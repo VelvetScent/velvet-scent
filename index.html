@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Fashion Store</title>
 
     <style>
@@ -20,12 +19,15 @@
         }
 
         header {
-            background: white;
-            padding: 20px 8%;
+            background: #fff;
+            padding: 18px 7%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .logo {
@@ -33,14 +35,32 @@
             font-weight: bold;
         }
 
-        nav a {
-            margin-right: 20px;
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        nav a,
+        .cart-button {
             text-decoration: none;
             color: #222;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .cart-count {
+            background: #222;
+            color: #fff;
+            border-radius: 20px;
+            padding: 3px 8px;
+            font-size: 12px;
         }
 
         .hero {
-            min-height: 450px;
+            min-height: 460px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -51,27 +71,28 @@
         }
 
         .hero h1 {
-            font-size: 50px;
+            font-size: 52px;
             margin-bottom: 15px;
         }
 
         .hero p {
-            font-size: 20px;
-            margin-bottom: 25px;
+            font-size: 21px;
+            margin-bottom: 28px;
         }
 
         .btn {
             background: #222;
             color: white;
             padding: 14px 30px;
+            border: none;
             border-radius: 8px;
-            text-decoration: none;
-            display: inline-block;
+            cursor: pointer;
+            font-size: 16px;
         }
 
         .categories,
         .products {
-            padding: 60px 8%;
+            padding: 60px 7%;
         }
 
         .categories h2,
@@ -89,11 +110,31 @@
 
         .category {
             background: white;
-            padding: 50px 20px;
+            padding: 45px 20px;
             text-align: center;
             border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 5px 20px rgba(0,0,0,.06);
             font-size: 22px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .category:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        /* المنتجات مخفية في البداية */
+        .products {
+            display: none;
+        }
+
+        .products.active {
+            display: block;
         }
 
         .product-container {
@@ -103,13 +144,13 @@
         }
 
         .product {
-            background: white;
+            background: #fff;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 20px rgba(0,0,0,.08);
             text-align: center;
             padding-bottom: 20px;
-            transition: transform 0.2s ease;
+            transition: .2s;
         }
 
         .product:hover {
@@ -118,8 +159,8 @@
 
         .product-image {
             width: 100%;
-            height: 280px;
-            background: #f5f5f5;
+            height: 300px;
+            background: #f3f3f3;
             overflow: hidden;
         }
 
@@ -130,14 +171,134 @@
             display: block;
         }
 
-        .product p {
-            margin-top: 12px;
+        .product-name {
             font-size: 18px;
+            font-weight: bold;
+            margin: 16px 10px 8px;
         }
 
-        .product p:last-child {
+        .product-price {
+            font-size: 19px;
             font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .add-cart {
+            background: #222;
+            color: white;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        /* السلة */
+        .cart-panel {
+            position: fixed;
+            top: 0;
+            left: -430px;
+            width: 410px;
+            max-width: 90%;
+            height: 100vh;
+            background: white;
+            z-index: 1000;
+            box-shadow: 5px 0 25px rgba(0,0,0,.15);
+            padding: 25px;
+            overflow-y: auto;
+            transition: .3s;
+        }
+
+        .cart-panel.open {
+            left: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .close-cart {
+            border: none;
+            background: none;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .cart-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+
+        .cart-item-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .quantity-controls button {
+            width: 30px;
+            height: 30px;
+            border: none;
+            background: #222;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .remove {
+            color: #b00020;
+            border: none;
+            background: none;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .cart-total {
             font-size: 20px;
+            font-weight: bold;
+            margin: 25px 0;
+        }
+
+        .checkout {
+            width: 100%;
+        }
+
+        .checkout-form {
+            display: none;
+            margin-top: 25px;
+        }
+
+        .checkout-form.active {
+            display: block;
+        }
+
+        .checkout-form input,
+        .checkout-form textarea {
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            font-family: inherit;
+        }
+
+        .checkout-form textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .empty {
+            text-align: center;
+            color: #777;
+            padding: 30px;
         }
 
         footer {
@@ -145,35 +306,40 @@
             color: white;
             text-align: center;
             padding: 25px;
-            margin-top: 30px;
+            margin-top: 40px;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 1000px) {
             .product-container {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
         @media (max-width: 700px) {
-            .category-container {
-                grid-template-columns: 1fr;
+            header {
+                flex-direction: column;
+                gap: 15px;
             }
 
-            .product-container {
-                grid-template-columns: 1fr;
+            nav {
+                gap: 10px;
             }
 
             .hero h1 {
                 font-size: 36px;
             }
 
-            header {
-                flex-direction: column;
-                gap: 15px;
+            .category-container,
+            .product-container {
+                grid-template-columns: 1fr;
             }
 
-            nav a {
-                margin: 0 8px;
+            .product-image {
+                height: 330px;
+            }
+
+            .cart-panel {
+                width: 90%;
             }
         }
     </style>
@@ -182,128 +348,841 @@
 <body>
 
 <header>
-    <div class="logo">FASHION</div>
+
+    <div class="logo">
+        FASHION STORE
+    </div>
 
     <nav>
-        <a href="#">الرئيسية</a>
-        <a href="#products">المنتجات</a>
-        <a href="#">السلة 🛒</a>
+
+        <a href="#" onclick="goHome()">
+            الرئيسية
+        </a>
+
+        <a href="#categories">
+            الأقسام
+        </a>
+
+        <button class="cart-button" onclick="openCart()">
+            السلة 🛒
+            <span class="cart-count" id="cartCount">0</span>
+        </button>
+
     </nav>
+
 </header>
 
-<section class="hero">
-    <h1>اكتشفي إطلالتك</h1>
 
-    <p>شنط • ملابس • إكسسوارات</p>
+<section class="hero" id="home">
 
-    <a href="#products" class="btn">تسوقي الآن</a>
+    <h1>
+        اكتشفي إطلالتك
+    </h1>
+
+    <p>
+        شنط • ملابس • إكسسوارات
+    </p>
+
+    <button class="btn" onclick="showBags()">
+        تسوقي الآن
+    </button>
+
 </section>
 
-<section class="categories">
 
-    <h2>تسوقي حسب القسم</h2>
+<section class="categories" id="categories">
+
+    <h2>
+        تسوقي حسب القسم
+    </h2>
 
     <div class="category-container">
 
-        <div class="category">
-            👜
-            <br><br>
+        <div class="category" onclick="showBags()">
+
+            <div class="category-icon">
+                👜
+            </div>
+
             شنط حريمي
+
         </div>
 
-        <div class="category">
-            👗
-            <br><br>
+
+        <div class="category" onclick="comingSoon()">
+
+            <div class="category-icon">
+                👗
+            </div>
+
             ملابس
+
         </div>
 
-        <div class="category">
-            💍
-            <br><br>
+
+        <div class="category" onclick="comingSoon()">
+
+            <div class="category-icon">
+                💍
+            </div>
+
             إكسسوارات
+
         </div>
 
     </div>
 
 </section>
+
 
 <section class="products" id="products">
 
-    <h2>منتجاتنا</h2>
+    <h2>
+        شنط حريمي
+    </h2>
+
 
     <div class="product-container">
 
-        <div class="product">
-            <div class="product-image">
-                <img src="images/bag1.jpeg" alt="شنطة حريمي">
-            </div>
-            <p>شنطة حريمي 1</p>
-            <p>850 جنيه</p>
-        </div>
+
+        <!-- BAG 1 -->
 
         <div class="product">
+
             <div class="product-image">
-                <img src="images/bag2.jpeg" alt="شنطة أنيقة">
+
+                <img
+                    src="./images/bag1.jpeg"
+                    alt="شنطة أنيقة 1"
+                >
+
             </div>
-            <p>شنطة أنيقة 2</p>
-            <p>1200 جنيه</p>
+
+            <div class="product-name">
+                شنطة أنيقة 1
+            </div>
+
+            <div class="product-price">
+                2,499 جنيه
+            </div>
+
+            <button
+                class="add-cart"
+                onclick="addToCart('شنطة أنيقة 1',2499)"
+            >
+                أضف للسلة
+            </button>
+
         </div>
 
-        <div class="product">
-            <div class="product-image">
-                <img src="images/bag3.jpeg" alt="شنطة حريمي">
-            </div>
-            <p>شنطة حريمي 3</p>
-            <p>450 جنيه</p>
-        </div>
+
+        <!-- BAG 2 -->
 
         <div class="product">
+
             <div class="product-image">
-                <img src="images/bag4.jpeg" alt="شنطة حريمي">
+
+                <img
+                    src="./images/bag2.jpeg"
+                    alt="شنطة أنيقة 2"
+                >
+
             </div>
-            <p>شنطة حريمي 4</p>
-            <p>950 جنيه</p>
+
+            <div class="product-name">
+                شنطة أنيقة 2
+            </div>
+
+            <div class="product-price">
+                2,299 جنيه
+            </div>
+
+            <button
+                class="add-cart"
+                onclick="addToCart('شنطة أنيقة 2',2299)"
+            >
+                أضف للسلة
+            </button>
+
         </div>
 
-        <div class="product">
-            <div class="product-image">
-                <img src="images/bag5.jpeg" alt="شنطة حريمي">
-            </div>
-            <p>شنطة حريمي 5</p>
-            <p>1100 جنيه</p>
-        </div>
+
+        <!-- BAG 3 -->
 
         <div class="product">
+
             <div class="product-image">
-                <img src="images/bag6.jpeg" alt="شنطة حريمي">
+
+                <img
+                    src="./images/bag3.jpeg"
+                    alt="شنطة أنيقة 3"
+                >
+
             </div>
-            <p>شنطة حريمي 6</p>
-            <p>1250 جنيه</p>
+
+            <div class="product-name">
+                شنطة أنيقة 3
+            </div>
+
+            <div class="product-price">
+                2,799 جنيه
+            </div>
+
+            <button
+                class="add-cart"
+                onclick="addToCart('شنطة أنيقة 3',2799)"
+            >
+                أضف للسلة
+            </button>
+
         </div>
 
-        <div class="product">
-            <div class="product-image">
-                <img src="images/bag7.jpeg" alt="شنطة حريمي">
-            </div>
-            <p>شنطة حريمي 7</p>
-            <p>1350 جنيه</p>
-        </div>
+
+        <!-- BAG 4 -->
 
         <div class="product">
+
             <div class="product-image">
-                <img src="images/bag8.jpeg" alt="شنطة حريمي">
+
+                <img
+                    src="./images/bag4.jpeg"
+                    alt="شنطة كتف Burgundy"
+                >
+
             </div>
-            <p>شنطة حريمي 8</p>
-            <p>1500 جنيه</p>
+
+            <div class="product-name">
+                شنطة كتف Burgundy
+            </div>
+
+            <div class="product-price">
+                999 جنيه
+            </div>
+
+            <button
+                class="add-cart"
+                onclick="addToCart('شنطة كتف Burgundy',999)"
+            >
+                أضف للسلة
+            </button>
+
         </div>
+
+
+        <!-- BAG 5 -->
+
+        <div class="product">
+
+            <div class="product-image">
+
+                <img
+                    src="./images/bag5.jpeg"
+                    alt="شنطة فاخرة 5"
+                >
+
+            </div>
+
+            <div class="product-name">
+                شنطة فاخرة 5
+            </div>
+
+            <div class="product-price">
+                2,999 جنيه
+            </div>
+
+            <button
+                class="add-cart"
+                onclick="addToCart('شنطة فاخرة 5',2999)"
+            >
+                أضف للسلة
+            </button>
+
+        </div>
+
+
+        <!-- BAG 6 -->
+
+        <div class="product">
+
+            <div class="product-image">
+
+                <img
+                    src="./images/bag6.jpeg"
+                    alt="شنطة أنيقة 6"
+                >
+
+            </div>
+
+            <div class="product-name">
+                شنطة أنيقة 6
+            </div>
+
+            <div class="product-price">
+                2,499 جنيه
+            </div>
+
+            <button
+                class="add-cart"
+                onclick="addToCart('شنطة أنيقة 6',2499)"
+            >
+                أضف للسلة
+            </button>
+
+        </div>
+
+
+        <!-- BAG 7 -->
+
+        <div class="product">
+
+            <div class="product-image">
+
+                <img
+                    src="./images/bag7.jpeg"
+                    alt="شنطة Longchamp Style"
+                >
+
+            </div>
+
+            <div class="product-name">
+                شنطة Longchamp Style
+            </div>
+
+            <div class="product-price">
+                1,299 جنيه
+            </div>
+
+            <button
+                class="add-cart"
+                onclick="addToCart('شنطة Longchamp Style',1299)"
+            >
+                أضف للسلة
+            </button>
+
+        </div>
+
+
+        <!-- BAG 8 -->
+
+        <div class="product">
+
+            <div class="product-image">
+
+                <img
+                    src="./images/bag8.jpeg"
+                    alt="شنطة سوداء فاخرة"
+                >
+
+            </div>
+
+            <div class="product-name">
+                شنطة سوداء فاخرة
+            </div>
+
+            <div class="product-price">
+                3,499 جنيه
+            </div>
+
+            <button
+                class="add-cart"
+                onclick="addToCart('شنطة سوداء فاخرة',3499)"
+            >
+                أضف للسلة
+            </button>
+
+        </div>
+
 
     </div>
 
 </section>
 
+
+<!-- CART -->
+
+<div class="cart-panel" id="cartPanel">
+
+    <div class="cart-header">
+
+        <h2>
+            سلة المشتريات
+        </h2>
+
+        <button
+            class="close-cart"
+            onclick="closeCart()"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <div id="cartItems"></div>
+
+
+    <div
+        class="cart-total"
+        id="cartTotal"
+    >
+        الإجمالي: 0 جنيه
+    </div>
+
+
+    <button
+        class="btn checkout"
+        onclick="showCheckout()"
+    >
+        إتمام الطلب
+    </button>
+
+
+    <div
+        class="checkout-form"
+        id="checkoutForm"
+    >
+
+        <h3>
+            بيانات الطلب
+        </h3>
+
+        <br>
+
+
+        <input
+            type="text"
+            id="customerName"
+            placeholder="الاسم بالكامل"
+        >
+
+
+        <input
+            type="tel"
+            id="customerPhone"
+            placeholder="رقم الهاتف"
+        >
+
+
+        <textarea
+            id="customerAddress"
+            placeholder="العنوان بالتفصيل"
+        ></textarea>
+
+
+        <button
+            class="btn checkout"
+            onclick="createOrder()"
+        >
+            تأكيد الطلب
+        </button>
+
+    </div>
+
+</div>
+
+
 <footer>
-    <p>© 2026 Fashion Store - جميع الحقوق محفوظة</p>
+
+    <p>
+        © 2026 Fashion Store - جميع الحقوق محفوظة
+    </p>
+
 </footer>
+
+
+<script>
+
+    let cart = [];
+
+
+    function showBags() {
+
+        const products =
+            document.getElementById("products");
+
+        products.classList.add("active");
+
+        products.scrollIntoView({
+            behavior: "smooth"
+        });
+
+    }
+
+
+    function goHome() {
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }
+
+
+    function comingSoon() {
+
+        alert(
+            "هذا القسم سيتم إضافته قريبًا ❤️"
+        );
+
+    }
+
+
+    function addToCart(name, price) {
+
+        const existing =
+            cart.find(
+                item => item.name === name
+            );
+
+
+        if (existing) {
+
+            existing.quantity++;
+
+        } else {
+
+            cart.push({
+                name: name,
+                price: price,
+                quantity: 1
+            });
+
+        }
+
+
+        updateCart();
+
+        openCart();
+
+    }
+
+
+    function updateCart() {
+
+        const container =
+            document.getElementById(
+                "cartItems"
+            );
+
+
+        const count =
+            document.getElementById(
+                "cartCount"
+            );
+
+
+        const totalElement =
+            document.getElementById(
+                "cartTotal"
+            );
+
+
+        const totalItems =
+            cart.reduce(
+                (sum, item) =>
+                    sum + item.quantity,
+                0
+            );
+
+
+        count.textContent =
+            totalItems;
+
+
+        if (cart.length === 0) {
+
+            container.innerHTML =
+                '<div class="empty">السلة فارغة</div>';
+
+            totalElement.textContent =
+                "الإجمالي: 0 جنيه";
+
+            return;
+
+        }
+
+
+        container.innerHTML = "";
+
+
+        let total = 0;
+
+
+        cart.forEach(
+            (item, index) => {
+
+                const subtotal =
+                    item.price *
+                    item.quantity;
+
+
+                total += subtotal;
+
+
+                const div =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                div.className =
+                    "cart-item";
+
+
+                div.innerHTML = `
+
+                    <div class="cart-item-title">
+                        ${item.name}
+                    </div>
+
+                    <div>
+                        ${item.price.toLocaleString()}
+                        جنيه
+                    </div>
+
+                    <div class="quantity-controls">
+
+                        <button
+                            onclick="changeQuantity(${index}, 1)"
+                        >
+                            +
+                        </button>
+
+                        <span>
+                            ${item.quantity}
+                        </span>
+
+                        <button
+                            onclick="changeQuantity(${index}, -1)"
+                        >
+                            -
+                        </button>
+
+                    </div>
+
+                    <button
+                        class="remove"
+                        onclick="removeItem(${index})"
+                    >
+                        حذف المنتج
+                    </button>
+
+                `;
+
+
+                container.appendChild(div);
+
+            }
+        );
+
+
+        totalElement.textContent =
+            "الإجمالي: " +
+            total.toLocaleString() +
+            " جنيه";
+
+    }
+
+
+    function changeQuantity(index, amount) {
+
+        cart[index].quantity += amount;
+
+
+        if (
+            cart[index].quantity <= 0
+        ) {
+
+            cart.splice(index, 1);
+
+        }
+
+
+        updateCart();
+
+    }
+
+
+    function removeItem(index) {
+
+        cart.splice(index, 1);
+
+        updateCart();
+
+    }
+
+
+    function openCart() {
+
+        document
+            .getElementById("cartPanel")
+            .classList.add("open");
+
+        updateCart();
+
+    }
+
+
+    function closeCart() {
+
+        document
+            .getElementById("cartPanel")
+            .classList.remove("open");
+
+    }
+
+
+    function showCheckout() {
+
+        if (cart.length === 0) {
+
+            alert(
+                "السلة فارغة."
+            );
+
+            return;
+
+        }
+
+
+        document
+            .getElementById("checkoutForm")
+            .classList.add("active");
+
+    }
+
+
+    function createOrder() {
+
+        const name =
+            document
+                .getElementById(
+                    "customerName"
+                )
+                .value
+                .trim();
+
+
+        const phone =
+            document
+                .getElementById(
+                    "customerPhone"
+                )
+                .value
+                .trim();
+
+
+        const address =
+            document
+                .getElementById(
+                    "customerAddress"
+                )
+                .value
+                .trim();
+
+
+        if (
+            !name ||
+            !phone ||
+            !address
+        ) {
+
+            alert(
+                "من فضلك اكتب الاسم ورقم الهاتف والعنوان."
+            );
+
+            return;
+
+        }
+
+
+        let message =
+            "طلب جديد من Fashion Store\n\n";
+
+
+        message +=
+            "الاسم: " +
+            name +
+            "\n";
+
+
+        message +=
+            "رقم الهاتف: " +
+            phone +
+            "\n";
+
+
+        message +=
+            "العنوان: " +
+            address +
+            "\n\n";
+
+
+        message +=
+            "المنتجات:\n";
+
+
+        let total = 0;
+
+
+        cart.forEach(
+            item => {
+
+                const subtotal =
+                    item.price *
+                    item.quantity;
+
+
+                total += subtotal;
+
+
+                message +=
+                    item.name +
+                    " × " +
+                    item.quantity +
+                    " = " +
+                    subtotal.toLocaleString() +
+                    " جنيه\n";
+
+            }
+        );
+
+
+        message +=
+            "\nالإجمالي: " +
+            total.toLocaleString() +
+            " جنيه";
+
+
+        /*
+            رقم واتساب المتجر
+        */
+
+        const storeWhatsApp =
+            "201064014838";
+
+
+        const url =
+            "https://wa.me/" +
+            storeWhatsApp +
+            "?text=" +
+            encodeURIComponent(
+                message
+            );
+
+
+        window.open(
+            url,
+            "_blank"
+        );
+
+    }
+
+
+    updateCart();
+
+</script>
 
 </body>
 </html>
