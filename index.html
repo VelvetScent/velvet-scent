@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Fashion Store</title>
 
     <style>
@@ -31,7 +33,7 @@
         }
 
         .logo {
-            font-size: 26px;
+            font-size: 25px;
             font-weight: bold;
         }
 
@@ -46,7 +48,7 @@
             text-decoration: none;
             color: #222;
             background: none;
-            border: none;
+            border: 0;
             cursor: pointer;
             font-size: 16px;
         }
@@ -82,9 +84,9 @@
 
         .btn {
             background: #222;
-            color: white;
+            color: #fff;
             padding: 14px 30px;
-            border: none;
+            border: 0;
             border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
@@ -109,11 +111,11 @@
         }
 
         .category {
-            background: white;
+            background: #fff;
             padding: 45px 20px;
             text-align: center;
             border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,.06);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, .06);
             font-size: 22px;
             cursor: pointer;
             transition: .2s;
@@ -128,7 +130,6 @@
             margin-bottom: 15px;
         }
 
-        /* المنتجات مخفية في البداية */
         .products {
             display: none;
         }
@@ -147,7 +148,7 @@
             background: #fff;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,.08);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, .08);
             text-align: center;
             padding-bottom: 20px;
             transition: .2s;
@@ -185,14 +186,13 @@
 
         .add-cart {
             background: #222;
-            color: white;
-            border: none;
+            color: #fff;
+            border: 0;
             padding: 11px 20px;
             border-radius: 7px;
             cursor: pointer;
         }
 
-        /* السلة */
         .cart-panel {
             position: fixed;
             top: 0;
@@ -200,9 +200,9 @@
             width: 410px;
             max-width: 90%;
             height: 100vh;
-            background: white;
+            background: #fff;
             z-index: 1000;
-            box-shadow: 5px 0 25px rgba(0,0,0,.15);
+            box-shadow: 5px 0 25px rgba(0, 0, 0, .15);
             padding: 25px;
             overflow-y: auto;
             transition: .3s;
@@ -220,7 +220,7 @@
         }
 
         .close-cart {
-            border: none;
+            border: 0;
             background: none;
             font-size: 28px;
             cursor: pointer;
@@ -246,16 +246,16 @@
         .quantity-controls button {
             width: 30px;
             height: 30px;
-            border: none;
+            border: 0;
             background: #222;
-            color: white;
+            color: #fff;
             border-radius: 5px;
             cursor: pointer;
         }
 
         .remove {
             color: #b00020;
-            border: none;
+            border: 0;
             background: none;
             cursor: pointer;
             margin-top: 8px;
@@ -303,7 +303,7 @@
 
         footer {
             background: #222;
-            color: white;
+            color: #fff;
             text-align: center;
             padding: 25px;
             margin-top: 40px;
@@ -319,10 +319,6 @@
             header {
                 flex-direction: column;
                 gap: 15px;
-            }
-
-            nav {
-                gap: 10px;
             }
 
             .hero h1 {
@@ -354,10 +350,7 @@
     </div>
 
     <nav>
-
-        <a href="#" onclick="goHome()">
-            الرئيسية
-        </a>
+        <a href="#" onclick="goHome()">الرئيسية</a>
 
         <a href="#categories">
             الأقسام
@@ -367,7 +360,6 @@
             السلة 🛒
             <span class="cart-count" id="cartCount">0</span>
         </button>
-
     </nav>
 
 </header>
@@ -452,14 +444,14 @@
             <div class="product-image">
 
                 <img
-                    src="./images/bag1.jpeg"
-                    alt="شنطة أنيقة 1"
+                    src="bag1.jpeg"
+                    alt="شنطة 1"
                 >
 
             </div>
 
             <div class="product-name">
-                شنطة أنيقة 1
+                شنطة Coach أصلية
             </div>
 
             <div class="product-price">
@@ -468,7 +460,7 @@
 
             <button
                 class="add-cart"
-                onclick="addToCart('شنطة أنيقة 1',2499)"
+                onclick="addToCart('شنطة Coach أصلية',2499)"
             >
                 أضف للسلة
             </button>
@@ -483,14 +475,14 @@
             <div class="product-image">
 
                 <img
-                    src="./images/bag2.jpeg"
-                    alt="شنطة أنيقة 2"
+                    src="bag2.jpeg"
+                    alt="شنطة 2"
                 >
 
             </div>
 
             <div class="product-name">
-                شنطة أنيقة 2
+                شنطة Polène Paris
             </div>
 
             <div class="product-price">
@@ -499,7 +491,7 @@
 
             <button
                 class="add-cart"
-                onclick="addToCart('شنطة أنيقة 2',2299)"
+                onclick="addToCart('شنطة Polène Paris',2299)"
             >
                 أضف للسلة
             </button>
@@ -514,14 +506,14 @@
             <div class="product-image">
 
                 <img
-                    src="./images/bag3.jpeg"
-                    alt="شنطة أنيقة 3"
+                    src="bag3.jpeg"
+                    alt="شنطة 3"
                 >
 
             </div>
 
             <div class="product-name">
-                شنطة أنيقة 3
+                شنطة Christian Dior
             </div>
 
             <div class="product-price">
@@ -530,7 +522,7 @@
 
             <button
                 class="add-cart"
-                onclick="addToCart('شنطة أنيقة 3',2799)"
+                onclick="addToCart('شنطة Christian Dior',2799)"
             >
                 أضف للسلة
             </button>
@@ -545,8 +537,8 @@
             <div class="product-image">
 
                 <img
-                    src="./images/bag4.jpeg"
-                    alt="شنطة كتف Burgundy"
+                    src="bag4.jpeg"
+                    alt="شنطة Burgundy"
                 >
 
             </div>
@@ -576,14 +568,14 @@
             <div class="product-image">
 
                 <img
-                    src="./images/bag5.jpeg"
-                    alt="شنطة فاخرة 5"
+                    src="bag5.jpeg"
+                    alt="شنطة Louis Vuitton"
                 >
 
             </div>
 
             <div class="product-name">
-                شنطة فاخرة 5
+                شنطة Louis Vuitton
             </div>
 
             <div class="product-price">
@@ -592,7 +584,7 @@
 
             <button
                 class="add-cart"
-                onclick="addToCart('شنطة فاخرة 5',2999)"
+                onclick="addToCart('شنطة Louis Vuitton',2999)"
             >
                 أضف للسلة
             </button>
@@ -607,14 +599,14 @@
             <div class="product-image">
 
                 <img
-                    src="./images/bag6.jpeg"
-                    alt="شنطة أنيقة 6"
+                    src="bag6.jpeg"
+                    alt="شنطة Coach"
                 >
 
             </div>
 
             <div class="product-name">
-                شنطة أنيقة 6
+                شنطة Coach
             </div>
 
             <div class="product-price">
@@ -623,7 +615,7 @@
 
             <button
                 class="add-cart"
-                onclick="addToCart('شنطة أنيقة 6',2499)"
+                onclick="addToCart('شنطة Coach',2499)"
             >
                 أضف للسلة
             </button>
@@ -638,14 +630,14 @@
             <div class="product-image">
 
                 <img
-                    src="./images/bag7.jpeg"
-                    alt="شنطة Longchamp Style"
+                    src="bag7.jpeg"
+                    alt="شنطة Longchamp"
                 >
 
             </div>
 
             <div class="product-name">
-                شنطة Longchamp Style
+                شنطة Longchamp
             </div>
 
             <div class="product-price">
@@ -654,7 +646,7 @@
 
             <button
                 class="add-cart"
-                onclick="addToCart('شنطة Longchamp Style',1299)"
+                onclick="addToCart('شنطة Longchamp',1299)"
             >
                 أضف للسلة
             </button>
@@ -669,14 +661,14 @@
             <div class="product-image">
 
                 <img
-                    src="./images/bag8.jpeg"
-                    alt="شنطة سوداء فاخرة"
+                    src="bag8.jpeg"
+                    alt="شنطة Louis Vuitton Alma"
                 >
 
             </div>
 
             <div class="product-name">
-                شنطة سوداء فاخرة
+                شنطة Louis Vuitton Alma
             </div>
 
             <div class="product-price">
@@ -685,7 +677,7 @@
 
             <button
                 class="add-cart"
-                onclick="addToCart('شنطة سوداء فاخرة',3499)"
+                onclick="addToCart('شنطة Louis Vuitton Alma',3499)"
             >
                 أضف للسلة
             </button>
@@ -697,8 +689,6 @@
 
 </section>
 
-
-<!-- CART -->
 
 <div class="cart-panel" id="cartPanel">
 
@@ -748,13 +738,11 @@
 
         <br>
 
-
         <input
             type="text"
             id="customerName"
             placeholder="الاسم بالكامل"
         >
-
 
         <input
             type="tel"
@@ -762,12 +750,10 @@
             placeholder="رقم الهاتف"
         >
 
-
         <textarea
             id="customerAddress"
             placeholder="العنوان بالتفصيل"
         ></textarea>
-
 
         <button
             class="btn checkout"
@@ -783,404 +769,369 @@
 
 <footer>
 
-    <p>
-        © 2026 Fashion Store - جميع الحقوق محفوظة
-    </p>
+    © 2026 Fashion Store - جميع الحقوق محفوظة
 
 </footer>
 
 
 <script>
 
-    let cart = [];
+let cart = [];
 
 
-    function showBags() {
+function showBags() {
 
-        const products =
-            document.getElementById("products");
+    const products =
+        document.getElementById("products");
 
-        products.classList.add("active");
+    products.classList.add("active");
 
-        products.scrollIntoView({
-            behavior: "smooth"
+    products.scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+
+function goHome() {
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+function comingSoon() {
+
+    alert(
+        "هذا القسم سيتم إضافته قريبًا ❤️"
+    );
+
+}
+
+
+function addToCart(name, price) {
+
+    const existing =
+        cart.find(
+            item => item.name === name
+        );
+
+
+    if (existing) {
+
+        existing.quantity++;
+
+    } else {
+
+        cart.push({
+            name: name,
+            price: price,
+            quantity: 1
         });
-
-    }
-
-
-    function goHome() {
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-
-    }
-
-
-    function comingSoon() {
-
-        alert(
-            "هذا القسم سيتم إضافته قريبًا ❤️"
-        );
-
-    }
-
-
-    function addToCart(name, price) {
-
-        const existing =
-            cart.find(
-                item => item.name === name
-            );
-
-
-        if (existing) {
-
-            existing.quantity++;
-
-        } else {
-
-            cart.push({
-                name: name,
-                price: price,
-                quantity: 1
-            });
-
-        }
-
-
-        updateCart();
-
-        openCart();
-
-    }
-
-
-    function updateCart() {
-
-        const container =
-            document.getElementById(
-                "cartItems"
-            );
-
-
-        const count =
-            document.getElementById(
-                "cartCount"
-            );
-
-
-        const totalElement =
-            document.getElementById(
-                "cartTotal"
-            );
-
-
-        const totalItems =
-            cart.reduce(
-                (sum, item) =>
-                    sum + item.quantity,
-                0
-            );
-
-
-        count.textContent =
-            totalItems;
-
-
-        if (cart.length === 0) {
-
-            container.innerHTML =
-                '<div class="empty">السلة فارغة</div>';
-
-            totalElement.textContent =
-                "الإجمالي: 0 جنيه";
-
-            return;
-
-        }
-
-
-        container.innerHTML = "";
-
-
-        let total = 0;
-
-
-        cart.forEach(
-            (item, index) => {
-
-                const subtotal =
-                    item.price *
-                    item.quantity;
-
-
-                total += subtotal;
-
-
-                const div =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                div.className =
-                    "cart-item";
-
-
-                div.innerHTML = `
-
-                    <div class="cart-item-title">
-                        ${item.name}
-                    </div>
-
-                    <div>
-                        ${item.price.toLocaleString()}
-                        جنيه
-                    </div>
-
-                    <div class="quantity-controls">
-
-                        <button
-                            onclick="changeQuantity(${index}, 1)"
-                        >
-                            +
-                        </button>
-
-                        <span>
-                            ${item.quantity}
-                        </span>
-
-                        <button
-                            onclick="changeQuantity(${index}, -1)"
-                        >
-                            -
-                        </button>
-
-                    </div>
-
-                    <button
-                        class="remove"
-                        onclick="removeItem(${index})"
-                    >
-                        حذف المنتج
-                    </button>
-
-                `;
-
-
-                container.appendChild(div);
-
-            }
-        );
-
-
-        totalElement.textContent =
-            "الإجمالي: " +
-            total.toLocaleString() +
-            " جنيه";
-
-    }
-
-
-    function changeQuantity(index, amount) {
-
-        cart[index].quantity += amount;
-
-
-        if (
-            cart[index].quantity <= 0
-        ) {
-
-            cart.splice(index, 1);
-
-        }
-
-
-        updateCart();
-
-    }
-
-
-    function removeItem(index) {
-
-        cart.splice(index, 1);
-
-        updateCart();
-
-    }
-
-
-    function openCart() {
-
-        document
-            .getElementById("cartPanel")
-            .classList.add("open");
-
-        updateCart();
-
-    }
-
-
-    function closeCart() {
-
-        document
-            .getElementById("cartPanel")
-            .classList.remove("open");
-
-    }
-
-
-    function showCheckout() {
-
-        if (cart.length === 0) {
-
-            alert(
-                "السلة فارغة."
-            );
-
-            return;
-
-        }
-
-
-        document
-            .getElementById("checkoutForm")
-            .classList.add("active");
-
-    }
-
-
-    function createOrder() {
-
-        const name =
-            document
-                .getElementById(
-                    "customerName"
-                )
-                .value
-                .trim();
-
-
-        const phone =
-            document
-                .getElementById(
-                    "customerPhone"
-                )
-                .value
-                .trim();
-
-
-        const address =
-            document
-                .getElementById(
-                    "customerAddress"
-                )
-                .value
-                .trim();
-
-
-        if (
-            !name ||
-            !phone ||
-            !address
-        ) {
-
-            alert(
-                "من فضلك اكتب الاسم ورقم الهاتف والعنوان."
-            );
-
-            return;
-
-        }
-
-
-        let message =
-            "طلب جديد من Fashion Store\n\n";
-
-
-        message +=
-            "الاسم: " +
-            name +
-            "\n";
-
-
-        message +=
-            "رقم الهاتف: " +
-            phone +
-            "\n";
-
-
-        message +=
-            "العنوان: " +
-            address +
-            "\n\n";
-
-
-        message +=
-            "المنتجات:\n";
-
-
-        let total = 0;
-
-
-        cart.forEach(
-            item => {
-
-                const subtotal =
-                    item.price *
-                    item.quantity;
-
-
-                total += subtotal;
-
-
-                message +=
-                    item.name +
-                    " × " +
-                    item.quantity +
-                    " = " +
-                    subtotal.toLocaleString() +
-                    " جنيه\n";
-
-            }
-        );
-
-
-        message +=
-            "\nالإجمالي: " +
-            total.toLocaleString() +
-            " جنيه";
-
-
-        /*
-            رقم واتساب المتجر
-        */
-
-        const storeWhatsApp =
-            "201064014838";
-
-
-        const url =
-            "https://wa.me/" +
-            storeWhatsApp +
-            "?text=" +
-            encodeURIComponent(
-                message
-            );
-
-
-        window.open(
-            url,
-            "_blank"
-        );
 
     }
 
 
     updateCart();
+
+    openCart();
+
+}
+
+
+function updateCart() {
+
+    const container =
+        document.getElementById("cartItems");
+
+    const count =
+        document.getElementById("cartCount");
+
+    const totalElement =
+        document.getElementById("cartTotal");
+
+
+    count.textContent =
+        cart.reduce(
+            (sum, item) =>
+                sum + item.quantity,
+            0
+        );
+
+
+    if (cart.length === 0) {
+
+        container.innerHTML =
+            '<div class="empty">السلة فارغة</div>';
+
+        totalElement.textContent =
+            "الإجمالي: 0 جنيه";
+
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+    let total = 0;
+
+
+    cart.forEach(
+        (item, index) => {
+
+            const subtotal =
+                item.price *
+                item.quantity;
+
+            total += subtotal;
+
+
+            const div =
+                document.createElement("div");
+
+            div.className =
+                "cart-item";
+
+
+            div.innerHTML = `
+
+                <div class="cart-item-title">
+                    ${item.name}
+                </div>
+
+                <div>
+                    ${item.price.toLocaleString()}
+                    جنيه
+                </div>
+
+                <div class="quantity-controls">
+
+                    <button
+                        onclick="changeQuantity(${index},1)"
+                    >
+                        +
+                    </button>
+
+                    <span>
+                        ${item.quantity}
+                    </span>
+
+                    <button
+                        onclick="changeQuantity(${index},-1)"
+                    >
+                        -
+                    </button>
+
+                </div>
+
+                <button
+                    class="remove"
+                    onclick="removeItem(${index})"
+                >
+                    حذف المنتج
+                </button>
+
+            `;
+
+
+            container.appendChild(div);
+
+        }
+    );
+
+
+    totalElement.textContent =
+        "الإجمالي: " +
+        total.toLocaleString() +
+        " جنيه";
+
+}
+
+
+function changeQuantity(index, amount) {
+
+    cart[index].quantity += amount;
+
+
+    if (
+        cart[index].quantity <= 0
+    ) {
+
+        cart.splice(index, 1);
+
+    }
+
+
+    updateCart();
+
+}
+
+
+function removeItem(index) {
+
+    cart.splice(index, 1);
+
+    updateCart();
+
+}
+
+
+function openCart() {
+
+    document
+        .getElementById("cartPanel")
+        .classList.add("open");
+
+    updateCart();
+
+}
+
+
+function closeCart() {
+
+    document
+        .getElementById("cartPanel")
+        .classList.remove("open");
+
+}
+
+
+function showCheckout() {
+
+    if (cart.length === 0) {
+
+        alert(
+            "السلة فارغة."
+        );
+
+        return;
+    }
+
+
+    document
+        .getElementById("checkoutForm")
+        .classList.add("active");
+
+}
+
+
+function createOrder() {
+
+    const name =
+        document
+            .getElementById("customerName")
+            .value
+            .trim();
+
+
+    const phone =
+        document
+            .getElementById("customerPhone")
+            .value
+            .trim();
+
+
+    const address =
+        document
+            .getElementById("customerAddress")
+            .value
+            .trim();
+
+
+    if (
+        !name ||
+        !phone ||
+        !address
+    ) {
+
+        alert(
+            "من فضلك اكتب الاسم ورقم الهاتف والعنوان."
+        );
+
+        return;
+    }
+
+
+    let message =
+        "طلب جديد من Fashion Store\n\n";
+
+
+    message +=
+        "الاسم: " +
+        name +
+        "\n";
+
+
+    message +=
+        "رقم الهاتف: " +
+        phone +
+        "\n";
+
+
+    message +=
+        "العنوان: " +
+        address +
+        "\n\n";
+
+
+    message +=
+        "المنتجات:\n";
+
+
+    let total = 0;
+
+
+    cart.forEach(
+        item => {
+
+            const subtotal =
+                item.price *
+                item.quantity;
+
+            total += subtotal;
+
+
+            message +=
+                item.name +
+                " × " +
+                item.quantity +
+                " = " +
+                subtotal.toLocaleString() +
+                " جنيه\n";
+
+        }
+    );
+
+
+    message +=
+        "\nالإجمالي: " +
+        total.toLocaleString() +
+        " جنيه";
+
+
+    const storeWhatsApp =
+        "201064014838";
+
+
+    const url =
+        "https://wa.me/" +
+        storeWhatsApp +
+        "?text=" +
+        encodeURIComponent(message);
+
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+
+updateCart();
 
 </script>
 
