@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,11 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
   <style>
 
@@ -26,7 +30,7 @@
       --gold: #c9a45c;
       --gold-light: #e2c98d;
       --cream: #f7f3eb;
-      --white: #fff;
+      --white: #ffffff;
       --gray: #77716a;
     }
 
@@ -50,11 +54,15 @@
       inset: 0;
       background: var(--black);
       z-index: 99999;
+
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      transition: opacity .7s ease, visibility .7s ease;
+
+      transition:
+        opacity .7s ease,
+        visibility .7s ease;
     }
 
     #loader.hide {
@@ -65,9 +73,10 @@
     .loader-logo {
       color: white;
       font-family: "Playfair Display", serif;
-      font-size: 42px;
+      font-size: 40px;
       letter-spacing: 7px;
       animation: pulse 1.5s infinite;
+      text-align: center;
     }
 
     .loader-line {
@@ -110,13 +119,19 @@
       top: 0;
       right: 0;
       left: 0;
+
       height: 78px;
+
       z-index: 5000;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       padding: 0 6%;
+
       color: white;
+
       transition: .4s;
     }
 
@@ -127,18 +142,18 @@
     }
 
     .logo {
+      color: white;
+      text-decoration: none;
+
       font-family: "Playfair Display", serif;
       font-size: 25px;
       letter-spacing: 4px;
-      color: white;
-      text-decoration: none;
-      white-space: nowrap;
     }
 
     nav {
       display: flex;
       align-items: center;
-      gap: 30px;
+      gap: 28px;
     }
 
     nav a {
@@ -150,12 +165,17 @@
 
     nav a::after {
       content: "";
+
       position: absolute;
+
       width: 0;
       height: 1px;
+
       background: var(--gold-light);
+
       bottom: -7px;
       right: 0;
+
       transition: .3s;
     }
 
@@ -165,12 +185,18 @@
 
     .header-cart {
       border: 1px solid rgba(255,255,255,.4);
+
       background: transparent;
       color: white;
+
       border-radius: 50px;
+
       padding: 9px 17px;
+
       cursor: pointer;
+
       transition: .3s;
+
       font-family: inherit;
     }
 
@@ -185,7 +211,9 @@
 
     .hero {
       min-height: 100vh;
+
       position: relative;
+
       background:
         linear-gradient(
           90deg,
@@ -197,19 +225,26 @@
 
       display: flex;
       align-items: center;
+
       overflow: hidden;
     }
 
     .hero-content {
       width: 90%;
       max-width: 1250px;
+
       margin: auto;
+
       color: white;
+
       padding-top: 70px;
-      animation: heroIn 1.2s ease forwards;
+
+      animation:
+        heroIn 1.2s ease forwards;
     }
 
     @keyframes heroIn {
+
       from {
         opacity: 0;
         transform: translateY(35px);
@@ -219,23 +254,39 @@
         opacity: 1;
         transform: translateY(0);
       }
+
     }
 
     .eyebrow {
       color: var(--gold-light);
+
       font-size: 14px;
+
       letter-spacing: 5px;
+
       margin-bottom: 18px;
+
       text-transform: uppercase;
     }
 
     .hero h1 {
       font-family: "Playfair Display", serif;
-      font-size: clamp(55px, 9vw, 115px);
+
+      font-size:
+        clamp(
+          55px,
+          9vw,
+          115px
+        );
+
       line-height: .95;
+
       letter-spacing: 3px;
+
       font-weight: 600;
+
       max-width: 850px;
+
       margin-bottom: 25px;
     }
 
@@ -245,9 +296,13 @@
 
     .hero-text {
       max-width: 520px;
+
       color: #e4dfd6;
+
       line-height: 2;
+
       font-size: 16px;
+
       margin-bottom: 35px;
     }
 
@@ -259,28 +314,43 @@
 
     .btn-gold {
       background: var(--gold);
+
       color: #17130e;
+
       border: none;
+
       padding: 14px 30px;
+
       border-radius: 3px;
+
       cursor: pointer;
+
       text-decoration: none;
+
       font-weight: 700;
+
       transition: .3s;
+
       display: inline-block;
     }
 
     .btn-gold:hover {
       background: var(--gold-light);
+
       transform: translateY(-3px);
     }
 
     .btn-outline {
       color: white;
+
       border: 1px solid rgba(255,255,255,.55);
+
       padding: 13px 30px;
+
       text-decoration: none;
+
       transition: .3s;
+
       display: inline-block;
     }
 
@@ -289,50 +359,101 @@
       color: var(--black);
     }
 
-    .scroll-down {
-      position: absolute;
-      bottom: 28px;
-      right: 50%;
-      transform: translateX(50%);
-      color: white;
-      font-size: 12px;
-      letter-spacing: 3px;
-      opacity: .7;
-    }
-
     /* =========================
-       SECTION
+       SECTIONS
     ========================= */
 
     .section {
       width: 90%;
       max-width: 1250px;
+
       margin: auto;
+
       padding: 100px 0;
     }
 
     .section-heading {
       text-align: center;
-      margin-bottom: 55px;
+
+      margin-bottom: 45px;
     }
 
     .section-heading small {
       color: var(--gold);
+
       letter-spacing: 4px;
+
       font-size: 12px;
     }
 
     .section-heading h2 {
       font-family: "Playfair Display", serif;
-      font-size: clamp(35px, 5vw, 55px);
+
+      font-size:
+        clamp(
+          35px,
+          5vw,
+          55px
+        );
+
       margin: 10px 0;
     }
 
     .section-heading p {
       color: var(--gray);
+
       max-width: 550px;
+
       margin: auto;
+
       line-height: 1.9;
+    }
+
+    /* =========================
+       CATEGORY BUTTONS
+    ========================= */
+
+    .categories {
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      gap: 12px;
+
+      flex-wrap: wrap;
+
+      margin-bottom: 45px;
+    }
+
+    .category-btn {
+      background: transparent;
+
+      border: 1px solid #cfc8bc;
+
+      color: #292622;
+
+      padding: 12px 28px;
+
+      cursor: pointer;
+
+      font-family: "Cairo", sans-serif;
+
+      letter-spacing: 1px;
+
+      transition: .3s;
+    }
+
+    .category-btn:hover,
+    .category-btn.active {
+      background: var(--black);
+
+      color: white;
+
+      border-color: var(--black);
+
+      transform: translateY(-2px);
     }
 
     /* =========================
@@ -341,147 +462,220 @@
 
     .products {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
       gap: 24px;
     }
 
     .product {
       background: white;
+
       position: relative;
+
       overflow: hidden;
+
       transition: .4s;
+
       border-radius: 2px;
     }
 
     .product:hover {
       transform: translateY(-8px);
-      box-shadow: 0 20px 50px rgba(0,0,0,.12);
+
+      box-shadow:
+        0 20px 50px
+        rgba(0,0,0,.12);
     }
 
     .product-image {
       height: 330px;
+
       position: relative;
+
       overflow: hidden;
+
       background: #eee;
     }
 
     .product-image img {
       width: 100%;
       height: 100%;
+
       object-fit: cover;
+
       transition: .6s;
     }
 
-    .product:hover .product-image img {
+    .product:hover
+    .product-image img {
       transform: scale(1.07);
     }
 
     .product-tag {
       position: absolute;
+
       top: 14px;
       right: 14px;
+
       background: var(--black);
+
       color: white;
+
       padding: 5px 10px;
+
       font-size: 11px;
+
       letter-spacing: 1px;
+
+      z-index: 2;
     }
 
     .product-info {
       padding: 20px;
-      text-align: right;
     }
 
     .product-name {
-      font-family: "Playfair Display", serif;
+      font-family:
+        "Playfair Display",
+        serif;
+
       font-size: 21px;
+
       margin-bottom: 7px;
     }
 
     .product-description {
       color: var(--gray);
+
       font-size: 13px;
+
       line-height: 1.7;
+
       min-height: 43px;
+
       margin-bottom: 12px;
     }
 
     .product-bottom {
       display: flex;
+
       align-items: center;
-      justify-content: space-between;
+
+      justify-content:
+        space-between;
+
       gap: 10px;
     }
 
     .price {
       font-weight: 700;
+
       font-size: 17px;
     }
 
     .add-btn {
       border: none;
+
       background: var(--black);
+
       color: white;
+
       padding: 10px 15px;
+
       cursor: pointer;
+
       font-family: inherit;
+
       transition: .3s;
+
       border-radius: 2px;
     }
 
     .add-btn:hover {
       background: var(--gold);
+
       color: var(--black);
     }
 
     .empty {
       text-align: center;
+
       padding: 50px;
+
       color: var(--gray);
-      grid-column: 1 / -1;
+
+      grid-column:
+        1 / -1;
     }
 
     /* =========================
-       BRAND STORY
+       STORY
     ========================= */
 
     .story {
       background: var(--black);
+
       color: white;
     }
 
     .story-inner {
       width: 90%;
       max-width: 1250px;
+
       margin: auto;
+
       padding: 100px 0;
+
       display: grid;
-      grid-template-columns: 1fr 1fr;
+
+      grid-template-columns:
+        1fr 1fr;
+
       gap: 80px;
+
       align-items: center;
     }
 
     .story-image {
       height: 520px;
+
       background:
-        linear-gradient(rgba(0,0,0,.2), rgba(0,0,0,.2)),
-        url("story.jpg") center/cover;
+        linear-gradient(
+          rgba(0,0,0,.2),
+          rgba(0,0,0,.2)
+        ),
+        url("story.jpg")
+        center/cover;
     }
 
     .story-content small {
       color: var(--gold-light);
+
       letter-spacing: 4px;
     }
 
     .story-content h2 {
-      font-family: "Playfair Display", serif;
-      font-size: clamp(38px, 5vw, 65px);
+      font-family:
+        "Playfair Display",
+        serif;
+
+      font-size:
+        clamp(
+          38px,
+          5vw,
+          65px
+        );
+
       margin: 15px 0 25px;
     }
 
     .story-content p {
       color: #c9c5be;
+
       line-height: 2.1;
+
       margin-bottom: 25px;
     }
 
@@ -491,37 +685,53 @@
 
     .features {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+
+      grid-template-columns:
+        repeat(3,1fr);
+
       gap: 20px;
     }
 
     .feature {
       text-align: center;
+
       padding: 45px 25px;
+
       background: white;
+
       border: 1px solid #eee9df;
+
       transition: .3s;
     }
 
     .feature:hover {
       transform: translateY(-5px);
-      border-color: var(--gold);
+
+      border-color:
+        var(--gold);
     }
 
     .feature-icon {
       font-size: 30px;
+
       margin-bottom: 18px;
     }
 
     .feature h3 {
-      font-family: "Playfair Display", serif;
+      font-family:
+        "Playfair Display",
+        serif;
+
       font-size: 23px;
+
       margin-bottom: 10px;
     }
 
     .feature p {
       color: var(--gray);
+
       line-height: 1.8;
+
       font-size: 14px;
     }
 
@@ -532,26 +742,43 @@
     .cta {
       width: 90%;
       max-width: 1250px;
-      margin: 0 auto 100px;
+
+      margin:
+        0 auto 100px;
+
       padding: 80px 30px;
+
       background:
         linear-gradient(
           rgba(17,16,15,.92),
           rgba(17,16,15,.92)
         ),
-        url("cta.jpg") center/cover;
+        url("cta.jpg")
+        center/cover;
+
       text-align: center;
+
       color: white;
     }
 
     .cta h2 {
-      font-family: "Playfair Display", serif;
-      font-size: clamp(35px, 5vw, 60px);
+      font-family:
+        "Playfair Display",
+        serif;
+
+      font-size:
+        clamp(
+          35px,
+          5vw,
+          60px
+        );
+
       margin-bottom: 15px;
     }
 
     .cta p {
       color: #ccc;
+
       margin-bottom: 30px;
     }
 
@@ -561,20 +788,29 @@
 
     footer {
       background: #0c0b0a;
+
       color: white;
+
       text-align: center;
+
       padding: 50px 20px;
     }
 
     .footer-logo {
-      font-family: "Playfair Display", serif;
+      font-family:
+        "Playfair Display",
+        serif;
+
       font-size: 28px;
+
       letter-spacing: 5px;
+
       margin-bottom: 12px;
     }
 
     footer p {
       color: #999;
+
       font-size: 13px;
     }
 
@@ -584,24 +820,40 @@
 
     .overlay {
       display: none;
+
       position: fixed;
+
       inset: 0;
-      background: rgba(0,0,0,.65);
+
+      background:
+        rgba(0,0,0,.65);
+
       z-index: 7000;
+
       backdrop-filter: blur(3px);
     }
 
     .cart {
       position: fixed;
+
       top: 0;
+
       right: -470px;
+
       width: 440px;
+
       max-width: 95%;
+
       height: 100%;
+
       background: white;
+
       z-index: 8000;
+
       transition: .4s;
+
       padding: 25px;
+
       overflow-y: auto;
     }
 
@@ -611,37 +863,56 @@
 
     .cart-header {
       display: flex;
-      justify-content: space-between;
+
+      justify-content:
+        space-between;
+
       align-items: center;
+
       padding-bottom: 20px;
-      border-bottom: 1px solid #eee;
+
+      border-bottom:
+        1px solid #eee;
+
       margin-bottom: 10px;
     }
 
     .cart-header h2 {
-      font-family: "Playfair Display", serif;
+      font-family:
+        "Playfair Display",
+        serif;
     }
 
     .close-cart {
       border: none;
+
       background: #f1eee8;
+
       width: 38px;
       height: 38px;
+
       border-radius: 50%;
+
       cursor: pointer;
+
       font-size: 20px;
     }
 
     .cart-item {
       display: flex;
+
       gap: 12px;
+
       padding: 15px 0;
-      border-bottom: 1px solid #eee;
+
+      border-bottom:
+        1px solid #eee;
     }
 
     .cart-item img {
       width: 75px;
       height: 75px;
+
       object-fit: cover;
     }
 
@@ -650,75 +921,111 @@
     }
 
     .cart-item-info strong {
-      font-family: "Playfair Display", serif;
+      font-family:
+        "Playfair Display",
+        serif;
+
       font-size: 17px;
     }
 
     .quantity {
       display: flex;
+
       align-items: center;
+
       gap: 8px;
+
       margin-top: 8px;
     }
 
     .quantity button {
       width: 28px;
       height: 28px;
+
       border: none;
+
       background: var(--black);
+
       color: white;
+
       cursor: pointer;
     }
 
     .remove {
       border: none;
+
       background: none;
+
       color: #b00000;
+
       cursor: pointer;
+
       margin-top: 5px;
     }
 
     .cart-total {
       font-size: 21px;
+
       font-weight: bold;
+
       padding: 20px 0;
-      border-top: 2px solid var(--black);
+
+      border-top:
+        2px solid var(--black);
+
       margin-top: 20px;
     }
 
     .order-form {
       display: none;
+
       margin-top: 10px;
     }
 
     .order-form h3 {
       margin-bottom: 12px;
-      font-family: "Playfair Display", serif;
+
+      font-family:
+        "Playfair Display",
+        serif;
     }
 
     .order-form input,
     .order-form textarea {
       width: 100%;
+
       padding: 13px;
+
       margin-bottom: 10px;
+
       border: 1px solid #ddd;
+
       outline: none;
+
       font-family: inherit;
     }
 
     .order-form textarea {
       height: 90px;
+
       resize: none;
     }
 
     .whatsapp-btn {
       width: 100%;
+
       background: #25D366;
+
       color: white;
+
       border: none;
+
       padding: 14px;
+
       cursor: pointer;
+
       font-family: inherit;
+
       font-weight: bold;
     }
 
@@ -733,11 +1040,13 @@
       }
 
       .products {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+          repeat(2,1fr);
       }
 
       .story-inner {
         grid-template-columns: 1fr;
+
         gap: 35px;
       }
 
@@ -755,26 +1064,26 @@
 
       header {
         height: 68px;
-        padding: 0 18px;
+
+        padding:
+          0 18px;
       }
 
       .logo {
         font-size: 19px;
+
         letter-spacing: 2px;
       }
 
       .header-cart {
-        padding: 7px 12px;
+        padding:
+          7px 12px;
+
         font-size: 12px;
       }
 
       .hero {
         min-height: 92vh;
-        background-position: center;
-      }
-
-      .hero-content {
-        padding-top: 60px;
       }
 
       .hero h1 {
@@ -786,7 +1095,9 @@
       }
 
       .products {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns:
+          1fr 1fr;
+
         gap: 10px;
       }
 
@@ -807,8 +1118,11 @@
       }
 
       .product-bottom {
-        flex-direction: column;
-        align-items: stretch;
+        flex-direction:
+          column;
+
+        align-items:
+          stretch;
       }
 
       .price {
@@ -829,12 +1143,22 @@
 
       .cta {
         margin-bottom: 70px;
-        padding: 60px 20px;
+
+        padding:
+          60px 20px;
       }
 
       .cart {
         width: 100%;
+
         max-width: 100%;
+      }
+
+      .category-btn {
+        padding:
+          10px 18px;
+
+        font-size: 12px;
       }
 
     }
@@ -843,6 +1167,7 @@
 </head>
 
 <body>
+
 
 <!-- LOADER -->
 
@@ -861,27 +1186,40 @@
 
 <header id="header">
 
-  <a href="#" class="logo">
+  <a
+    href="#home"
+    class="logo"
+  >
     VELVET SCENT
   </a>
 
+
   <nav>
 
-    <a href="#home">الرئيسية</a>
+    <a href="#home">
+      HOME
+    </a>
 
-    <a href="#products-section">العطور</a>
+    <a href="#products-section">
+      COLLECTION
+    </a>
 
-    <a href="#story">قصتنا</a>
+    <a href="#story">
+      OUR STORY
+    </a>
 
-    <a href="#why-us">لماذا نحن</a>
+    <a href="#why-us">
+      WHY US
+    </a>
 
   </nav>
+
 
   <button
     class="header-cart"
     onclick="openCart()"
   >
-    🛍️ السلة
+    🛍️ CART
     (<span id="cartCount">0</span>)
   </button>
 
@@ -890,7 +1228,10 @@
 
 <!-- HERO -->
 
-<section id="home" class="hero">
+<section
+  id="home"
+  class="hero"
+>
 
   <div class="hero-content">
 
@@ -898,17 +1239,28 @@
       THE ART OF FRAGRANCE
     </div>
 
+
     <h1>
+
       Your Scent.
+
       <br>
-      <span>Your Signature.</span>
+
+      <span>
+        Your Signature.
+      </span>
+
     </h1>
 
+
     <p class="hero-text">
-      اكتشف عالم Velvet Scent،
-      حيث تلتقي الفخامة مع الروائح
-      التي تعبر عن شخصيتك.
+
+      Discover Velvet Scent —
+      a world of luxury fragrances
+      created to express your personality.
+
     </p>
+
 
     <div class="hero-buttons">
 
@@ -916,28 +1268,25 @@
         href="#products-section"
         class="btn-gold"
       >
-        اكتشف المجموعة
+        EXPLORE COLLECTION
       </a>
+
 
       <a
         href="#story"
         class="btn-outline"
       >
-        اكتشف قصتنا
+        OUR STORY
       </a>
 
     </div>
 
   </div>
 
-  <div class="scroll-down">
-    SCROLL ↓
-  </div>
-
 </section>
 
 
-<!-- PRODUCTS -->
+<!-- COLLECTION -->
 
 <section
   id="products-section"
@@ -947,17 +1296,55 @@
   <div class="section-heading">
 
     <small>
-      OUR COLLECTION
+      VELVET SCENT COLLECTION
     </small>
 
     <h2>
-      اكتشف عطرك
+      Find Your Signature
     </h2>
 
     <p>
-      مجموعة مختارة بعناية من العطور
-      لتجد الرائحة التي تشبهك.
+      اختر العطر الذي يناسب شخصيتك
+      واكتشف مجموعتنا.
     </p>
+
+  </div>
+
+
+  <!-- CATEGORY BUTTONS -->
+
+  <div class="categories">
+
+    <button
+      class="category-btn active"
+      onclick="filterProducts('all', this)"
+    >
+      ALL
+    </button>
+
+
+    <button
+      class="category-btn"
+      onclick="filterProducts('man', this)"
+    >
+      MAN
+    </button>
+
+
+    <button
+      class="category-btn"
+      onclick="filterProducts('women', this)"
+    >
+      WOMEN
+    </button>
+
+
+    <button
+      class="category-btn"
+      onclick="filterProducts('unisex', this)"
+    >
+      UNISEX
+    </button>
 
   </div>
 
@@ -987,16 +1374,19 @@
 
     <div class="story-image"></div>
 
+
     <div class="story-content">
 
       <small>
         OUR STORY
       </small>
 
+
       <h2>
         Scent tells
         your story.
       </h2>
+
 
       <p>
         في Velvet Scent نؤمن أن العطر
@@ -1004,17 +1394,19 @@
         ذكرى، وشخصية.
       </p>
 
+
       <p>
-        لذلك اخترنا لك مجموعة من الروائح
+        اخترنا لك مجموعة من الروائح
         المميزة التي تمنحك حضورًا مختلفًا
         في كل لحظة.
       </p>
+
 
       <a
         href="#products-section"
         class="btn-gold"
       >
-        اكتشف العطور
+        SHOP FRAGRANCES
       </a>
 
     </div>
@@ -1038,13 +1430,14 @@
     </small>
 
     <h2>
-      لماذا Velvet Scent؟
+      The Velvet Experience
     </h2>
 
   </div>
 
 
   <div class="features">
+
 
     <div class="feature">
 
@@ -1053,7 +1446,7 @@
       </div>
 
       <h3>
-        جودة مميزة
+        Premium Quality
       </h3>
 
       <p>
@@ -1071,12 +1464,12 @@
       </div>
 
       <h3>
-        اختيارات راقية
+        Curated Collection
       </h3>
 
       <p>
-        مجموعة متنوعة من الروائح
-        لتناسب مختلف الأذواق والمناسبات.
+        مجموعة مختارة بعناية
+        لتناسب مختلف الأذواق.
       </p>
 
     </div>
@@ -1089,15 +1482,16 @@
       </div>
 
       <h3>
-        تجربة مختلفة
+        Made For You
       </h3>
 
       <p>
-        هدفنا أن تكون تجربة Velvet Scent
-        بسيطة، فخمة، ومميزة من أول زيارة.
+        لأن عطرك هو جزء من شخصيتك
+        وحضورك الخاص.
       </p>
 
     </div>
+
 
   </div>
 
@@ -1113,14 +1507,15 @@
   </h2>
 
   <p>
-    عطرك القادم يمكن أن يكون هنا.
+    Your next favorite fragrance is waiting.
   </p>
+
 
   <a
     href="#products-section"
     class="btn-gold"
   >
-    تسوق الآن
+    SHOP NOW
   </a>
 
 </section>
@@ -1148,7 +1543,7 @@
 </footer>
 
 
-<!-- CART OVERLAY -->
+<!-- OVERLAY -->
 
 <div
   id="overlay"
@@ -1167,8 +1562,9 @@
   <div class="cart-header">
 
     <h2>
-      سلة المشتريات
+      Shopping Bag
     </h2>
+
 
     <button
       class="close-cart"
@@ -1205,11 +1601,13 @@
       بيانات الطلب
     </h3>
 
+
     <input
       id="customerName"
       type="text"
       placeholder="الاسم"
     >
+
 
     <input
       id="customerPhone"
@@ -1217,10 +1615,12 @@
       placeholder="رقم الموبايل"
     >
 
+
     <textarea
       id="customerAddress"
       placeholder="العنوان بالتفصيل"
     ></textarea>
+
 
     <button
       class="whatsapp-btn"
@@ -1236,14 +1636,22 @@
 
 <script>
 
+
+/* =========================
+   SUPABASE
+========================= */
+
 const SUPABASE_URL =
   "https://frvgjkeeaojyvwsjikre.supabase.co";
+
 
 const SUPABASE_KEY =
   "sb_publishable_aPftd5l28afljdgY2ddn9A_2HPnFF3E";
 
+
 const STORE_WHATSAPP =
-  "201092460908";
+  "201064014838";
+
 
 const BUCKET =
   "product-images";
@@ -1256,8 +1664,15 @@ const supabaseClient =
   );
 
 
+/* =========================
+   DATA
+========================= */
+
 let products = [];
+
 let cart = [];
+
+let currentCategory = "all";
 
 
 /* =========================
@@ -1272,8 +1687,12 @@ window.addEventListener(
       () => {
 
         document
-          .getElementById("loader")
-          .classList.add("hide");
+          .getElementById(
+            "loader"
+          )
+          .classList.add(
+            "hide"
+          );
 
       },
       900
@@ -1284,7 +1703,7 @@ window.addEventListener(
 
 
 /* =========================
-   HEADER SCROLL
+   HEADER
 ========================= */
 
 window.addEventListener(
@@ -1296,7 +1715,10 @@ window.addEventListener(
         "header"
       );
 
-    if (window.scrollY > 40) {
+
+    if (
+      window.scrollY > 40
+    ) {
 
       header.classList.add(
         "scrolled"
@@ -1320,21 +1742,32 @@ window.addEventListener(
 
 function getImageUrl(image) {
 
-  if (!image) return "";
+  if (!image) {
+    return "";
+  }
+
 
   if (
-    image.startsWith("http://") ||
-    image.startsWith("https://")
+    image.startsWith(
+      "http://"
+    ) ||
+    image.startsWith(
+      "https://"
+    )
   ) {
 
     return image;
 
   }
 
+
   const { data } =
     supabaseClient.storage
       .from(BUCKET)
-      .getPublicUrl(image);
+      .getPublicUrl(
+        image
+      );
+
 
   return data.publicUrl;
 
@@ -1367,7 +1800,10 @@ async function loadProducts() {
 
   if (error) {
 
-    console.error(error);
+    console.error(
+      error
+    );
+
 
     container.innerHTML =
       `
@@ -1376,12 +1812,14 @@ async function loadProducts() {
       </div>
       `;
 
+
     return;
 
   }
 
 
-  products = data || [];
+  products =
+    data || [];
 
 
   renderProducts();
@@ -1390,7 +1828,42 @@ async function loadProducts() {
 
 
 /* =========================
-   RENDER PRODUCTS
+   FILTER
+========================= */
+
+function filterProducts(
+  category,
+  button
+) {
+
+  currentCategory =
+    category;
+
+
+  document
+    .querySelectorAll(
+      ".category-btn"
+    )
+    .forEach(
+      btn =>
+        btn.classList.remove(
+          "active"
+        )
+    );
+
+
+  button.classList.add(
+    "active"
+  );
+
+
+  renderProducts();
+
+}
+
+
+/* =========================
+   RENDER
 ========================= */
 
 function renderProducts() {
@@ -1401,14 +1874,36 @@ function renderProducts() {
     );
 
 
-  if (!products.length) {
+  let filtered =
+    products;
+
+
+  if (
+    currentCategory !==
+    "all"
+  ) {
+
+    filtered =
+      products.filter(
+        product =>
+          String(
+            product.category || ""
+          ).toLowerCase() ===
+          currentCategory
+      );
+
+  }
+
+
+  if (!filtered.length) {
 
     container.innerHTML =
       `
       <div class="empty">
-        لا توجد عطور حاليًا
+        لا توجد عطور في هذا القسم حاليًا.
       </div>
       `;
+
 
     return;
 
@@ -1416,7 +1911,7 @@ function renderProducts() {
 
 
   container.innerHTML =
-    products
+    filtered
       .map(
         (product, index) => {
 
@@ -1428,11 +1923,14 @@ function renderProducts() {
 
               ${
                 index < 3
-                  ? `<div class="product-tag">
+                  ? `
+                    <div class="product-tag">
                       NEW
-                     </div>`
+                    </div>
+                  `
                   : ""
               }
+
 
               <img
                 src="${escapeHTML(
@@ -1465,7 +1963,8 @@ function renderProducts() {
               <div class="product-description">
 
                 ${escapeHTML(
-                  product.description || ""
+                  product.description ||
+                  ""
                 )}
 
               </div>
@@ -1488,9 +1987,11 @@ function renderProducts() {
 
                 <button
                   class="add-btn"
-                  onclick="addToCart(
-                    ${product.id}
-                  )"
+                  onclick="
+                    addToCart(
+                      ${product.id}
+                    )
+                  "
                 >
                   أضف للسلة
                 </button>
@@ -1511,23 +2012,27 @@ function renderProducts() {
 
 
 /* =========================
-   ADD TO CART
+   ADD CART
 ========================= */
 
 function addToCart(id) {
 
   const product =
     products.find(
-      p => p.id === id
+      p =>
+        p.id === id
     );
 
 
-  if (!product) return;
+  if (!product) {
+    return;
+  }
 
 
   const existing =
     cart.find(
-      item => item.id === id
+      item =>
+        item.id === id
     );
 
 
@@ -1536,7 +2041,9 @@ function addToCart(id) {
     if (
       product.stock &&
       existing.quantity >=
-      Number(product.stock)
+      Number(
+        product.stock
+      )
     ) {
 
       alert(
@@ -1565,7 +2072,6 @@ function addToCart(id) {
 
   updateCart();
 
-
   openCart();
 
 }
@@ -1575,21 +2081,28 @@ function addToCart(id) {
    QUANTITY
 ========================= */
 
-function increaseQuantity(id) {
+function increaseQuantity(
+  id
+) {
 
   const item =
     cart.find(
-      item => item.id === id
+      item =>
+        item.id === id
     );
 
 
-  if (!item) return;
+  if (!item) {
+    return;
+  }
 
 
   if (
     item.stock &&
     item.quantity >=
-    Number(item.stock)
+    Number(
+      item.stock
+    )
   ) {
 
     alert(
@@ -1603,20 +2116,26 @@ function increaseQuantity(id) {
 
   item.quantity++;
 
+
   updateCart();
 
 }
 
 
-function decreaseQuantity(id) {
+function decreaseQuantity(
+  id
+) {
 
   const item =
     cart.find(
-      item => item.id === id
+      item =>
+        item.id === id
     );
 
 
-  if (!item) return;
+  if (!item) {
+    return;
+  }
 
 
   item.quantity--;
@@ -1628,7 +2147,8 @@ function decreaseQuantity(id) {
 
     cart =
       cart.filter(
-        item => item.id !== id
+        item =>
+          item.id !== id
       );
 
   }
@@ -1639,11 +2159,14 @@ function decreaseQuantity(id) {
 }
 
 
-function removeFromCart(id) {
+function removeFromCart(
+  id
+) {
 
   cart =
     cart.filter(
-      item => item.id !== id
+      item =>
+        item.id !== id
     );
 
 
@@ -1653,7 +2176,7 @@ function removeFromCart(id) {
 
 
 /* =========================
-   CART
+   UPDATE CART
 ========================= */
 
 function updateCart() {
@@ -1663,15 +2186,18 @@ function updateCart() {
       "cartItems"
     );
 
+
   const cartCount =
     document.getElementById(
       "cartCount"
     );
 
+
   const cartTotal =
     document.getElementById(
       "cartTotal"
     );
+
 
   const orderForm =
     document.getElementById(
@@ -1681,17 +2207,26 @@ function updateCart() {
 
   const count =
     cart.reduce(
-      (sum, item) =>
-        sum + item.quantity,
+      (
+        sum,
+        item
+      ) =>
+        sum +
+        item.quantity,
       0
     );
 
 
   const total =
     cart.reduce(
-      (sum, item) =>
+      (
+        sum,
+        item
+      ) =>
         sum +
-        Number(item.price) *
+        Number(
+          item.price
+        ) *
         item.quantity,
       0
     );
@@ -1716,8 +2251,10 @@ function updateCart() {
       </div>
       `;
 
+
     orderForm.style.display =
       "none";
+
 
     return;
 
@@ -1759,33 +2296,42 @@ function updateCart() {
 
 
               <div>
+
                 ${Number(
                   item.price
                 ).toLocaleString(
                   "ar-EG"
                 )}
+
                 جنيه
+
               </div>
 
 
               <div class="quantity">
 
                 <button
-                  onclick="decreaseQuantity(
-                    ${item.id}
-                  )"
+                  onclick="
+                    decreaseQuantity(
+                      ${item.id}
+                    )
+                  "
                 >
                   −
                 </button>
+
 
                 <span>
                   ${item.quantity}
                 </span>
 
+
                 <button
-                  onclick="increaseQuantity(
-                    ${item.id}
-                  )"
+                  onclick="
+                    increaseQuantity(
+                      ${item.id}
+                    )
+                  "
                 >
                   +
                 </button>
@@ -1795,9 +2341,11 @@ function updateCart() {
 
               <button
                 class="remove"
-                onclick="removeFromCart(
-                  ${item.id}
-                )"
+                onclick="
+                  removeFromCart(
+                    ${item.id}
+                  )
+                "
               >
                 حذف
               </button>
@@ -1822,12 +2370,18 @@ function updateCart() {
 function openCart() {
 
   document
-    .getElementById("cart")
-    .classList.add("open");
+    .getElementById(
+      "cart"
+    )
+    .classList.add(
+      "open"
+    );
 
 
   document
-    .getElementById("overlay")
+    .getElementById(
+      "overlay"
+    )
     .style.display =
       "block";
 
@@ -1844,12 +2398,18 @@ function openCart() {
 function closeCart() {
 
   document
-    .getElementById("cart")
-    .classList.remove("open");
+    .getElementById(
+      "cart"
+    )
+    .classList.remove(
+      "open"
+    );
 
 
   document
-    .getElementById("overlay")
+    .getElementById(
+      "overlay"
+    )
     .style.display =
       "none";
 
@@ -1917,9 +2477,14 @@ function sendOrder() {
 
   const total =
     cart.reduce(
-      (sum, item) =>
+      (
+        sum,
+        item
+      ) =>
         sum +
-        Number(item.price) *
+        Number(
+          item.price
+        ) *
         item.quantity,
       0
     );
@@ -1961,7 +2526,9 @@ function sendOrder() {
         item.quantity +
         " = " +
         (
-          Number(item.price) *
+          Number(
+            item.price
+          ) *
           item.quantity
         ) +
         " جنيه\n";
@@ -1976,7 +2543,7 @@ function sendOrder() {
     " جنيه";
 
 
-  const url =
+  const whatsappURL =
     "https://wa.me/" +
     STORE_WHATSAPP +
     "?text=" +
@@ -1986,7 +2553,7 @@ function sendOrder() {
 
 
   window.open(
-    url,
+    whatsappURL,
     "_blank"
   );
 
@@ -1994,10 +2561,12 @@ function sendOrder() {
 
 
 /* =========================
-   ESCAPE
+   ESCAPE HTML
 ========================= */
 
-function escapeHTML(value) {
+function escapeHTML(
+  value
+) {
 
   return String(value)
 
