@@ -180,6 +180,37 @@
       font-size: 12px;
     }
 
+    .prices {
+      background: #faf8f3;
+      border: 1px solid #e5ddce;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 12px 0;
+    }
+
+    .prices-title {
+      font-weight: bold;
+      margin-bottom: 12px;
+      color: #111;
+    }
+
+    .price-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .price-option {
+      background: white;
+      border: 1px solid #eee;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .price-option strong {
+      color: #111;
+    }
+
     .actions {
       display: flex;
       gap: 8px;
@@ -204,6 +235,20 @@
       display: block;
     }
 
+    .option-box {
+      background: white;
+      border: 1px solid #e5ddce;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+
+    .option-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #111;
+    }
+
     .empty {
       text-align: center;
       color: #777;
@@ -216,6 +261,7 @@
     }
 
     @media (max-width: 650px) {
+
       body {
         padding: 10px;
       }
@@ -243,6 +289,10 @@
 
       .actions {
         flex-direction: column;
+      }
+
+      .price-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -290,7 +340,7 @@
   <div id="adminPanel">
 
 
-    <!-- ADD -->
+    <!-- ADD PRODUCT -->
 
     <div class="card">
 
@@ -302,22 +352,95 @@
         placeholder="اسم العطر"
       >
 
-      <input
-        id="productPrice"
-        type="number"
-        placeholder="السعر"
-      >
+
+      <div class="prices">
+
+        <div class="prices-title">
+          💰 اختيارات الأسعار
+        </div>
+
+
+        <div class="option-box">
+
+          <div class="option-title">
+            الاختيار الأول
+          </div>
+
+          <input
+            id="option1Name"
+            type="text"
+            placeholder="مثال: 30 ML"
+          >
+
+          <input
+            id="option1Price"
+            type="number"
+            min="0"
+            placeholder="السعر - مثال: 500"
+          >
+
+        </div>
+
+
+        <div class="option-box">
+
+          <div class="option-title">
+            الاختيار الثاني
+          </div>
+
+          <input
+            id="option2Name"
+            type="text"
+            placeholder="مثال: 50 ML"
+          >
+
+          <input
+            id="option2Price"
+            type="number"
+            min="0"
+            placeholder="السعر - مثال: 750"
+          >
+
+        </div>
+
+
+        <div class="option-box">
+
+          <div class="option-title">
+            الاختيار الثالث
+          </div>
+
+          <input
+            id="option3Name"
+            type="text"
+            placeholder="مثال: 100 ML"
+          >
+
+          <input
+            id="option3Price"
+            type="number"
+            min="0"
+            placeholder="السعر - مثال: 1000"
+          >
+
+        </div>
+
+      </div>
+
 
       <textarea
         id="productDescription"
         placeholder="وصف العطر"
       ></textarea>
 
+
       <input
         id="productStock"
         type="number"
+        min="0"
         placeholder="المخزون"
       >
+
 
       <select id="productCategory">
 
@@ -339,17 +462,26 @@
 
       </select>
 
+
       <input
         id="productImage"
         type="file"
         accept="image/*"
       >
 
-      <button class="gold" onclick="addProduct()">
+
+      <button
+        class="gold"
+        onclick="addProduct()"
+      >
         ✨ إضافة العطر
       </button>
 
-      <p id="addMessage" class="message"></p>
+
+      <p
+        id="addMessage"
+        class="message"
+      ></p>
 
     </div>
 
@@ -360,6 +492,7 @@
 
       <h2>🌹 إدارة العطور</h2>
 
+
       <div class="toolbar">
 
         <input
@@ -368,6 +501,7 @@
           placeholder="🔎 ابحث عن عطر..."
           oninput="renderProducts()"
         >
+
 
         <select
           id="filterCategory"
@@ -394,9 +528,17 @@
 
       </div>
 
-      <div id="count" class="count"></div>
 
-      <div id="products" class="products">
+      <div
+        id="count"
+        class="count"
+      ></div>
+
+
+      <div
+        id="products"
+        class="products"
+      >
 
         <div class="empty">
           جاري تحميل العطور...
@@ -407,7 +549,10 @@
     </div>
 
 
-    <button class="logout" onclick="logout()">
+    <button
+      class="logout"
+      onclick="logout()"
+    >
       تسجيل خروج
     </button>
 
@@ -417,7 +562,6 @@
 
 
 <script>
-
 
 /* ==========================
    SUPABASE
@@ -450,10 +594,16 @@ let products = [];
 async function login() {
 
   const email =
-    document.getElementById("email").value.trim();
+    document
+      .getElementById("email")
+      .value
+      .trim();
 
   const password =
-    document.getElementById("password").value;
+    document
+      .getElementById("password")
+      .value;
+
 
   if (!email || !password) {
 
@@ -466,11 +616,16 @@ async function login() {
     return;
   }
 
+
   const { error } =
-    await supabaseClient.auth.signInWithPassword({
-      email,
-      password
-    });
+    await supabaseClient.auth
+      .signInWithPassword({
+
+        email,
+        password
+
+      });
+
 
   if (error) {
 
@@ -482,6 +637,7 @@ async function login() {
 
     return;
   }
+
 
   showAdmin();
 
@@ -495,11 +651,13 @@ async function login() {
 
 function showAdmin() {
 
-  document.getElementById("loginBox").style.display =
-    "none";
+  document
+    .getElementById("loginBox")
+    .style.display = "none";
 
-  document.getElementById("adminPanel").style.display =
-    "block";
+  document
+    .getElementById("adminPanel")
+    .style.display = "block";
 }
 
 
@@ -511,11 +669,13 @@ async function logout() {
 
   await supabaseClient.auth.signOut();
 
-  document.getElementById("adminPanel").style.display =
-    "none";
+  document
+    .getElementById("adminPanel")
+    .style.display = "none";
 
-  document.getElementById("loginBox").style.display =
-    "block";
+  document
+    .getElementById("loginBox")
+    .style.display = "block";
 }
 
 
@@ -526,33 +686,94 @@ async function logout() {
 async function addProduct() {
 
   const name =
-    document.getElementById("productName").value.trim();
+    document
+      .getElementById("productName")
+      .value
+      .trim();
 
-  const price =
-    document.getElementById("productPrice").value;
+
+  const option1Name =
+    document
+      .getElementById("option1Name")
+      .value
+      .trim();
+
+  const option1Price =
+    document
+      .getElementById("option1Price")
+      .value;
+
+
+  const option2Name =
+    document
+      .getElementById("option2Name")
+      .value
+      .trim();
+
+  const option2Price =
+    document
+      .getElementById("option2Price")
+      .value;
+
+
+  const option3Name =
+    document
+      .getElementById("option3Name")
+      .value
+      .trim();
+
+  const option3Price =
+    document
+      .getElementById("option3Price")
+      .value;
+
 
   const description =
-    document.getElementById("productDescription").value.trim();
+    document
+      .getElementById("productDescription")
+      .value
+      .trim();
+
 
   const stock =
-    document.getElementById("productStock").value;
+    document
+      .getElementById("productStock")
+      .value;
+
 
   const category =
-    document.getElementById("productCategory").value;
+    document
+      .getElementById("productCategory")
+      .value;
+
 
   const imageFile =
-    document.getElementById("productImage").files[0];
+    document
+      .getElementById("productImage")
+      .files[0];
 
-  if (!name || !price || !category || !imageFile) {
+
+  if (
+    !name ||
+    !option1Name ||
+    !option1Price ||
+    !option2Name ||
+    !option2Price ||
+    !option3Name ||
+    !option3Price ||
+    !category ||
+    !imageFile
+  ) {
 
     showMessage(
       "addMessage",
-      "اكتب الاسم والسعر والقسم واختار صورة",
+      "اكتب اسم العطر والـ3 اختيارات والأسعار والقسم واختار صورة",
       "error"
     );
 
     return;
   }
+
 
   showMessage(
     "addMessage",
@@ -561,7 +782,9 @@ async function addProduct() {
   );
 
 
-  /* UPLOAD IMAGE */
+  /* ==========================
+     UPLOAD IMAGE
+  ========================== */
 
   const safeName =
     imageFile.name.replace(
@@ -569,16 +792,21 @@ async function addProduct() {
       "-"
     );
 
+
   const fileName =
     Date.now() + "-" + safeName;
 
-  const { error: uploadError } =
+
+  const {
+    error: uploadError
+  } =
     await supabaseClient.storage
       .from("product-images")
       .upload(
         fileName,
         imageFile
       );
+
 
   if (uploadError) {
 
@@ -592,27 +820,50 @@ async function addProduct() {
   }
 
 
-  /* IMAGE URL */
+  /* ==========================
+     IMAGE URL
+  ========================== */
 
-  const { data: publicData } =
+  const {
+    data: publicData
+  } =
     supabaseClient.storage
       .from("product-images")
-      .getPublicUrl(fileName);
+      .getPublicUrl(
+        fileName
+      );
+
 
   const imageUrl =
     publicData.publicUrl;
 
 
-  /* INSERT */
+  /* ==========================
+     INSERT
+  ========================== */
 
-  const { error } =
+  const {
+    error
+  } =
     await supabaseClient
       .from("products")
       .insert({
 
         name: name,
 
-        price: Number(price),
+        price: Number(option1Price),
+
+        option1_name: option1Name,
+
+        option1_price: Number(option1Price),
+
+        option2_name: option2Name,
+
+        option2_price: Number(option2Price),
+
+        option3_name: option3Name,
+
+        option3_price: Number(option3Price),
 
         image: imageUrl,
 
@@ -656,17 +907,59 @@ async function addProduct() {
 
 function clearAddForm() {
 
-  document.getElementById("productName").value = "";
+  document.getElementById(
+    "productName"
+  ).value = "";
 
-  document.getElementById("productPrice").value = "";
 
-  document.getElementById("productDescription").value = "";
+  document.getElementById(
+    "option1Name"
+  ).value = "";
 
-  document.getElementById("productStock").value = "";
 
-  document.getElementById("productCategory").value = "";
+  document.getElementById(
+    "option1Price"
+  ).value = "";
 
-  document.getElementById("productImage").value = "";
+
+  document.getElementById(
+    "option2Name"
+  ).value = "";
+
+
+  document.getElementById(
+    "option2Price"
+  ).value = "";
+
+
+  document.getElementById(
+    "option3Name"
+  ).value = "";
+
+
+  document.getElementById(
+    "option3Price"
+  ).value = "";
+
+
+  document.getElementById(
+    "productDescription"
+  ).value = "";
+
+
+  document.getElementById(
+    "productStock"
+  ).value = "";
+
+
+  document.getElementById(
+    "productCategory"
+  ).value = "";
+
+
+  document.getElementById(
+    "productImage"
+  ).value = "";
 }
 
 
@@ -677,27 +970,51 @@ function clearAddForm() {
 async function loadProducts() {
 
   const container =
-    document.getElementById("products");
+    document.getElementById(
+      "products"
+    );
+
 
   container.innerHTML =
     '<div class="empty">جاري تحميل العطور...</div>';
 
 
-  const { data, error } =
+  const {
+    data,
+    error
+  } =
     await supabaseClient
       .from("products")
-      .select(
-        "product_id,name,price,image,description,stock,category"
-      );
+      .select(`
+        product_id,
+        name,
+        price,
+        image,
+        description,
+        stock,
+        category,
+        option1_name,
+        option1_price,
+        option2_name,
+        option2_price,
+        option3_name,
+        option3_price
+      `);
 
 
   if (error) {
 
     container.innerHTML = `
       <div class="empty">
+
         ❌ حدث خطأ في تحميل العطور
+
         <br><br>
-        ${escapeHTML(error.message)}
+
+        ${escapeHTML(
+          error.message
+        )}
+
       </div>
     `;
 
@@ -705,7 +1022,9 @@ async function loadProducts() {
   }
 
 
-  products = data || [];
+  products =
+    data || [];
+
 
   renderProducts();
 }
@@ -719,54 +1038,68 @@ function getFilteredProducts() {
 
   const search =
     document
-      .getElementById("searchInput")
+      .getElementById(
+        "searchInput"
+      )
       .value
       .trim()
       .toLowerCase();
 
+
   const category =
     document
-      .getElementById("filterCategory")
+      .getElementById(
+        "filterCategory"
+      )
       .value;
 
 
-  return products.filter(product => {
+  return products.filter(
+    function(product) {
 
-    const matchesSearch =
-      !search ||
-      String(product.name || "")
-        .toLowerCase()
-        .includes(search);
-
-
-    const matchesCategory =
-      category === "all" ||
-      product.category === category;
+      const matchesSearch =
+        !search ||
+        String(
+          product.name || ""
+        )
+          .toLowerCase()
+          .includes(search);
 
 
-    return (
-      matchesSearch &&
-      matchesCategory
-    );
+      const matchesCategory =
+        category === "all" ||
+        product.category === category;
 
-  });
+
+      return (
+        matchesSearch &&
+        matchesCategory
+      );
+
+    }
+  );
 }
 
 
 /* ==========================
-   RENDER
+   RENDER PRODUCTS
 ========================== */
 
 function renderProducts() {
 
   const container =
-    document.getElementById("products");
+    document.getElementById(
+      "products"
+    );
+
 
   const filtered =
     getFilteredProducts();
 
 
-  document.getElementById("count").textContent =
+  document.getElementById(
+    "count"
+  ).textContent =
     `عدد العطور الظاهرة: ${filtered.length} من ${products.length}`;
 
 
@@ -783,166 +1116,350 @@ function renderProducts() {
 
 
   container.innerHTML =
-    filtered.map(product => {
+    filtered
+      .map(
+        function(product) {
 
-      const category =
-        getCategoryName(product.category);
-
-
-      return `
-
-        <div class="product">
-
-          <img
-            src="${escapeAttribute(product.image || "")}"
-            alt=""
-            onerror="this.style.opacity='.3'"
-          >
+          const category =
+            getCategoryName(
+              product.category
+            );
 
 
-          <div>
+          return `
 
-            <div class="product-name">
-              ${escapeHTML(product.name || "")}
-            </div>
+          <div class="product">
 
-
-            <div class="product-info">
-
-              💰 السعر:
-              <strong>
-                ${Number(product.price || 0).toLocaleString("ar-EG")}
-              </strong>
-              جنيه
-
-              <br>
-
-              📦 المخزون:
-              ${Number(product.stock || 0)}
-
-              <br>
-
-              🏷️ القسم:
-              <span class="category">
-                ${escapeHTML(category)}
-              </span>
-
-            </div>
-
-
-            <div class="actions">
-
-              <button
-                class="gold"
-                onclick="openEdit('${product.product_id}')"
-              >
-                ✏️ تعديل
-              </button>
-
-
-              <button
-                class="red"
-                onclick="deleteProduct('${product.product_id}')"
-              >
-                🗑️ حذف
-              </button>
-
-            </div>
-
-
-            <div
-              id="edit-${product.product_id}"
-              class="edit-box"
+            <img
+              src="${escapeAttribute(
+                product.image || ""
+              )}"
+              alt=""
+              onerror="
+                this.style.opacity='.3'
+              "
             >
 
-              <input
-                id="name-${product.product_id}"
-                value="${escapeAttribute(product.name || "")}"
-                placeholder="اسم العطر"
-              >
+
+            <div>
+
+              <div class="product-name">
+
+                ${escapeHTML(
+                  product.name || ""
+                )}
+
+              </div>
 
 
-              <input
-                id="price-${product.product_id}"
-                type="number"
-                value="${escapeAttribute(product.price || 0)}"
-                placeholder="السعر"
-              >
+              <div class="product-info">
+
+                <div class="prices">
+
+                  <div class="prices-title">
+                    💰 اختيارات الأسعار
+                  </div>
+
+                  <div class="price-grid">
+
+                    <div class="price-option">
+                      <strong>
+                        ${escapeHTML(
+                          product.option1_name || "اختيار 1"
+                        )}
+                      </strong>
+
+                      <br>
+
+                      ${Number(
+                        product.option1_price || 0
+                      ).toLocaleString("ar-EG")}
+
+                      جنيه
+                    </div>
 
 
-              <textarea
-                id="description-${product.product_id}"
-                placeholder="الوصف"
-              >${escapeHTML(product.description || "")}</textarea>
+                    <div class="price-option">
+                      <strong>
+                        ${escapeHTML(
+                          product.option2_name || "اختيار 2"
+                        )}
+                      </strong>
+
+                      <br>
+
+                      ${Number(
+                        product.option2_price || 0
+                      ).toLocaleString("ar-EG")}
+
+                      جنيه
+                    </div>
 
 
-              <input
-                id="stock-${product.product_id}"
-                type="number"
-                value="${escapeAttribute(product.stock || 0)}"
-                placeholder="المخزون"
-              >
+                    <div class="price-option">
+                      <strong>
+                        ${escapeHTML(
+                          product.option3_name || "اختيار 3"
+                        )}
+                      </strong>
+
+                      <br>
+
+                      ${Number(
+                        product.option3_price || 0
+                      ).toLocaleString("ar-EG")}
+
+                      جنيه
+                    </div>
+
+                  </div>
+
+                </div>
 
 
-              <select
-                id="category-${product.product_id}"
-              >
+                📦 المخزون:
+                ${Number(
+                  product.stock || 0
+                )}
 
-                <option
-                  value="man"
-                  ${product.category === "man" ? "selected" : ""}
+                <br>
+
+                🏷️ القسم:
+
+                <span class="category">
+                  ${escapeHTML(category)}
+                </span>
+
+              </div>
+
+
+              <div class="actions">
+
+                <button
+                  class="gold"
+                  onclick="
+                    openEdit(
+                      '${product.product_id}'
+                    )
+                  "
                 >
-                  MAN
-                </option>
+                  ✏️ تعديل
+                </button>
 
-                <option
-                  value="women"
-                  ${product.category === "women" ? "selected" : ""}
+
+                <button
+                  class="red"
+                  onclick="
+                    deleteProduct(
+                      '${product.product_id}'
+                    )
+                  "
                 >
-                  WOMEN
-                </option>
+                  🗑️ حذف
+                </button>
 
-                <option
-                  value="unisex"
-                  ${product.category === "unisex" ? "selected" : ""}
+              </div>
+
+
+              <!-- EDIT -->
+
+              <div
+                id="edit-${product.product_id}"
+                class="edit-box"
+              >
+
+                <input
+                  id="name-${product.product_id}"
+                  value="${escapeAttribute(
+                    product.name || ""
+                  )}"
+                  placeholder="اسم العطر"
                 >
-                  UNISEX
-                </option>
-
-              </select>
 
 
-              <input
-                id="image-${product.product_id}"
-                type="file"
-                accept="image/*"
-              >
+                <div class="option-box">
+
+                  <div class="option-title">
+                    الاختيار الأول
+                  </div>
+
+                  <input
+                    id="option1-name-${product.product_id}"
+                    value="${escapeAttribute(
+                      product.option1_name || ""
+                    )}"
+                    placeholder="مثال: 30 ML"
+                  >
+
+                  <input
+                    id="option1-price-${product.product_id}"
+                    type="number"
+                    min="0"
+                    value="${escapeAttribute(
+                      product.option1_price || 0
+                    )}"
+                    placeholder="السعر"
+                  >
+
+                </div>
 
 
-              <button
-                class="gold"
-                onclick="updateProduct('${product.product_id}')"
-              >
-                💾 حفظ التعديلات
-              </button>
+                <div class="option-box">
+
+                  <div class="option-title">
+                    الاختيار الثاني
+                  </div>
+
+                  <input
+                    id="option2-name-${product.product_id}"
+                    value="${escapeAttribute(
+                      product.option2_name || ""
+                    )}"
+                    placeholder="مثال: 50 ML"
+                  >
+
+                  <input
+                    id="option2-price-${product.product_id}"
+                    type="number"
+                    min="0"
+                    value="${escapeAttribute(
+                      product.option2_price || 0
+                    )}"
+                    placeholder="السعر"
+                  >
+
+                </div>
 
 
-              <button
-                class="gray"
-                onclick="openEdit('${product.product_id}')"
-              >
-                إلغاء
-              </button>
+                <div class="option-box">
+
+                  <div class="option-title">
+                    الاختيار الثالث
+                  </div>
+
+                  <input
+                    id="option3-name-${product.product_id}"
+                    value="${escapeAttribute(
+                      product.option3_name || ""
+                    )}"
+                    placeholder="مثال: 100 ML"
+                  >
+
+                  <input
+                    id="option3-price-${product.product_id}"
+                    type="number"
+                    min="0"
+                    value="${escapeAttribute(
+                      product.option3_price || 0
+                    )}"
+                    placeholder="السعر"
+                  >
+
+                </div>
+
+
+                <textarea
+                  id="description-${product.product_id}"
+                  placeholder="الوصف"
+                >${escapeHTML(
+                  product.description || ""
+                )}</textarea>
+
+
+                <input
+                  id="stock-${product.product_id}"
+                  type="number"
+                  min="0"
+                  value="${escapeAttribute(
+                    product.stock || 0
+                  )}"
+                  placeholder="المخزون"
+                >
+
+
+                <select
+                  id="category-${product.product_id}"
+                >
+
+                  <option
+                    value="man"
+                    ${
+                      product.category === "man"
+                      ? "selected"
+                      : ""
+                    }
+                  >
+                    MAN
+                  </option>
+
+
+                  <option
+                    value="women"
+                    ${
+                      product.category === "women"
+                      ? "selected"
+                      : ""
+                    }
+                  >
+                    WOMEN
+                  </option>
+
+
+                  <option
+                    value="unisex"
+                    ${
+                      product.category === "unisex"
+                      ? "selected"
+                      : ""
+                    }
+                  >
+                    UNISEX
+                  </option>
+
+                </select>
+
+
+                <input
+                  id="image-${product.product_id}"
+                  type="file"
+                  accept="image/*"
+                >
+
+
+                <button
+                  class="gold"
+                  onclick="
+                    updateProduct(
+                      '${product.product_id}'
+                    )
+                  "
+                >
+                  💾 حفظ التعديلات
+                </button>
+
+
+                <button
+                  class="gray"
+                  onclick="
+                    openEdit(
+                      '${product.product_id}'
+                    )
+                  "
+                >
+                  إلغاء
+                </button>
+
+              </div>
 
             </div>
 
           </div>
 
-        </div>
+          `;
 
-      `;
-
-    }).join("");
+        }
+      )
+      .join("");
 }
 
 
@@ -957,72 +1474,146 @@ function openEdit(id) {
       "edit-" + id
     );
 
+
   if (!box) return;
+
 
   box.classList.toggle("show");
 }
 
 
 /* ==========================
-   UPDATE
+   UPDATE PRODUCT
 ========================== */
 
 async function updateProduct(id) {
 
   const product =
     products.find(
-      p => p.product_id === id
+      function(p) {
+
+        return p.product_id === id;
+
+      }
     );
 
 
   if (!product) {
 
-    alert("العطر غير موجود");
+    alert(
+      "العطر غير موجود"
+    );
 
     return;
   }
 
 
   const name =
-    document.getElementById(
-      "name-" + id
-    ).value.trim();
+    document
+      .getElementById(
+        "name-" + id
+      )
+      .value
+      .trim();
 
 
-  const price =
-    document.getElementById(
-      "price-" + id
-    ).value;
+  const option1Name =
+    document
+      .getElementById(
+        "option1-name-" + id
+      )
+      .value
+      .trim();
+
+
+  const option1Price =
+    document
+      .getElementById(
+        "option1-price-" + id
+      )
+      .value;
+
+
+  const option2Name =
+    document
+      .getElementById(
+        "option2-name-" + id
+      )
+      .value
+      .trim();
+
+
+  const option2Price =
+    document
+      .getElementById(
+        "option2-price-" + id
+      )
+      .value;
+
+
+  const option3Name =
+    document
+      .getElementById(
+        "option3-name-" + id
+      )
+      .value
+      .trim();
+
+
+  const option3Price =
+    document
+      .getElementById(
+        "option3-price-" + id
+      )
+      .value;
 
 
   const description =
-    document.getElementById(
-      "description-" + id
-    ).value.trim();
+    document
+      .getElementById(
+        "description-" + id
+      )
+      .value
+      .trim();
 
 
   const stock =
-    document.getElementById(
-      "stock-" + id
-    ).value;
+    document
+      .getElementById(
+        "stock-" + id
+      )
+      .value;
 
 
   const category =
-    document.getElementById(
-      "category-" + id
-    ).value;
+    document
+      .getElementById(
+        "category-" + id
+      )
+      .value;
 
 
   const imageFile =
-    document.getElementById(
-      "image-" + id
-    ).files[0];
+    document
+      .getElementById(
+        "image-" + id
+      )
+      .files[0];
 
 
-  if (!name || !price || !category) {
+  if (
+    !name ||
+    !option1Name ||
+    !option1Price ||
+    !option2Name ||
+    !option2Price ||
+    !option3Name ||
+    !option3Price ||
+    !category
+  ) {
 
     alert(
-      "اكتب الاسم والسعر والقسم"
+      "اكتب اسم العطر والـ3 اختيارات والأسعار والقسم"
     );
 
     return;
@@ -1033,7 +1624,9 @@ async function updateProduct(id) {
     product.image;
 
 
-  /* NEW IMAGE */
+  /* ==========================
+     NEW IMAGE
+  ========================== */
 
   if (imageFile) {
 
@@ -1048,7 +1641,9 @@ async function updateProduct(id) {
       Date.now() + "-" + safeName;
 
 
-    const { error } =
+    const {
+      error
+    } =
       await supabaseClient.storage
         .from("product-images")
         .upload(
@@ -1059,13 +1654,17 @@ async function updateProduct(id) {
 
     if (error) {
 
-      alert(error.message);
+      alert(
+        error.message
+      );
 
       return;
     }
 
 
-    const { data } =
+    const {
+      data
+    } =
       supabaseClient.storage
         .from("product-images")
         .getPublicUrl(
@@ -1078,22 +1677,59 @@ async function updateProduct(id) {
   }
 
 
-  const { error } =
+  /* ==========================
+     UPDATE DATABASE
+  ========================== */
+
+  const {
+    error
+  } =
     await supabaseClient
       .from("products")
       .update({
 
         name: name,
 
-        price: Number(price),
+        price: Number(
+          option1Price
+        ),
+
+        option1_name:
+          option1Name,
+
+        option1_price:
+          Number(
+            option1Price
+          ),
+
+        option2_name:
+          option2Name,
+
+        option2_price:
+          Number(
+            option2Price
+          ),
+
+        option3_name:
+          option3Name,
+
+        option3_price:
+          Number(
+            option3Price
+          ),
 
         image: image,
 
-        description: description,
+        description:
+          description,
 
-        stock: Number(stock || 0),
+        stock:
+          Number(
+            stock || 0
+          ),
 
-        category: category
+        category:
+          category
 
       })
       .eq(
@@ -1130,13 +1766,19 @@ async function deleteProduct(id) {
 
   const product =
     products.find(
-      p => p.product_id === id
+      function(p) {
+
+        return p.product_id === id;
+
+      }
     );
 
 
   if (!product) {
 
-    alert("العطر غير موجود");
+    alert(
+      "العطر غير موجود"
+    );
 
     return;
   }
@@ -1153,7 +1795,9 @@ async function deleteProduct(id) {
   if (!confirmed) return;
 
 
-  const { error } =
+  const {
+    error
+  } =
     await supabaseClient
       .from("products")
       .delete()
@@ -1189,11 +1833,17 @@ async function deleteProduct(id) {
 
 function getCategoryName(category) {
 
-  if (category === "man") return "MAN";
+  if (category === "man")
+    return "MAN";
 
-  if (category === "women") return "WOMEN";
 
-  if (category === "unisex") return "UNISEX";
+  if (category === "women")
+    return "WOMEN";
+
+
+  if (category === "unisex")
+    return "UNISEX";
+
 
   return category || "غير محدد";
 }
@@ -1212,7 +1862,10 @@ function showMessage(
   const element =
     document.getElementById(id);
 
-  element.textContent = text;
+
+  element.textContent =
+    text;
+
 
   element.className =
     "message " + type;
@@ -1226,11 +1879,31 @@ function showMessage(
 function escapeHTML(value) {
 
   return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
 }
 
 
@@ -1246,8 +1919,11 @@ function escapeAttribute(value) {
 
 async function checkSession() {
 
-  const { data } =
-    await supabaseClient.auth.getSession();
+  const {
+    data
+  } =
+    await supabaseClient.auth
+      .getSession();
 
 
   if (data.session) {
@@ -1255,7 +1931,9 @@ async function checkSession() {
     showAdmin();
 
     loadProducts();
+
   }
+
 }
 
 
