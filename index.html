@@ -3,20 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Velvet Scent | Luxury Fragrances</title>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link
     href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
     rel="stylesheet"
   >
+
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+
     :root {
       --black: #11100f;
       --gold: #c9a45c;
@@ -25,16 +31,20 @@
       --white: #fff;
       --gray: #77716a;
     }
+
     html {
       scroll-behavior: smooth;
     }
+
     body {
       background: var(--cream);
       color: var(--black);
       font-family: "Cairo", Arial, sans-serif;
       overflow-x: hidden;
     }
+
     /* LOADER */
+
     #loader {
       position: fixed;
       inset: 0;
@@ -46,10 +56,12 @@
       flex-direction: column;
       transition: .6s;
     }
+
     #loader.hide {
       opacity: 0;
       visibility: hidden;
     }
+
     .loader-logo {
       color: white;
       font-family: "Playfair Display", serif;
@@ -57,13 +69,16 @@
       letter-spacing: 6px;
       text-align: center;
     }
+
     .loader-line {
       width: 90px;
       height: 1px;
       background: var(--gold);
       margin-top: 18px;
     }
+
     /* HEADER */
+
     header {
       position: fixed;
       top: 0;
@@ -71,17 +86,22 @@
       right: 0;
       height: 78px;
       z-index: 5000;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       padding: 0 6%;
       color: white;
+
       transition: .3s;
     }
+
     header.scrolled {
       background: rgba(17,16,15,.95);
       backdrop-filter: blur(12px);
     }
+
     .logo {
       color: white;
       text-decoration: none;
@@ -89,15 +109,18 @@
       font-size: 24px;
       letter-spacing: 4px;
     }
+
     nav {
       display: flex;
       gap: 28px;
     }
+
     nav a {
       color: white;
       text-decoration: none;
       font-size: 14px;
     }
+
     .header-cart {
       background: transparent;
       color: white;
@@ -106,11 +129,14 @@
       padding: 9px 17px;
       cursor: pointer;
     }
+
     /* HERO */
+
     .hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
+
       background:
         linear-gradient(
           90deg,
@@ -120,6 +146,7 @@
         ),
         url("hero.jpg") center/cover no-repeat;
     }
+
     .hero-content {
       width: 90%;
       max-width: 1250px;
@@ -127,27 +154,32 @@
       color: white;
       padding-top: 70px;
     }
+
     .eyebrow {
       color: var(--gold-light);
       letter-spacing: 5px;
       font-size: 13px;
       margin-bottom: 18px;
     }
+
     .hero h1 {
       font-family: "Playfair Display", serif;
       font-size: clamp(55px, 9vw, 110px);
       line-height: .95;
       margin-bottom: 25px;
     }
+
     .hero h1 span {
       color: var(--gold-light);
     }
+
     .hero-text {
       max-width: 520px;
       color: #e4dfd6;
       line-height: 2;
       margin-bottom: 30px;
     }
+
     .btn-gold {
       display: inline-block;
       background: var(--gold);
@@ -158,30 +190,38 @@
       cursor: pointer;
       font-weight: bold;
     }
+
     /* SECTIONS */
+
     .section {
       width: 90%;
       max-width: 1250px;
       margin: auto;
       padding: 90px 0;
     }
+
     .section-heading {
       text-align: center;
       margin-bottom: 40px;
     }
+
     .section-heading small {
       color: var(--gold);
       letter-spacing: 4px;
     }
+
     .section-heading h2 {
       font-family: "Playfair Display", serif;
       font-size: clamp(35px, 5vw, 55px);
       margin: 10px 0;
     }
+
     .section-heading p {
       color: var(--gray);
     }
+
     /* CATEGORIES */
+
     .categories {
       display: flex;
       justify-content: center;
@@ -189,6 +229,7 @@
       flex-wrap: wrap;
       margin-bottom: 40px;
     }
+
     .category-btn {
       background: transparent;
       border: 1px solid #cfc8bc;
@@ -197,42 +238,51 @@
       font-family: inherit;
       transition: .3s;
     }
+
     .category-btn.active,
     .category-btn:hover {
       background: var(--black);
       color: white;
       border-color: var(--black);
     }
+
     /* PRODUCTS */
+
     .products {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 24px;
     }
+
     .product {
       background: white;
       overflow: hidden;
       transition: .3s;
     }
+
     .product:hover {
       transform: translateY(-7px);
       box-shadow: 0 18px 40px rgba(0,0,0,.12);
     }
+
     .product-image {
       height: 320px;
       background: #eee;
       position: relative;
       overflow: hidden;
     }
+
     .product-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: .5s;
     }
+
     .product:hover .product-image img {
       transform: scale(1.06);
     }
+
     .product-tag {
       position: absolute;
       top: 12px;
@@ -243,14 +293,17 @@
       padding: 5px 10px;
       font-size: 11px;
     }
+
     .product-info {
       padding: 18px;
     }
+
     .product-name {
       font-family: "Playfair Display", serif;
       font-size: 21px;
       margin-bottom: 7px;
     }
+
     .product-description {
       color: var(--gray);
       font-size: 13px;
@@ -258,15 +311,18 @@
       line-height: 1.7;
       margin-bottom: 12px;
     }
+
     .product-bottom {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 10px;
     }
+
     .price {
       font-weight: bold;
     }
+
     .add-btn {
       background: var(--black);
       color: white;
@@ -275,16 +331,19 @@
       cursor: pointer;
       font-family: inherit;
     }
+
     .add-btn:hover {
       background: var(--gold);
       color: var(--black);
     }
+
     .empty {
       text-align: center;
       padding: 50px 20px;
       color: var(--gray);
       grid-column: 1 / -1;
     }
+
     .error-box {
       background: #fff0f0;
       color: #a00000;
@@ -294,12 +353,16 @@
       direction: ltr;
       text-align: left;
       word-break: break-word;
+      grid-column: 1 / -1;
     }
+
     /* STORY */
+
     .story {
       background: var(--black);
       color: white;
     }
+
     .story-inner {
       width: 90%;
       max-width: 1250px;
@@ -310,52 +373,64 @@
       gap: 70px;
       align-items: center;
     }
+
     .story-image {
       height: 500px;
       background:
         linear-gradient(rgba(0,0,0,.2), rgba(0,0,0,.2)),
         url("story.jpg") center/cover;
     }
+
     .story-content small {
       color: var(--gold-light);
       letter-spacing: 4px;
     }
+
     .story-content h2 {
       font-family: "Playfair Display", serif;
       font-size: clamp(38px, 5vw, 65px);
       margin: 15px 0 25px;
     }
+
     .story-content p {
       color: #c9c5be;
       line-height: 2;
       margin-bottom: 20px;
     }
+
     /* FEATURES */
+
     .features {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
     }
+
     .feature {
       background: white;
       text-align: center;
       padding: 40px 25px;
       border: 1px solid #eee9df;
     }
+
     .feature-icon {
       font-size: 30px;
       margin-bottom: 15px;
     }
+
     .feature h3 {
       font-family: "Playfair Display", serif;
       font-size: 22px;
       margin-bottom: 10px;
     }
+
     .feature p {
       color: var(--gray);
       line-height: 1.8;
     }
+
     /* CTA */
+
     .cta {
       width: 90%;
       max-width: 1250px;
@@ -367,33 +442,41 @@
         linear-gradient(rgba(17,16,15,.92), rgba(17,16,15,.92)),
         url("cta.jpg") center/cover;
     }
+
     .cta h2 {
       font-family: "Playfair Display", serif;
       font-size: clamp(35px, 5vw, 60px);
       margin-bottom: 15px;
     }
+
     .cta p {
       color: #ccc;
       margin-bottom: 25px;
     }
+
     /* FOOTER */
+
     footer {
       background: #0c0b0a;
       color: white;
       text-align: center;
       padding: 45px 20px;
     }
+
     .footer-logo {
       font-family: "Playfair Display", serif;
       font-size: 27px;
       letter-spacing: 5px;
       margin-bottom: 10px;
     }
+
     footer p {
       color: #999;
       font-size: 13px;
     }
+
     /* CART */
+
     .overlay {
       display: none;
       position: fixed;
@@ -401,6 +484,7 @@
       background: rgba(0,0,0,.65);
       z-index: 7000;
     }
+
     .cart {
       position: fixed;
       top: 0;
@@ -414,9 +498,11 @@
       padding: 25px;
       overflow-y: auto;
     }
+
     .cart.open {
       right: 0;
     }
+
     .cart-header {
       display: flex;
       justify-content: space-between;
@@ -424,9 +510,11 @@
       border-bottom: 1px solid #eee;
       padding-bottom: 15px;
     }
+
     .cart-header h2 {
       font-family: "Playfair Display", serif;
     }
+
     .close-cart {
       width: 38px;
       height: 38px;
@@ -435,26 +523,31 @@
       cursor: pointer;
       font-size: 20px;
     }
+
     .cart-item {
       display: flex;
       gap: 12px;
       padding: 15px 0;
       border-bottom: 1px solid #eee;
     }
+
     .cart-item img {
       width: 75px;
       height: 75px;
       object-fit: cover;
     }
+
     .cart-item-info {
       flex: 1;
     }
+
     .quantity {
       display: flex;
       gap: 8px;
       align-items: center;
       margin-top: 8px;
     }
+
     .quantity button {
       width: 28px;
       height: 28px;
@@ -463,6 +556,7 @@
       color: white;
       cursor: pointer;
     }
+
     .remove {
       border: none;
       background: none;
@@ -470,6 +564,7 @@
       cursor: pointer;
       margin-top: 5px;
     }
+
     .cart-total {
       font-size: 21px;
       font-weight: bold;
@@ -477,9 +572,11 @@
       margin-top: 20px;
       padding: 20px 0;
     }
+
     .order-form {
       display: none;
     }
+
     .order-form input,
     .order-form textarea {
       width: 100%;
@@ -488,10 +585,12 @@
       border: 1px solid #ddd;
       font-family: inherit;
     }
+
     .order-form textarea {
       height: 90px;
       resize: none;
     }
+
     .whatsapp-btn {
       width: 100%;
       background: #25D366;
@@ -501,514 +600,618 @@
       cursor: pointer;
       font-weight: bold;
     }
-    /* MOBILE */
+
     @media (max-width: 950px) {
       nav {
         display: none;
       }
+
       .products {
         grid-template-columns: repeat(2, 1fr);
       }
+
       .story-inner {
         grid-template-columns: 1fr;
       }
+
       .features {
         grid-template-columns: 1fr;
       }
     }
+
     @media (max-width: 600px) {
       header {
         height: 68px;
         padding: 0 18px;
       }
+
       .logo {
         font-size: 18px;
         letter-spacing: 2px;
       }
+
       .hero h1 {
         font-size: 52px;
       }
+
       .products {
         grid-template-columns: 1fr 1fr;
         gap: 10px;
       }
+
       .product-image {
         height: 210px;
       }
+
       .product-info {
         padding: 11px;
       }
+
       .product-name {
         font-size: 17px;
       }
+
       .product-description {
         font-size: 11px;
       }
+
       .product-bottom {
         flex-direction: column;
         align-items: stretch;
       }
+
       .price {
         text-align: center;
       }
+
       .cart {
         width: 100%;
         max-width: 100%;
       }
+
       .story-image {
         height: 350px;
       }
     }
   </style>
 </head>
+
 <body>
-<!-- LOADER -->
+
 <div id="loader">
-  <div class="loader-logo">
-    VELVET SCENT
-  </div>
+  <div class="loader-logo">VELVET SCENT</div>
   <div class="loader-line"></div>
 </div>
-<!-- HEADER -->
+
 <header id="header">
+
   <a href="#home" class="logo">
     VELVET SCENT
   </a>
+
   <nav>
     <a href="#home">HOME</a>
     <a href="#products-section">COLLECTION</a>
     <a href="#story">OUR STORY</a>
     <a href="#why-us">WHY US</a>
   </nav>
-  <button
-    class="header-cart"
-    onclick="openCart()"
-  >
-    🛍️ CART
-    (<span id="cartCount">0</span>)
+
+  <button class="header-cart" onclick="openCart()">
+    🛍️ CART (<span id="cartCount">0</span>)
   </button>
+
 </header>
-<!-- HERO -->
+
 <section id="home" class="hero">
+
   <div class="hero-content">
+
     <div class="eyebrow">
       THE ART OF FRAGRANCE
     </div>
+
     <h1>
       Your Scent.
       <br>
       <span>Your Signature.</span>
     </h1>
+
     <p class="hero-text">
       Discover Velvet Scent —
       a world of luxury fragrances
       created to express your personality.
     </p>
-    <a
-      href="#products-section"
-      class="btn-gold"
-    >
+
+    <a href="#products-section" class="btn-gold">
       EXPLORE COLLECTION
     </a>
+
   </div>
+
 </section>
-<!-- PRODUCTS -->
-<section
-  id="products-section"
-  class="section"
->
+
+<section id="products-section" class="section">
+
   <div class="section-heading">
-    <small>
-      VELVET SCENT COLLECTION
-    </small>
-    <h2>
-      Find Your Signature
-    </h2>
+
+    <small>VELVET SCENT COLLECTION</small>
+
+    <h2>Find Your Signature</h2>
+
     <p>
       اختر العطر الذي يناسب شخصيتك
     </p>
+
   </div>
+
   <div class="categories">
+
     <button
       class="category-btn active"
       onclick="filterProducts('all', this)"
     >
       ALL
     </button>
+
     <button
       class="category-btn"
       onclick="filterProducts('man', this)"
     >
       MAN
     </button>
+
     <button
       class="category-btn"
       onclick="filterProducts('women', this)"
     >
       WOMEN
     </button>
+
     <button
       class="category-btn"
       onclick="filterProducts('unisex', this)"
     >
       UNISEX
     </button>
+
   </div>
-  <div
-    id="products"
-    class="products"
-  >
+
+  <div id="products" class="products">
+
     <div class="empty">
       جاري تحميل العطور...
     </div>
+
   </div>
+
 </section>
-<!-- STORY -->
+
 <section id="story" class="story">
+
   <div class="story-inner">
+
     <div class="story-image"></div>
+
     <div class="story-content">
-      <small>
-        OUR STORY
-      </small>
+
+      <small>OUR STORY</small>
+
       <h2>
         Scent tells your story.
       </h2>
+
       <p>
         في Velvet Scent نؤمن أن العطر
         ليس مجرد رائحة، بل هو انطباع
         وذكرى وشخصية.
       </p>
+
       <p>
         اخترنا لك مجموعة من الروائح
         المميزة التي تمنحك حضورًا مختلفًا.
       </p>
-      <a
-        href="#products-section"
-        class="btn-gold"
-      >
+
+      <a href="#products-section" class="btn-gold">
         SHOP FRAGRANCES
       </a>
+
     </div>
+
   </div>
+
 </section>
-<!-- WHY US -->
+
 <section id="why-us" class="section">
+
   <div class="section-heading">
-    <small>
-      WHY VELVET SCENT
-    </small>
-    <h2>
-      The Velvet Experience
-    </h2>
+
+    <small>WHY VELVET SCENT</small>
+
+    <h2>The Velvet Experience</h2>
+
   </div>
+
   <div class="features">
+
     <div class="feature">
-      <div class="feature-icon">
-        ✦
-      </div>
-      <h3>
-        Premium Quality
-      </h3>
+      <div class="feature-icon">✦</div>
+      <h3>Premium Quality</h3>
       <p>
         نهتم بكل تفاصيل تجربتك
         من اختيار العطر حتى وصوله إليك.
       </p>
     </div>
+
     <div class="feature">
-      <div class="feature-icon">
-        ♢
-      </div>
-      <h3>
-        Curated Collection
-      </h3>
+      <div class="feature-icon">♢</div>
+      <h3>Curated Collection</h3>
       <p>
         مجموعة مختارة بعناية
         لتناسب مختلف الأذواق.
       </p>
     </div>
+
     <div class="feature">
-      <div class="feature-icon">
-        ♡
-      </div>
-      <h3>
-        Made For You
-      </h3>
+      <div class="feature-icon">♡</div>
+      <h3>Made For You</h3>
       <p>
         لأن عطرك هو جزء من شخصيتك
         وحضورك الخاص.
       </p>
     </div>
+
   </div>
+
 </section>
-<!-- CTA -->
+
 <section class="cta">
-  <h2>
-    Find Your Signature
-  </h2>
+
+  <h2>Find Your Signature</h2>
+
   <p>
     Your next favorite fragrance is waiting.
   </p>
-  <a
-    href="#products-section"
-    class="btn-gold"
-  >
+
+  <a href="#products-section" class="btn-gold">
     SHOP NOW
   </a>
+
 </section>
-<!-- FOOTER -->
+
 <footer>
+
   <div class="footer-logo">
     VELVET SCENT
   </div>
-  <p>
-    Luxury Fragrances
-  </p>
+
+  <p>Luxury Fragrances</p>
+
   <br>
+
   <p>
     © 2026 Velvet Scent — جميع الحقوق محفوظة
   </p>
+
 </footer>
-<!-- CART OVERLAY -->
+
 <div
   id="overlay"
   class="overlay"
   onclick="closeCart()"
 ></div>
-<!-- CART -->
-<div
-  id="cart"
-  class="cart"
->
+
+<div id="cart" class="cart">
+
   <div class="cart-header">
-    <h2>
-      Shopping Bag
-    </h2>
+
+    <h2>Shopping Bag</h2>
+
     <button
       class="close-cart"
       onclick="closeCart()"
     >
       ×
     </button>
+
   </div>
+
   <div id="cartItems"></div>
+
   <div class="cart-total">
+
     الإجمالي:
-    <span id="cartTotal">
-      0
-    </span>
+
+    <span id="cartTotal">0</span>
+
     جنيه
+
   </div>
-  <div
-    id="orderForm"
-    class="order-form"
-  >
+
+  <div id="orderForm" class="order-form">
+
     <input
       id="customerName"
       type="text"
       placeholder="الاسم"
     >
+
     <input
       id="customerPhone"
       type="tel"
       placeholder="رقم الموبايل"
     >
+
     <textarea
       id="customerAddress"
       placeholder="العنوان بالتفصيل"
     ></textarea>
+
     <button
       class="whatsapp-btn"
       onclick="sendOrder()"
     >
       📱 إرسال الطلب عبر WhatsApp
     </button>
+
   </div>
+
 </div>
+
 <script>
+
 /* =========================
    SUPABASE
 ========================= */
+
 const SUPABASE_URL =
   "https://frvgjkeeaojyvwsjikre.supabase.co";
+
 const SUPABASE_KEY =
   "sb_publishable_aPftd5l28afljdgY2ddn9A_2HPnFF3E";
+
 const STORE_WHATSAPP =
   "201064014838";
+
 const supabaseClient =
   window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
   );
+
+
 /* =========================
    DATA
 ========================= */
+
 let products = [];
+
 let cart = [];
+
 let currentCategory = "all";
+
+
 /* =========================
    LOADER
 ========================= */
+
 window.addEventListener(
   "load",
   function() {
+
     setTimeout(
       function() {
+
         document
           .getElementById("loader")
           .classList.add("hide");
+
       },
       800
     );
+
   }
 );
+
+
 /* =========================
    HEADER
 ========================= */
+
 window.addEventListener(
   "scroll",
   function() {
+
     const header =
       document.getElementById("header");
+
     if (window.scrollY > 40) {
+
       header.classList.add("scrolled");
+
     } else {
+
       header.classList.remove("scrolled");
+
     }
+
   }
 );
+
+
 /* =========================
    FILTER
 ========================= */
+
 function filterProducts(
   category,
   button
 ) {
+
   currentCategory = category;
+
   document
     .querySelectorAll(".category-btn")
-    .forEach(function(btn) {
-      btn.classList.remove("active");
-    });
+    .forEach(
+      function(btn) {
+
+        btn.classList.remove("active");
+
+      }
+    );
+
   button.classList.add("active");
+
   renderProducts();
+
 }
+
+
 /* =========================
    LOAD PRODUCTS
 ========================= */
+
 async function loadProducts() {
+
   const container =
     document.getElementById("products");
-  container.innerHTML =
-    `
+
+
+  container.innerHTML = `
     <div class="empty">
       جاري تحميل العطور...
     </div>
-    `;
+  `;
+
+
   const result =
     await supabaseClient
       .from("products")
-      .select("*")
-      .order(
-        "id",
-        {
-          ascending: true
-        }
-      );
-  const data = result.data;
-  const error = result.error;
+      .select("*");
+
+
+  const data =
+    result.data;
+
+  const error =
+    result.error;
+
+
   if (error) {
+
     console.error(
       "SUPABASE ERROR:",
       error
     );
-    container.innerHTML =
-      `
+
+
+    container.innerHTML = `
       <div class="error-box">
+
         <strong>
           حدث خطأ في تحميل العطور
         </strong>
+
         <br><br>
+
         <b>Message:</b>
         ${escapeHTML(
           error.message || ""
         )}
+
         <br>
+
         <b>Code:</b>
         ${escapeHTML(
           error.code || ""
         )}
+
         <br>
+
         <b>Details:</b>
         ${escapeHTML(
           error.details || ""
         )}
+
         <br>
+
         <b>Hint:</b>
         ${escapeHTML(
           error.hint || ""
         )}
+
       </div>
-      `;
+    `;
+
+
     return;
   }
-  products = data || [];
+
+
+  products =
+    data || [];
+
+
   renderProducts();
+
 }
+
+
 /* =========================
-   IMAGE
+   FILTER + RENDER
 ========================= */
-function getImageUrl(
-  image
-) {
-  if (!image) {
-    return "";
-  }
-  if (
-    image.startsWith("http://") ||
-    image.startsWith("https://")
-  ) {
-    return image;
-  }
-  return image;
-}
-/* =========================
-   RENDER PRODUCTS
-========================= */
+
 function renderProducts() {
+
   const container =
     document.getElementById("products");
+
+
   let filtered =
     products;
+
+
   if (
     currentCategory !== "all"
   ) {
+
     filtered =
       products.filter(
         function(product) {
+
           return String(
             product.category || ""
           ).toLowerCase() ===
           currentCategory;
+
         }
       );
+
   }
+
+
   if (!filtered.length) {
-    container.innerHTML =
-      `
+
+    container.innerHTML = `
       <div class="empty">
         لا توجد عطور في هذا القسم حاليًا.
       </div>
-      `;
+    `;
+
     return;
   }
+
+
   container.innerHTML =
     filtered
       .map(
         function(product, index) {
+
           return `
+
           <div class="product">
+
             <div class="product-image">
+
               ${
                 index < 3
                 ?
@@ -1020,346 +1223,572 @@ function renderProducts() {
                 :
                 ""
               }
+
               <img
                 src="${escapeHTML(
-                  getImageUrl(
-                    product.image
-                  )
+                  product.image || ""
                 )}"
                 alt="${escapeHTML(
-                  product.name
+                  product.name || ""
                 )}"
                 onerror="
                   this.style.display='none';
                 "
               >
+
             </div>
+
             <div class="product-info">
+
               <div class="product-name">
+
                 ${escapeHTML(
-                  product.name
+                  product.name || "عطر"
                 )}
+
               </div>
+
               <div class="product-description">
+
                 ${escapeHTML(
                   product.description || ""
                 )}
+
               </div>
+
               <div class="product-bottom">
+
                 <div class="price">
+
                   ${Number(
                     product.price || 0
                   ).toLocaleString("ar-EG")}
+
                   جنيه
+
                 </div>
+
                 <button
                   class="add-btn"
                   onclick="
                     addToCart(
-                      ${Number(product.id)}
+                      products.indexOf(
+                        products.find(
+                          p => p === ${JSON.stringify(product)}
+                        )
+                      )
                     )
                   "
                 >
                   أضف للسلة
                 </button>
+
               </div>
+
             </div>
+
           </div>
+
           `;
+
         }
       )
       .join("");
+
 }
+
+
 /* =========================
-   CART
+   ADD TO CART
 ========================= */
-function addToCart(id) {
+
+function addToCart(index) {
+
   const product =
-    products.find(
-      function(p) {
-        return Number(p.id) === Number(id);
-      }
-    );
+    products[index];
+
+
   if (!product) {
+
     return;
+
   }
+
+
   const existing =
     cart.find(
       function(item) {
-        return Number(item.id) === Number(id);
+
+        return item._cartIndex === index;
+
       }
     );
+
+
   if (existing) {
+
     if (
       product.stock &&
       existing.quantity >=
       Number(product.stock)
     ) {
+
       alert(
         "الكمية المتاحة خلصت"
       );
+
       return;
+
     }
+
+
     existing.quantity++;
+
+
   } else {
+
     cart.push({
+
       ...product,
+
+      _cartIndex: index,
+
       quantity: 1
+
     });
+
   }
+
+
   updateCart();
+
   openCart();
+
 }
-function increaseQuantity(id) {
+
+
+/* =========================
+   QUANTITY
+========================= */
+
+function increaseQuantity(index) {
+
   const item =
     cart.find(
       function(item) {
-        return Number(item.id) === Number(id);
+
+        return item._cartIndex === index;
+
       }
     );
+
+
   if (!item) {
+
     return;
+
   }
+
+
   if (
     item.stock &&
     item.quantity >=
     Number(item.stock)
   ) {
+
     alert(
       "الكمية المتاحة خلصت"
     );
+
     return;
+
   }
+
+
   item.quantity++;
+
   updateCart();
+
 }
-function decreaseQuantity(id) {
+
+
+function decreaseQuantity(index) {
+
   const item =
     cart.find(
       function(item) {
-        return Number(item.id) === Number(id);
+
+        return item._cartIndex === index;
+
       }
     );
+
+
   if (!item) {
+
     return;
+
   }
+
+
   item.quantity--;
-  if (item.quantity <= 0) {
+
+
+  if (
+    item.quantity <= 0
+  ) {
+
     cart =
       cart.filter(
         function(item) {
-          return Number(item.id) !==
-            Number(id);
+
+          return item._cartIndex !==
+            index;
+
         }
       );
+
   }
+
+
   updateCart();
+
 }
-function removeFromCart(id) {
+
+
+function removeFromCart(index) {
+
   cart =
     cart.filter(
       function(item) {
-        return Number(item.id) !==
-          Number(id);
+
+        return item._cartIndex !==
+          index;
+
       }
     );
+
+
   updateCart();
+
 }
+
+
 /* =========================
    UPDATE CART
 ========================= */
+
 function updateCart() {
+
   const cartItems =
-    document.getElementById("cartItems");
+    document.getElementById(
+      "cartItems"
+    );
+
+
   const cartCount =
-    document.getElementById("cartCount");
+    document.getElementById(
+      "cartCount"
+    );
+
+
   const cartTotal =
-    document.getElementById("cartTotal");
+    document.getElementById(
+      "cartTotal"
+    );
+
+
   const orderForm =
-    document.getElementById("orderForm");
+    document.getElementById(
+      "orderForm"
+    );
+
+
   const count =
     cart.reduce(
       function(sum, item) {
-        return sum + item.quantity;
+
+        return sum +
+          item.quantity;
+
       },
       0
     );
+
+
   const total =
     cart.reduce(
       function(sum, item) {
+
         return sum +
           Number(item.price || 0) *
           item.quantity;
+
       },
       0
     );
+
+
   cartCount.textContent =
     count;
+
+
   cartTotal.textContent =
-    total.toLocaleString("ar-EG");
+    total.toLocaleString(
+      "ar-EG"
+    );
+
+
   if (!cart.length) {
-    cartItems.innerHTML =
-      `
+
+    cartItems.innerHTML = `
       <div class="empty">
         السلة فارغة 🛍️
       </div>
-      `;
+    `;
+
     orderForm.style.display =
       "none";
+
     return;
+
   }
+
+
   orderForm.style.display =
     "block";
+
+
   cartItems.innerHTML =
     cart
       .map(
         function(item) {
+
           return `
+
           <div class="cart-item">
+
             <img
               src="${escapeHTML(
-                getImageUrl(
-                  item.image
-                )
+                item.image || ""
               )}"
               alt="${escapeHTML(
-                item.name
+                item.name || ""
               )}"
             >
+
             <div class="cart-item-info">
+
               <strong>
                 ${escapeHTML(
-                  item.name
+                  item.name || "عطر"
                 )}
               </strong>
+
               <div>
+
                 ${Number(
                   item.price || 0
                 ).toLocaleString("ar-EG")}
+
                 جنيه
+
               </div>
+
               <div class="quantity">
+
                 <button
                   onclick="
                     decreaseQuantity(
-                      ${Number(item.id)}
+                      ${item._cartIndex}
                     )
                   "
                 >
                   −
                 </button>
+
                 <span>
                   ${item.quantity}
                 </span>
+
                 <button
                   onclick="
                     increaseQuantity(
-                      ${Number(item.id)}
+                      ${item._cartIndex}
                     )
                   "
                 >
                   +
                 </button>
+
               </div>
+
               <button
                 class="remove"
                 onclick="
                   removeFromCart(
-                    ${Number(item.id)}
+                    ${item._cartIndex}
                   )
                 "
               >
                 حذف
               </button>
+
             </div>
+
           </div>
+
           `;
+
         }
       )
       .join("");
+
 }
+
+
 /* =========================
-   OPEN / CLOSE CART
+   OPEN CART
 ========================= */
+
 function openCart() {
+
   document
     .getElementById("cart")
     .classList.add("open");
+
+
   document
     .getElementById("overlay")
     .style.display =
       "block";
+
+
   updateCart();
+
 }
+
+
+/* =========================
+   CLOSE CART
+========================= */
+
 function closeCart() {
+
   document
     .getElementById("cart")
     .classList.remove("open");
+
+
   document
     .getElementById("overlay")
     .style.display =
       "none";
+
 }
+
+
 /* =========================
    WHATSAPP
 ========================= */
+
 function sendOrder() {
+
   if (!cart.length) {
-    alert("السلة فارغة");
+
+    alert(
+      "السلة فارغة"
+    );
+
     return;
+
   }
+
+
   const name =
     document
-      .getElementById("customerName")
+      .getElementById(
+        "customerName"
+      )
       .value
       .trim();
+
+
   const phone =
     document
-      .getElementById("customerPhone")
+      .getElementById(
+        "customerPhone"
+      )
       .value
       .trim();
+
+
   const address =
     document
-      .getElementById("customerAddress")
+      .getElementById(
+        "customerAddress"
+      )
       .value
       .trim();
+
+
   if (
     !name ||
     !phone ||
     !address
   ) {
+
     alert(
-      "من فضلك املأ جميع البيانات"
+      "من فضلك املأ جميع بيانات الطلب"
     );
+
     return;
+
   }
+
+
   const total =
     cart.reduce(
       function(sum, item) {
+
         return sum +
           Number(item.price || 0) *
           item.quantity;
+
       },
       0
     );
+
+
   let message =
     "🖤 طلب جديد من Velvet Scent\n\n";
+
+
   message +=
     "👤 الاسم: " +
     name +
     "\n";
+
+
   message +=
     "📱 الموبايل: " +
     phone +
     "\n";
+
+
   message +=
     "📍 العنوان: " +
     address +
     "\n\n";
+
+
   message +=
     "🌹 العطور:\n";
+
+
   cart.forEach(
     function(item) {
+
       message +=
         "• " +
         item.name +
@@ -1371,39 +1800,77 @@ function sendOrder() {
           item.quantity
         ) +
         " جنيه\n";
+
     }
   );
+
+
   message +=
     "\n💰 الإجمالي: " +
     total +
     " جنيه";
-  const url =
+
+
+  const whatsappURL =
     "https://wa.me/" +
     STORE_WHATSAPP +
     "?text=" +
     encodeURIComponent(
       message
     );
+
+
   window.open(
-    url,
+    whatsappURL,
     "_blank"
   );
+
 }
+
+
 /* =========================
-   ESCAPE
+   ESCAPE HTML
 ========================= */
+
 function escapeHTML(value) {
+
   return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+
 }
+
+
 /* =========================
    START
 ========================= */
+
 loadProducts();
+
 </script>
+
 </body>
 </html>
