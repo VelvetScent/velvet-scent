@@ -374,7 +374,7 @@
 </div>
 
 <footer>
-  <p>© 2026 Fashion Store - جميع الحقوق محفوظة</p>
+  <p>©️ 2026 Fashion Store - جميع الحقوق محفوظة</p>
 </footer>
 
 <script>
@@ -397,6 +397,14 @@
 
 
   // ============================
+  // STORAGE
+  // ============================
+
+  const IMAGE_BUCKET =
+    "product-images";
+
+
+  // ============================
   // WHATSAPP
   // ============================
 
@@ -410,6 +418,34 @@
 
   let products = [];
   let cart = [];
+
+
+  // ============================
+  // GET IMAGE URL
+  // ============================
+
+  function getImageUrl(image) {
+
+    if (!image) {
+      return "";
+    }
+
+    // لو الصورة بالفعل رابط كامل
+    if (
+      image.startsWith("http://") ||
+      image.startsWith("https://")
+    ) {
+      return image;
+    }
+
+    // لو الصورة اسم ملف موجود في Storage
+    const { data } =
+      supabaseClient.storage
+        .from(IMAGE_BUCKET)
+        .getPublicUrl(image);
+
+    return data.publicUrl;
+  }
 
 
   // ============================
@@ -433,78 +469,16 @@
         error
       );
 
-      products = [
-        {
-          id: 1,
-          name: "شنطة حريمي 1",
-          price: 499,
-          image: "bag1.jpeg",
-          description: "شنطة حريمي أنيقة",
-          stock: 10
-        },
-        {
-          id: 2,
-          name: "شنطة حريمي 2",
-          price: 499,
-          image: "bag2.jpeg",
-          description: "شنطة حريمي أنيقة",
-          stock: 10
-        },
-        {
-          id: 3,
-          name: "شنطة حريمي 3",
-          price: 499,
-          image: "bag3.jpeg",
-          description: "شنطة حريمي أنيقة",
-          stock: 10
-        },
-        {
-          id: 4,
-          name: "شنطة حريمي 4",
-          price: 499,
-          image: "bag4.jpeg",
-          description: "شنطة حريمي أنيقة",
-          stock: 10
-        },
-        {
-          id: 5,
-          name: "شنطة حريمي 5",
-          price: 499,
-          image: "bag5.jpeg",
-          description: "شنطة حريمي أنيقة",
-          stock: 10
-        },
-        {
-          id: 6,
-          name: "شنطة حريمي 6",
-          price: 499,
-          image: "bag6.jpeg",
-          description: "شنطة حريمي أنيقة",
-          stock: 10
-        },
-        {
-          id: 7,
-          name: "شنطة حريمي 7",
-          price: 499,
-          image: "bag7.jpeg",
-          description: "شنطة حريمي أنيقة",
-          stock: 10
-        },
-        {
-          id: 8,
-          name: "شنطة حريمي 8",
-          price: 499,
-          image: "bag8.jpeg",
-          description: "شنطة حريمي أنيقة",
-          stock: 10
-        }
-      ];
+      const container =
+        document.getElementById("products");
 
-    } else {
+      container.innerHTML =
+        '<div class="empty">حدث خطأ في تحميل المنتجات</div>';
 
-      products = data || [];
-
+      return;
     }
+
+    products = data || [];
 
     renderProducts();
   }
@@ -517,9 +491,7 @@
   function renderProducts() {
 
     const container =
-      document.getElementById(
-        "products"
-      );
+      document.getElementById("products");
 
     if (!products.length) {
 
@@ -532,13 +504,16 @@
     container.innerHTML =
       products.map(product => {
 
+        const imageUrl =
+          getImageUrl(product.image);
+
         return `
           <div class="product">
 
             <img
-              src="${product.image}"
+              src="${escapeHTML(imageUrl)}"
               alt="${escapeHTML(product.name)}"
-              onerror="this.src='bag1.jpeg'"
+              onerror="this.style.display='none'"
             >
 
             <div class="product-info">
@@ -599,7 +574,7 @@
       if (
         product.stock &&
         existing.quantity >=
-        product.stock
+        Number(product.stock)
       ) {
 
         alert(
@@ -643,7 +618,8 @@
 
     if (
       item.stock &&
-      item.quantity >= item.stock
+      item.quantity >=
+      Number(item.stock)
     ) {
 
       alert(
@@ -765,7 +741,9 @@
           <div class="cart-item">
 
             <img
-              src="${item.image}"
+              src="${escapeHTML(
+                getImageUrl(item.image)
+              )}"
               alt="${escapeHTML(
                 item.name
               )}"
