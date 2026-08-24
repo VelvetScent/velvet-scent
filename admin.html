@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fashion Store - Admin</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+    }
+
+    input, textarea, button {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px;
+      margin: 7px 0;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+
+    button {
+      cursor: pointer;
+      background: #111;
+      color: white;
+      border: none;
+    }
+
+    .product {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      padding: 15px 0;
+    }
+
+    .product img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .delete {
+      background: #c00;
+    }
+
+    #adminPanel {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>Fashion Store Admin</h1>
+
+  <div id="loginBox" class="card">
+    <h2>تسجيل دخول الإدارة</h2>
+
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+
+    <button onclick="login()">دخول</button>
+
+    <p id="loginMessage"></p>
+  </div>
+
+  <div id="adminPanel">
+
+    <div class="card">
+      <h2>إضافة منتج</h2>
+
+      <input id="productName" placeholder="اسم المنتج">
+
+      <input id="productPrice"
+             type="number"
+             placeholder="السعر">
+
+      <textarea id="productDescription"
+                placeholder="الوصف"></textarea>
+
+      <input id="productStock"
+             type="number"
+             placeholder="المخزون">
+
+      <input id="productImage"
+             type="file"
+             accept="image/*">
+
+      <button onclick="addProduct()">
+        إضافة المنتج
+      </button>
+
+      <p id="message"></p>
+    </div>
+
+    <div class="card">
+      <h2>المنتجات</h2>
+      <div id="products"></div>
+    </div>
+
+    <button onclick="logout()">
+      تسجيل خروج
+    </button>
+
+  </div>
+
+</div>
+
+<script>
+
+const SUPABASE_URL =
+  "https://frvgjkeeaojyvwsjikre.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_aPftd5l28afljdgY2ddn9A_2HPnFF3E";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+async function login() {
+
+  const email =
+    document.getElementById("email").value;
+
+  const password =
+    document.getElementById("password").value;
+
+  const { error } =
+    await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+  if (error) {
+    document.getElementById("loginMessage").textContent =
+      error.message;
+    return;
+  }
+
+  showAdmin();
+  loadProducts();
+}
+
+async function logout() {
+
+  await supabaseClient.auth.signOut();
+
+  document.getElementById("adminPanel").style.display = "none";
+  document.getElementById("loginBox").style.display = "block";
+}
+
+function showAdmin() {
+
+  document.getElementById("loginBox").style.display = "none";
+  document.getElementById("adminPanel").style.display = "block";
+}
+
+async function addProduct() {
+
+  const name =
+    document.getElementById("productName").value;
+
+  const price =
+    document.getElementById("productPrice").value;
+
+  const description =
+    document.getElementById("productDescription").value;
+
+  const stock =
+    document.getElementById("productStock").value;
+
+  const imageFile =
+    document.getElementById("productImage").files[0];
+
+  if (!name || !price || !imageFile) {
+    alert("اكتب الاسم والسعر واختار صورة");
+    return;
+  }
+
+  const fileName =
+    Date.now() + "-" + imageFile.name;
+
+  const { error: uploadError } =
+    await supabaseClient.storage
+      .from("product-images")
+      .upload(fileName, imageFile);
+
+  if (uploadError) {
+    alert(uploadError.message);
+    return;
+  }
+
+  const { data: publicUrlData } =
+    supabaseClient.storage
+      .from("product-images")
+      .getPublicUrl(fileName);
+
+  const imageUrl =
+    publicUrlData.publicUrl;
+
+  const { error } =
+    await supabaseClient
+      .from("products")
+      .insert({
+        name,
+        price,
+        image: imageUrl,
+        description,
+        stock
+      });
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  document.getElementById("message").textContent =
+    "تم إضافة المنتج بنجاح ✅";
+
+  document.getElementById("productName").value = "";
+  document.getElementById("productPrice").value = "";
+  document.getElementById("productDescription").value = "";
+  document.getElementById("productStock").value = "";
+  document.getElementById("productImage").value = "";
+
+  loadProducts();
+}
+
+async function loadProducts() {
+
+  const { data, error } =
+    await supabaseClient
+      .from("products")
+      .select("*")
+      .order("id", { ascending: false });
+
+  if (error) {
+    document.getElementById("products").textContent =
+      error.message;
+    return;
+  }
+
+  const container =
+    document.getElementById("products");
+
+  container.innerHTML = "";
+
+  data.forEach(product => {
+
+    const div =
+      document.createElement("div");
+
+    div.className = "product";
+
+    div.innerHTML = `
+      <img src="${product.image}" alt="">
+      <div>
+        <strong>${product.name}</strong>
+        <br>
+        السعر: ${product.price}
+        <br>
+        المخزون: ${product.stock}
+      </div>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+async function checkSession() {
+
+  const { data } =
+    await supabaseClient.auth.getSession();
+
+  if (data.session) {
+    showAdmin();
+    loadProducts();
+  }
+}
+
+checkSession();
+
+</script>
+
+</body>
+</html>
