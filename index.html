@@ -1,3 +1,1173 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Velvet Scent | Luxury Fragrances</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+rel="stylesheet"
+>
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+:root{
+--black:#11100f;
+--gold:#c9a45c;
+--gold-light:#e2c98d;
+--cream:#f7f3eb;
+--white:#fff;
+--gray:#77716a;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+background:var(--cream);
+color:var(--black);
+font-family:"Cairo",Arial,sans-serif;
+overflow-x:hidden;
+}
+
+/* LOADER */
+
+#loader{
+position:fixed;
+inset:0;
+background:var(--black);
+z-index:99999;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+transition:.6s;
+}
+
+#loader.hide{
+opacity:0;
+visibility:hidden;
+}
+
+.loader-logo{
+color:white;
+font-family:"Playfair Display",serif;
+font-size:36px;
+letter-spacing:6px;
+text-align:center;
+}
+
+.loader-line{
+width:90px;
+height:1px;
+background:var(--gold);
+margin-top:18px;
+}
+
+
+/* HEADER */
+
+header{
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:78px;
+z-index:5000;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 6%;
+color:white;
+transition:.3s;
+}
+
+header.scrolled{
+background:rgba(17,16,15,.95);
+backdrop-filter:blur(12px);
+}
+
+.logo{
+color:white;
+text-decoration:none;
+font-family:"Playfair Display",serif;
+font-size:24px;
+letter-spacing:4px;
+}
+
+nav{
+display:flex;
+gap:28px;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+font-size:14px;
+}
+
+.header-cart{
+background:transparent;
+color:white;
+border:1px solid rgba(255,255,255,.5);
+border-radius:30px;
+padding:9px 17px;
+cursor:pointer;
+}
+
+
+/* HERO */
+
+.hero{
+min-height:100vh;
+display:flex;
+align-items:center;
+
+background:
+linear-gradient(
+90deg,
+rgba(10,9,8,.92),
+rgba(10,9,8,.58),
+rgba(10,9,8,.25)
+),
+url("hero.jpg") center/cover no-repeat;
+}
+
+.hero-content{
+width:90%;
+max-width:1250px;
+margin:auto;
+color:white;
+padding-top:70px;
+}
+
+.eyebrow{
+color:var(--gold-light);
+letter-spacing:5px;
+font-size:13px;
+margin-bottom:18px;
+}
+
+.hero h1{
+font-family:"Playfair Display",serif;
+font-size:clamp(55px,9vw,110px);
+line-height:.95;
+margin-bottom:25px;
+}
+
+.hero h1 span{
+color:var(--gold-light);
+}
+
+.hero-text{
+max-width:520px;
+color:#e4dfd6;
+line-height:2;
+margin-bottom:30px;
+}
+
+.btn-gold{
+display:inline-block;
+background:var(--gold);
+color:#17130e;
+padding:14px 28px;
+text-decoration:none;
+border:none;
+cursor:pointer;
+font-weight:bold;
+}
+
+
+/* SECTIONS */
+
+.section{
+width:90%;
+max-width:1250px;
+margin:auto;
+padding:90px 0;
+}
+
+.section-heading{
+text-align:center;
+margin-bottom:40px;
+}
+
+.section-heading small{
+color:var(--gold);
+letter-spacing:4px;
+}
+
+.section-heading h2{
+font-family:"Playfair Display",serif;
+font-size:clamp(35px,5vw,55px);
+margin:10px 0;
+}
+
+.section-heading p{
+color:var(--gray);
+}
+
+
+/* CATEGORIES */
+
+.categories{
+display:flex;
+justify-content:center;
+gap:12px;
+flex-wrap:wrap;
+margin-bottom:40px;
+}
+
+.category-btn{
+background:transparent;
+border:1px solid #cfc8bc;
+padding:11px 25px;
+cursor:pointer;
+font-family:inherit;
+transition:.3s;
+}
+
+.category-btn.active,
+.category-btn:hover{
+background:var(--black);
+color:white;
+border-color:var(--black);
+}
+
+
+/* PRODUCTS */
+
+.products{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:24px;
+}
+
+.product{
+background:white;
+overflow:hidden;
+transition:.3s;
+}
+
+.product:hover{
+transform:translateY(-7px);
+box-shadow:0 18px 40px rgba(0,0,0,.12);
+}
+
+.product-image{
+height:320px;
+background:#eee;
+position:relative;
+overflow:hidden;
+}
+
+.product-image img{
+width:100%;
+height:100%;
+object-fit:cover;
+transition:.5s;
+}
+
+.product:hover .product-image img{
+transform:scale(1.06);
+}
+
+.product-tag{
+position:absolute;
+top:12px;
+right:12px;
+z-index:2;
+background:var(--black);
+color:white;
+padding:5px 10px;
+font-size:11px;
+}
+
+.product-info{
+padding:18px;
+}
+
+.product-name{
+font-family:"Playfair Display",serif;
+font-size:21px;
+margin-bottom:7px;
+}
+
+.product-description{
+color:var(--gray);
+font-size:13px;
+min-height:42px;
+line-height:1.7;
+margin-bottom:12px;
+}
+
+
+/* SIZES */
+
+.size-title{
+font-weight:bold;
+font-size:13px;
+margin-bottom:8px;
+}
+
+.size-options{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:6px;
+margin-bottom:12px;
+}
+
+.size-option{
+position:relative;
+}
+
+.size-option input{
+position:absolute;
+opacity:0;
+pointer-events:none;
+}
+
+.size-option label{
+display:block;
+border:1px solid #d8d1c5;
+padding:8px 4px;
+text-align:center;
+cursor:pointer;
+font-size:12px;
+transition:.2s;
+background:#fff;
+}
+
+.size-option input:checked + label{
+background:var(--black);
+color:white;
+border-color:var(--black);
+}
+
+.selected-price{
+text-align:center;
+font-weight:bold;
+font-size:15px;
+margin-bottom:10px;
+}
+
+.add-btn{
+width:100%;
+background:var(--black);
+color:white;
+border:none;
+padding:10px 15px;
+cursor:pointer;
+font-family:inherit;
+}
+
+.add-btn:hover{
+background:var(--gold);
+color:var(--black);
+}
+
+
+/* MESSAGES */
+
+.empty{
+text-align:center;
+padding:50px 20px;
+color:var(--gray);
+grid-column:1/-1;
+}
+
+.error-box{
+background:#fff0f0;
+color:#a00000;
+border:1px solid #e0aaaa;
+padding:20px;
+border-radius:10px;
+direction:ltr;
+text-align:left;
+word-break:break-word;
+grid-column:1/-1;
+}
+
+
+/* STORY */
+
+.story{
+background:var(--black);
+color:white;
+}
+
+.story-inner{
+width:90%;
+max-width:1250px;
+margin:auto;
+padding:90px 0;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:70px;
+align-items:center;
+}
+
+.story-image{
+height:500px;
+background:
+linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),
+url("story.jpg") center/cover;
+}
+
+.story-content small{
+color:var(--gold-light);
+letter-spacing:4px;
+}
+
+.story-content h2{
+font-family:"Playfair Display",serif;
+font-size:clamp(38px,5vw,65px);
+margin:15px 0 25px;
+}
+
+.story-content p{
+color:#c9c5be;
+line-height:2;
+margin-bottom:20px;
+}
+
+
+/* FEATURES */
+
+.features{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
+.feature{
+background:white;
+text-align:center;
+padding:40px 25px;
+border:1px solid #eee9df;
+}
+
+.feature-icon{
+font-size:30px;
+margin-bottom:15px;
+}
+
+.feature h3{
+font-family:"Playfair Display",serif;
+font-size:22px;
+margin-bottom:10px;
+}
+
+.feature p{
+color:var(--gray);
+line-height:1.8;
+}
+
+
+/* CTA */
+
+.cta{
+width:90%;
+max-width:1250px;
+margin:0 auto 90px;
+padding:75px 20px;
+text-align:center;
+color:white;
+
+background:
+linear-gradient(rgba(17,16,15,.92),rgba(17,16,15,.92)),
+url("cta.jpg") center/cover;
+}
+
+.cta h2{
+font-family:"Playfair Display",serif;
+font-size:clamp(35px,5vw,60px);
+margin-bottom:15px;
+}
+
+.cta p{
+color:#ccc;
+margin-bottom:25px;
+}
+
+
+/* FOOTER */
+
+footer{
+background:#0c0b0a;
+color:white;
+text-align:center;
+padding:45px 20px;
+}
+
+.footer-logo{
+font-family:"Playfair Display",serif;
+font-size:27px;
+letter-spacing:5px;
+margin-bottom:10px;
+}
+
+footer p{
+color:#999;
+font-size:13px;
+}
+
+
+/* CART */
+
+.overlay{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.65);
+z-index:7000;
+}
+
+.cart{
+position:fixed;
+top:0;
+right:-460px;
+width:440px;
+max-width:95%;
+height:100%;
+background:white;
+z-index:8000;
+transition:.4s;
+padding:25px;
+overflow-y:auto;
+}
+
+.cart.open{
+right:0;
+}
+
+.cart-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid #eee;
+padding-bottom:15px;
+}
+
+.cart-header h2{
+font-family:"Playfair Display",serif;
+}
+
+.close-cart{
+width:38px;
+height:38px;
+border:none;
+border-radius:50%;
+cursor:pointer;
+font-size:20px;
+}
+
+.cart-item{
+display:flex;
+gap:12px;
+padding:15px 0;
+border-bottom:1px solid #eee;
+}
+
+.cart-item img{
+width:75px;
+height:75px;
+object-fit:cover;
+}
+
+.cart-item-info{
+flex:1;
+}
+
+.cart-size{
+color:#777;
+font-size:13px;
+margin-top:3px;
+}
+
+.quantity{
+display:flex;
+gap:8px;
+align-items:center;
+margin-top:8px;
+}
+
+.quantity button{
+width:28px;
+height:28px;
+border:none;
+background:var(--black);
+color:white;
+cursor:pointer;
+padding:0;
+}
+
+.remove{
+border:none;
+background:none;
+color:#b00000;
+cursor:pointer;
+margin-top:5px;
+}
+
+.cart-total{
+font-size:21px;
+font-weight:bold;
+border-top:2px solid var(--black);
+margin-top:20px;
+padding:20px 0;
+}
+
+.order-form{
+display:none;
+}
+
+.order-form input,
+.order-form textarea{
+width:100%;
+padding:13px;
+margin-bottom:10px;
+border:1px solid #ddd;
+font-family:inherit;
+}
+
+.order-form textarea{
+height:90px;
+resize:none;
+}
+
+.whatsapp-btn{
+width:100%;
+background:#25D366;
+color:white;
+border:none;
+padding:14px;
+cursor:pointer;
+font-weight:bold;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+nav{
+display:none;
+}
+
+.products{
+grid-template-columns:repeat(2,1fr);
+}
+
+.story-inner{
+grid-template-columns:1fr;
+}
+
+.features{
+grid-template-columns:1fr;
+}
+
+}
+
+@media(max-width:600px){
+
+header{
+height:68px;
+padding:0 18px;
+}
+
+.logo{
+font-size:18px;
+letter-spacing:2px;
+}
+
+.hero h1{
+font-size:52px;
+}
+
+.products{
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.product-image{
+height:210px;
+}
+
+.product-info{
+padding:11px;
+}
+
+.product-name{
+font-size:17px;
+}
+
+.product-description{
+font-size:11px;
+}
+
+.size-options{
+gap:4px;
+}
+
+.size-option label{
+font-size:10px;
+padding:7px 2px;
+}
+
+.cart{
+width:100%;
+max-width:100%;
+}
+
+.story-image{
+height:350px;
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- LOADER -->
+
+<div id="loader">
+
+<div class="loader-logo">
+VELVET SCENT
+</div>
+
+<div class="loader-line"></div>
+
+</div>
+
+
+<!-- HEADER -->
+
+<header id="header">
+
+<a href="#home" class="logo">
+VELVET SCENT
+</a>
+
+<nav>
+
+<a href="#home">
+HOME
+</a>
+
+<a href="#products-section">
+COLLECTION
+</a>
+
+<a href="#story">
+OUR STORY
+</a>
+
+<a href="#why-us">
+WHY US
+</a>
+
+</nav>
+
+<button
+class="header-cart"
+onclick="openCart()"
+>
+🛍️ CART
+(
+<span id="cartCount">0</span>
+)
+</button>
+
+</header>
+
+
+<!-- HERO -->
+
+<section id="home" class="hero">
+
+<div class="hero-content">
+
+<div class="eyebrow">
+THE ART OF FRAGRANCE
+</div>
+
+<h1>
+Your Scent.
+<br>
+<span>
+Your Signature.
+</span>
+</h1>
+
+<p class="hero-text">
+
+Discover Velvet Scent —
+a world of luxury fragrances
+created to express your personality.
+
+</p>
+
+<a
+href="#products-section"
+class="btn-gold"
+>
+EXPLORE COLLECTION
+</a>
+
+</div>
+
+</section>
+
+
+<!-- PRODUCTS -->
+
+<section
+id="products-section"
+class="section"
+>
+
+<div class="section-heading">
+
+<small>
+VELVET SCENT COLLECTION
+</small>
+
+<h2>
+Find Your Signature
+</h2>
+
+<p>
+اختر العطر والحجم المناسب لك
+</p>
+
+</div>
+
+
+<div class="categories">
+
+<button
+class="category-btn active"
+onclick="filterProducts('all',this)"
+>
+ALL
+</button>
+
+<button
+class="category-btn"
+onclick="filterProducts('man',this)"
+>
+MAN
+</button>
+
+<button
+class="category-btn"
+onclick="filterProducts('women',this)"
+>
+WOMEN
+</button>
+
+<button
+class="category-btn"
+onclick="filterProducts('unisex',this)"
+>
+UNISEX
+</button>
+
+</div>
+
+
+<div
+id="products"
+class="products"
+>
+
+<div class="empty">
+جاري تحميل العطور...
+</div>
+
+</div>
+
+</section>
+
+
+<!-- STORY -->
+
+<section
+id="story"
+class="story"
+>
+
+<div class="story-inner">
+
+<div class="story-image"></div>
+
+<div class="story-content">
+
+<small>
+OUR STORY
+</small>
+
+<h2>
+Scent tells your story.
+</h2>
+
+<p>
+في Velvet Scent نؤمن أن العطر
+ليس مجرد رائحة، بل هو انطباع
+وذكرى وشخصية.
+</p>
+
+<p>
+اخترنا لك مجموعة من الروائح
+المميزة التي تمنحك حضورًا مختلفًا.
+</p>
+
+<a
+href="#products-section"
+class="btn-gold"
+>
+SHOP FRAGRANCES
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- WHY US -->
+
+<section
+id="why-us"
+class="section"
+>
+
+<div class="section-heading">
+
+<small>
+WHY VELVET SCENT
+</small>
+
+<h2>
+The Velvet Experience
+</h2>
+
+</div>
+
+
+<div class="features">
+
+<div class="feature">
+
+<div class="feature-icon">
+✦
+</div>
+
+<h3>
+Premium Quality
+</h3>
+
+<p>
+نهتم بكل تفاصيل تجربتك
+من اختيار العطر حتى وصوله إليك.
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<div class="feature-icon">
+♢
+</div>
+
+<h3>
+Curated Collection
+</h3>
+
+<p>
+مجموعة مختارة بعناية
+لتناسب مختلف الأذواق.
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<div class="feature-icon">
+♡
+</div>
+
+<h3>
+Made For You
+</h3>
+
+<p>
+لأن عطرك هو جزء من شخصيتك
+وحضورك الخاص.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CTA -->
+
+<section class="cta">
+
+<h2>
+Find Your Signature
+</h2>
+
+<p>
+Your next favorite fragrance is waiting.
+</p>
+
+<a
+href="#products-section"
+class="btn-gold"
+>
+SHOP NOW
+</a>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="footer-logo">
+VELVET SCENT
+</div>
+
+<p>
+Luxury Fragrances
+</p>
+
+<br>
+
+<p>
+©️ 2026 Velvet Scent — جميع الحقوق محفوظة
+</p>
+
+</footer>
+
+
+<!-- CART OVERLAY -->
+
+<div
+id="overlay"
+class="overlay"
+onclick="closeCart()"
+></div>
+
+
+<!-- CART -->
+
+<div
+id="cart"
+class="cart"
+>
+
+<div class="cart-header">
+
+<h2>
+Shopping Bag
+</h2>
+
+<button
+class="close-cart"
+onclick="closeCart()"
+>
+×
+</button>
+
+</div>
+
+
+<div id="cartItems"></div>
+
+
+<div class="cart-total">
+
+الإجمالي:
+
+<span id="cartTotal">
+0
+</span>
+
+جنيه
+
+</div>
+
+
+<div
+id="orderForm"
+class="order-form"
+>
+
+<input
+id="customerName"
+type="text"
+placeholder="الاسم"
+>
+
+<input
+id="customerPhone"
+type="tel"
+placeholder="رقم الموبايل"
+>
+
+<textarea
+id="customerAddress"
+placeholder="العنوان بالتفصيل"
+></textarea>
+
+
+<button
+class="whatsapp-btn"
+onclick="sendOrder()"
+>
+📱 إرسال الطلب عبر WhatsApp
+</button>
+
+</div>
+
+</div>
+
+
+
 <script>
 
 /* =========================
@@ -25,7 +1195,9 @@ DATA
 ========================= */
 
 let products = [];
+
 let cart = [];
+
 let currentCategory = "all";
 
 
@@ -33,7 +1205,7 @@ let currentCategory = "all";
 LOADER
 ========================= */
 
-window.addEventListener("load", function(){
+window.addEventListener("load",function(){
 
 setTimeout(function(){
 
@@ -41,7 +1213,9 @@ const loader =
 document.getElementById("loader");
 
 if(loader){
+
 loader.classList.add("hide");
+
 }
 
 },800);
@@ -79,7 +1253,8 @@ FILTER
 
 function filterProducts(category,button){
 
-currentCategory = category;
+currentCategory =
+category;
 
 document
 .querySelectorAll(".category-btn")
@@ -117,6 +1292,9 @@ container.innerHTML = `
 </div>
 `;
 
+
+try{
+
 const {data,error} =
 await supabaseClient
 .from("products")
@@ -135,28 +1313,49 @@ option2_price,
 option3_name,
 option3_price
 `)
-.order("product_id",{ascending:false});
+.order(
+"product_id",
+{
+ascending:false
+}
+);
 
 
 if(error){
 
-console.error(error);
-
-container.innerHTML = `
-<div class="error-box">
-<strong>حدث خطأ في تحميل العطور</strong>
-<br><br>
-${escapeHTML(error.message)}
-</div>
-`;
-
-return;
+throw error;
 
 }
 
-products = data || [];
+
+products =
+data || [];
+
 
 renderProducts();
+
+
+}catch(error){
+
+console.error(error);
+
+container.innerHTML = `
+
+<div class="error-box">
+
+<strong>
+حدث خطأ في تحميل العطور
+</strong>
+
+<br><br>
+
+${escapeHTML(error.message)}
+
+</div>
+
+`;
+
+}
 
 }
 
@@ -170,79 +1369,83 @@ function getProductOptions(product){
 const options = [];
 
 
-/* OPTION 1 */
+const name1 =
+String(
+product.option1_name || ""
+).trim();
 
-const option1Name =
-String(product.option1_name || "").trim();
-
-const option1Price =
+const price1 =
 Number(product.option1_price);
 
+
 if(
-option1Name &&
-Number.isFinite(option1Price) &&
-option1Price > 0
+name1 &&
+Number.isFinite(price1) &&
+price1 > 0
 ){
 
 options.push({
 
-name:option1Name,
-price:option1Price,
-originalIndex:0
+name:name1,
+
+price:price1
 
 });
 
 }
 
 
-/* OPTION 2 */
+const name2 =
+String(
+product.option2_name || ""
+).trim();
 
-const option2Name =
-String(product.option2_name || "").trim();
-
-const option2Price =
+const price2 =
 Number(product.option2_price);
 
+
 if(
-option2Name &&
-Number.isFinite(option2Price) &&
-option2Price > 0
+name2 &&
+Number.isFinite(price2) &&
+price2 > 0
 ){
 
 options.push({
 
-name:option2Name,
-price:option2Price,
-originalIndex:1
+name:name2,
+
+price:price2
 
 });
 
 }
 
 
-/* OPTION 3 */
+const name3 =
+String(
+product.option3_name || ""
+).trim();
 
-const option3Name =
-String(product.option3_name || "").trim();
-
-const option3Price =
+const price3 =
 Number(product.option3_price);
 
+
 if(
-option3Name &&
-Number.isFinite(option3Price) &&
-option3Price > 0
+name3 &&
+Number.isFinite(price3) &&
+price3 > 0
 ){
 
 options.push({
 
-name:option3Name,
-price:option3Price,
-originalIndex:2
+name:name3,
+
+price:price3
 
 });
 
 }
+
 
 return options;
 
@@ -260,9 +1463,14 @@ document.getElementById("products");
 
 if(!container)return;
 
-let filtered = products;
 
-if(currentCategory !== "all"){
+let filtered =
+products;
+
+
+if(
+currentCategory !== "all"
+){
 
 filtered =
 products.filter(function(product){
@@ -280,9 +1488,11 @@ currentCategory;
 if(!filtered.length){
 
 container.innerHTML = `
+
 <div class="empty">
 لا توجد عطور في هذا القسم حاليًا.
 </div>
+
 `;
 
 return;
@@ -334,7 +1544,9 @@ onchange="updateSelectedPrice('${escapeAttribute(productId)}',${optionIndex})"
 ${optionIndex === 0 ? "checked" : ""}
 >
 
-<label for="${escapeAttribute(safeId)}">
+<label
+for="${escapeAttribute(safeId)}"
+>
 ${escapeHTML(option.name)}
 </label>
 
@@ -347,6 +1559,7 @@ ${escapeHTML(option.name)}
 
 </div>
 
+
 <div
 id="selected-price-${escapeAttribute(productId)}"
 class="selected-price"
@@ -354,6 +1567,7 @@ class="selected-price"
 ${options[0].price.toLocaleString("ar-EG")}
 جنيه
 </div>
+
 
 <button
 class="add-btn"
@@ -367,9 +1581,11 @@ onclick="addProductToCart('${escapeAttribute(productId)}')"
 }else{
 
 sizesHTML = `
+
 <div class="selected-price">
 السعر غير متاح
 </div>
+
 `;
 
 }
@@ -401,15 +1617,18 @@ onerror="this.style.display='none';"
 
 </div>
 
+
 <div class="product-info">
 
 <div class="product-name">
 ${escapeHTML(product.name || "عطر")}
 </div>
 
+
 <div class="product-description">
 ${escapeHTML(product.description || "")}
 </div>
+
 
 ${sizesHTML}
 
@@ -425,20 +1644,27 @@ ${sizesHTML}
 
 
 /* =========================
-UPDATE SELECTED PRICE
+SELECTED PRICE
 ========================= */
 
-function updateSelectedPrice(productId,optionIndex){
+function updateSelectedPrice(
+productId,
+optionIndex
+){
 
 const product =
 products.find(function(p){
 
-return String(p.product_id) ===
+return String(
+p.product_id
+) ===
 String(productId);
 
 });
 
+
 if(!product)return;
+
 
 const options =
 getProductOptions(product);
@@ -446,12 +1672,16 @@ getProductOptions(product);
 const option =
 options[optionIndex];
 
+
 if(!option)return;
+
 
 const priceElement =
 document.getElementById(
-"selected-price-" + productId
+"selected-price-" +
+productId
 );
+
 
 if(priceElement){
 
@@ -465,18 +1695,23 @@ option.price.toLocaleString("ar-EG") +
 
 
 /* =========================
-ADD TO CART
+ADD PRODUCT TO CART
 ========================= */
 
-function addProductToCart(productId){
+function addProductToCart(
+productId
+){
 
 const product =
 products.find(function(p){
 
-return String(p.product_id) ===
+return String(
+p.product_id
+) ===
 String(productId);
 
 });
+
 
 if(!product){
 
@@ -490,9 +1725,12 @@ return;
 const options =
 getProductOptions(product);
 
+
 if(!options.length){
 
-alert("لا توجد أسعار متاحة لهذا العطر");
+alert(
+"لا توجد أسعار متاحة لهذا العطر"
+);
 
 return;
 
@@ -504,9 +1742,12 @@ document.querySelector(
 `input[name="size_${CSS.escape(String(productId))}"]:checked`
 );
 
+
 if(!selected){
 
-alert("اختار الحجم الأول");
+alert(
+"اختار الحجم الأول"
+);
 
 return;
 
@@ -519,9 +1760,12 @@ Number(selected.value);
 const option =
 options[optionIndex];
 
+
 if(!option){
 
-alert("اختيار غير صحيح");
+alert(
+"اختيار غير صحيح"
+);
 
 return;
 
@@ -544,12 +1788,14 @@ option.name
 if(existing){
 
 if(
-product.stock > 0 &&
+Number(product.stock) > 0 &&
 existing.quantity >=
 Number(product.stock)
 ){
 
-alert("الكمية المتاحة خلصت");
+alert(
+"الكمية المتاحة خلصت"
+);
 
 return;
 
@@ -566,8 +1812,6 @@ productId:productId,
 name:product.name,
 
 image:product.image,
-
-description:product.description,
 
 optionName:option.name,
 
@@ -593,7 +1837,10 @@ openCart();
 INCREASE
 ========================= */
 
-function increaseQuantity(productId,optionName){
+function increaseQuantity(
+productId,
+optionName
+){
 
 const item =
 cart.find(function(item){
@@ -607,6 +1854,7 @@ optionName
 
 });
 
+
 if(!item)return;
 
 
@@ -615,7 +1863,9 @@ item.stock > 0 &&
 item.quantity >= item.stock
 ){
 
-alert("الكمية المتاحة خلصت");
+alert(
+"الكمية المتاحة خلصت"
+);
 
 return;
 
@@ -633,7 +1883,10 @@ updateCart();
 DECREASE
 ========================= */
 
-function decreaseQuantity(productId,optionName){
+function decreaseQuantity(
+productId,
+optionName
+){
 
 const item =
 cart.find(function(item){
@@ -647,9 +1900,12 @@ optionName
 
 });
 
+
 if(!item)return;
 
+
 item.quantity--;
+
 
 if(item.quantity <= 0){
 
@@ -657,7 +1913,9 @@ cart =
 cart.filter(function(cartItem){
 
 return !(
-String(cartItem.productId) ===
+String(
+cartItem.productId
+) ===
 String(productId) &&
 cartItem.optionName ===
 optionName
@@ -666,6 +1924,7 @@ optionName
 });
 
 }
+
 
 updateCart();
 
@@ -676,19 +1935,25 @@ updateCart();
 REMOVE
 ========================= */
 
-function removeFromCart(productId,optionName){
+function removeFromCart(
+productId,
+optionName
+){
 
 cart =
 cart.filter(function(item){
 
 return !(
-String(item.productId) ===
+String(
+item.productId
+) ===
 String(productId) &&
 item.optionName ===
 optionName
 );
 
 });
+
 
 updateCart();
 
@@ -735,7 +2000,9 @@ item.quantity;
 },0);
 
 
-cartCount.textContent = count;
+cartCount.textContent =
+count;
+
 
 cartTotal.textContent =
 total.toLocaleString("ar-EG");
@@ -744,19 +2011,23 @@ total.toLocaleString("ar-EG");
 if(!cart.length){
 
 cartItems.innerHTML = `
+
 <div class="empty">
 السلة فارغة 🛍️
 </div>
+
 `;
 
-orderForm.style.display = "none";
+orderForm.style.display =
+"none";
 
 return;
 
 }
 
 
-orderForm.style.display = "block";
+orderForm.style.display =
+"block";
 
 
 cartItems.innerHTML =
@@ -837,17 +2108,21 @@ document.getElementById("cart");
 const overlay =
 document.getElementById("overlay");
 
+
 if(cartElement){
 
 cartElement.classList.add("open");
 
 }
 
+
 if(overlay){
 
-overlay.style.display = "block";
+overlay.style.display =
+"block";
 
 }
+
 
 updateCart();
 
@@ -866,15 +2141,18 @@ document.getElementById("cart");
 const overlay =
 document.getElementById("overlay");
 
+
 if(cartElement){
 
 cartElement.classList.remove("open");
 
 }
 
+
 if(overlay){
 
-overlay.style.display = "none";
+overlay.style.display =
+"none";
 
 }
 
@@ -889,7 +2167,9 @@ async function sendOrder(){
 
 if(!cart.length){
 
-alert("السلة فارغة");
+alert(
+"السلة فارغة"
+);
 
 return;
 
@@ -917,7 +2197,11 @@ document
 .trim();
 
 
-if(!name || !phone || !address){
+if(
+!name ||
+!phone ||
+!address
+){
 
 alert(
 "من فضلك املأ جميع بيانات الطلب"
@@ -928,9 +2212,7 @@ return;
 }
 
 
-/* =========================
-TOTAL
-========================= */
+/* TOTAL */
 
 const total =
 cart.reduce(function(sum,item){
@@ -942,9 +2224,7 @@ item.quantity;
 },0);
 
 
-/* =========================
-ITEMS
-========================= */
+/* ITEMS */
 
 const orderItems =
 cart.map(function(item){
@@ -953,9 +2233,9 @@ return {
 
 product_id:item.productId,
 
-name:item.name,
+product_name:item.name,
 
-optionName:item.optionName,
+option_name:item.optionName,
 
 price:Number(item.price || 0),
 
@@ -967,13 +2247,15 @@ quantity:Number(item.quantity || 1)
 
 
 /* =========================
-SAVE ORDER
+SAVE TO SUPABASE
 ========================= */
 
 /*
-مهم:
-هنا لا نستخدم .select().single()
-حتى لا يحتاج الزائر إلى SELECT policy.
+مهم جدًا:
+لا يوجد select()
+بعد insert()
+لأن الزائر anon
+ومش محتاج يقرأ الطلب.
 */
 
 const {error} =
@@ -996,9 +2278,7 @@ items:orderItems
 });
 
 
-/* =========================
-ERROR
-========================= */
+/* ERROR */
 
 if(error){
 
@@ -1044,7 +2324,7 @@ address +
 
 
 message +=
-"🌹 العطور:\n";
+"🌹 المنتجات:\n";
 
 
 cart.forEach(function(item){
@@ -1072,6 +2352,8 @@ total +
 " جنيه";
 
 
+/* WHATSAPP */
+
 const whatsappURL =
 "https://wa.me/" +
 STORE_WHATSAPP +
@@ -1079,19 +2361,13 @@ STORE_WHATSAPP +
 encodeURIComponent(message);
 
 
-/* =========================
-OPEN WHATSAPP
-========================= */
-
 window.open(
 whatsappURL,
 "_blank"
 );
 
 
-/* =========================
-CLEAR
-========================= */
+/* CLEAR */
 
 cart = [];
 
@@ -1100,9 +2376,22 @@ updateCart();
 closeCart();
 
 
+document.getElementById(
+"customerName"
+).value = "";
+
+document.getElementById(
+"customerPhone"
+).value = "";
+
+document.getElementById(
+"customerAddress"
+).value = "";
+
+
 alert(
 "تم تسجيل الطلب بنجاح ✅\n\n" +
-"سيتم تأكيد الطلب عبر WhatsApp."
+"سيتم إرسال تفاصيل الطلب عبر WhatsApp."
 );
 
 }
@@ -1116,15 +2405,30 @@ function escapeHTML(value){
 
 return String(value)
 
-.replaceAll("&","&amp;")
+.replaceAll(
+"&",
+"&amp;"
+)
 
-.replaceAll("<","&lt;")
+.replaceAll(
+"<",
+"&lt;"
+)
 
-.replaceAll(">","&gt;")
+.replaceAll(
+">",
+"&gt;"
+)
 
-.replaceAll('"',"&quot;")
+.replaceAll(
+'"',
+"&quot;"
+)
 
-.replaceAll("'","&#039;");
+.replaceAll(
+"'",
+"&#039;"
+);
 
 }
 
@@ -1143,3 +2447,7 @@ START
 loadProducts();
 
 </script>
+
+</body>
+
+</html>
