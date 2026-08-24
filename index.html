@@ -14,6 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
+
 *{
 box-sizing:border-box;
 margin:0;
@@ -39,6 +40,10 @@ color:var(--black);
 font-family:"Cairo",Arial,sans-serif;
 overflow-x:hidden;
 }
+
+/* =========================
+LOADER
+========================= */
 
 #loader{
 position:fixed;
@@ -71,6 +76,10 @@ height:1px;
 background:var(--gold);
 margin-top:18px;
 }
+
+/* =========================
+HEADER
+========================= */
 
 header{
 position:fixed;
@@ -119,6 +128,10 @@ border-radius:30px;
 padding:9px 17px;
 cursor:pointer;
 }
+
+/* =========================
+HERO
+========================= */
 
 .hero{
 min-height:100vh;
@@ -179,6 +192,10 @@ cursor:pointer;
 font-weight:bold;
 }
 
+/* =========================
+SECTIONS
+========================= */
+
 .section{
 width:90%;
 max-width:1250px;
@@ -206,6 +223,10 @@ margin:10px 0;
 color:var(--gray);
 }
 
+/* =========================
+CATEGORIES
+========================= */
+
 .categories{
 display:flex;
 justify-content:center;
@@ -229,6 +250,10 @@ background:var(--black);
 color:white;
 border-color:var(--black);
 }
+
+/* =========================
+PRODUCTS
+========================= */
 
 .products{
 display:grid;
@@ -294,6 +319,10 @@ line-height:1.7;
 margin-bottom:12px;
 }
 
+/* =========================
+SIZE
+========================= */
+
 .size-title{
 font-weight:bold;
 font-size:13px;
@@ -356,6 +385,10 @@ background:var(--gold);
 color:var(--black);
 }
 
+/* =========================
+MESSAGES
+========================= */
+
 .empty{
 text-align:center;
 padding:50px 20px;
@@ -374,6 +407,10 @@ text-align:left;
 word-break:break-word;
 grid-column:1/-1;
 }
+
+/* =========================
+STORY
+========================= */
 
 .story{
 background:var(--black);
@@ -415,6 +452,10 @@ line-height:2;
 margin-bottom:20px;
 }
 
+/* =========================
+FEATURES
+========================= */
+
 .features{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -444,6 +485,10 @@ color:var(--gray);
 line-height:1.8;
 }
 
+/* =========================
+CTA
+========================= */
+
 .cta{
 width:90%;
 max-width:1250px;
@@ -468,6 +513,10 @@ color:#ccc;
 margin-bottom:25px;
 }
 
+/* =========================
+FOOTER
+========================= */
+
 footer{
 background:#0c0b0a;
 color:white;
@@ -486,6 +535,10 @@ footer p{
 color:#999;
 font-size:13px;
 }
+
+/* =========================
+CART
+========================= */
 
 .overlay{
 display:none;
@@ -618,6 +671,10 @@ cursor:pointer;
 font-weight:bold;
 }
 
+/* =========================
+RESPONSIVE
+========================= */
+
 @media(max-width:950px){
 
 nav{
@@ -694,15 +751,26 @@ height:350px;
 }
 
 }
+
 </style>
 </head>
 
 <body>
 
+<!-- LOADER -->
+
 <div id="loader">
-<div class="loader-logo">VELVET SCENT</div>
-<div class="loader-line"></div>
+
+<div class="loader-logo">
+VELVET SCENT
 </div>
+
+<div class="loader-line"></div>
+
+</div>
+
+
+<!-- HEADER -->
 
 <header id="header">
 
@@ -711,18 +779,41 @@ VELVET SCENT
 </a>
 
 <nav>
-<a href="#home">HOME</a>
-<a href="#products-section">COLLECTION</a>
-<a href="#story">OUR STORY</a>
-<a href="#why-us">WHY US</a>
+
+<a href="#home">
+HOME
+</a>
+
+<a href="#products-section">
+COLLECTION
+</a>
+
+<a href="#story">
+OUR STORY
+</a>
+
+<a href="#why-us">
+WHY US
+</a>
+
 </nav>
 
-<button class="header-cart" onclick="openCart()">
+<button
+class="header-cart"
+onclick="openCart()"
+>
+
 🛍️ CART
-(<span id="cartCount">0</span>)
+(
+<span id="cartCount">0</span>
+)
+
 </button>
 
 </header>
+
+
+<!-- HERO -->
 
 <section id="home" class="hero">
 
@@ -733,26 +824,44 @@ THE ART OF FRAGRANCE
 </div>
 
 <h1>
+
 Your Scent.
 <br>
-<span>Your Signature.</span>
+
+<span>
+Your Signature.
+</span>
+
 </h1>
 
 <p class="hero-text">
+
 Discover Velvet Scent —
 a world of luxury fragrances
 created to express your personality.
+
 </p>
 
-<a href="#products-section" class="btn-gold">
+<a
+href="#products-section"
+class="btn-gold"
+>
+
 EXPLORE COLLECTION
+
 </a>
 
 </div>
 
 </section>
 
-<section id="products-section" class="section">
+
+<!-- PRODUCTS -->
+
+<section
+id="products-section"
+class="section"
+>
 
 <div class="section-heading">
 
@@ -770,31 +879,44 @@ Find Your Signature
 
 </div>
 
+
 <div class="categories">
 
-<button class="category-btn active"
-onclick="filterProducts('all',this)">
+<button
+class="category-btn active"
+onclick="filterProducts('all',this)"
+>
 ALL
 </button>
 
-<button class="category-btn"
-onclick="filterProducts('man',this)">
+<button
+class="category-btn"
+onclick="filterProducts('man',this)"
+>
 MAN
 </button>
 
-<button class="category-btn"
-onclick="filterProducts('women',this)">
+<button
+class="category-btn"
+onclick="filterProducts('women',this)"
+>
 WOMEN
 </button>
 
-<button class="category-btn"
-onclick="filterProducts('unisex',this)">
+<button
+class="category-btn"
+onclick="filterProducts('unisex',this)"
+>
 UNISEX
 </button>
 
 </div>
 
-<div id="products" class="products">
+
+<div
+id="products"
+class="products"
+>
 
 <div class="empty">
 جاري تحميل العطور...
@@ -804,7 +926,13 @@ UNISEX
 
 </section>
 
-<section id="story" class="story">
+
+<!-- STORY -->
+
+<section
+id="story"
+class="story"
+>
 
 <div class="story-inner">
 
@@ -831,7 +959,10 @@ Scent tells your story.
 المميزة التي تمنحك حضورًا مختلفًا.
 </p>
 
-<a href="#products-section" class="btn-gold">
+<a
+href="#products-section"
+class="btn-gold"
+>
 SHOP FRAGRANCES
 </a>
 
@@ -841,7 +972,13 @@ SHOP FRAGRANCES
 
 </section>
 
-<section id="why-us" class="section">
+
+<!-- WHY US -->
+
+<section
+id="why-us"
+class="section"
+>
 
 <div class="section-heading">
 
@@ -855,38 +992,68 @@ The Velvet Experience
 
 </div>
 
+
 <div class="features">
 
 <div class="feature">
-<div class="feature-icon">✦</div>
-<h3>Premium Quality</h3>
+
+<div class="feature-icon">
+✦
+</div>
+
+<h3>
+Premium Quality
+</h3>
+
 <p>
 نهتم بكل تفاصيل تجربتك
 من اختيار العطر حتى وصوله إليك.
 </p>
+
 </div>
 
+
 <div class="feature">
-<div class="feature-icon">♢</div>
-<h3>Curated Collection</h3>
+
+<div class="feature-icon">
+♢
+</div>
+
+<h3>
+Curated Collection
+</h3>
+
 <p>
 مجموعة مختارة بعناية
 لتناسب مختلف الأذواق.
 </p>
+
 </div>
 
+
 <div class="feature">
-<div class="feature-icon">♡</div>
-<h3>Made For You</h3>
+
+<div class="feature-icon">
+♡
+</div>
+
+<h3>
+Made For You
+</h3>
+
 <p>
 لأن عطرك هو جزء من شخصيتك
 وحضورك الخاص.
 </p>
+
 </div>
 
 </div>
 
 </section>
+
+
+<!-- CTA -->
 
 <section class="cta">
 
@@ -898,11 +1065,17 @@ Find Your Signature
 Your next favorite fragrance is waiting.
 </p>
 
-<a href="#products-section" class="btn-gold">
+<a
+href="#products-section"
+class="btn-gold"
+>
 SHOP NOW
 </a>
 
 </section>
+
+
+<!-- FOOTER -->
 
 <footer>
 
@@ -910,7 +1083,9 @@ SHOP NOW
 VELVET SCENT
 </div>
 
-<p>Luxury Fragrances</p>
+<p>
+Luxury Fragrances
+</p>
 
 <br>
 
@@ -920,9 +1095,22 @@ VELVET SCENT
 
 </footer>
 
-<div id="overlay" class="overlay" onclick="closeCart()"></div>
 
-<div id="cart" class="cart">
+<!-- CART OVERLAY -->
+
+<div
+id="overlay"
+class="overlay"
+onclick="closeCart()"
+></div>
+
+
+<!-- CART -->
+
+<div
+id="cart"
+class="cart"
+>
 
 <div class="cart-header">
 
@@ -930,25 +1118,36 @@ VELVET SCENT
 Shopping Bag
 </h2>
 
-<button class="close-cart" onclick="closeCart()">
+<button
+class="close-cart"
+onclick="closeCart()"
+>
 ×
 </button>
 
 </div>
 
+
 <div id="cartItems"></div>
+
 
 <div class="cart-total">
 
 الإجمالي:
 
-<span id="cartTotal">0</span>
+<span id="cartTotal">
+0
+</span>
 
 جنيه
 
 </div>
 
-<div id="orderForm" class="order-form">
+
+<div
+id="orderForm"
+class="order-form"
+>
 
 <input
 id="customerName"
@@ -967,6 +1166,7 @@ id="customerAddress"
 placeholder="العنوان بالتفصيل"
 ></textarea>
 
+
 <button
 class="whatsapp-btn"
 onclick="sendOrder()"
@@ -977,6 +1177,7 @@ onclick="sendOrder()"
 </div>
 
 </div>
+
 
 <script>
 
@@ -1005,7 +1206,9 @@ DATA
 ========================= */
 
 let products = [];
+
 let cart = [];
+
 let currentCategory = "all";
 
 
@@ -1013,24 +1216,32 @@ let currentCategory = "all";
 LOADER
 ========================= */
 
-window.addEventListener("load",function(){
+window.addEventListener(
+"load",
+function(){
 
-setTimeout(function(){
+setTimeout(
+function(){
 
 document
 .getElementById("loader")
 .classList.add("hide");
 
-},800);
+},
+800
+);
 
-});
+}
+);
 
 
 /* =========================
 HEADER
 ========================= */
 
-window.addEventListener("scroll",function(){
+window.addEventListener(
+"scroll",
+function(){
 
 const header =
 document.getElementById("header");
@@ -1045,24 +1256,31 @@ header.classList.remove("scrolled");
 
 }
 
-});
+}
+);
 
 
 /* =========================
 FILTER
 ========================= */
 
-function filterProducts(category,button){
+function filterProducts(
+category,
+button
+){
 
-currentCategory = category;
+currentCategory =
+category;
 
 document
 .querySelectorAll(".category-btn")
-.forEach(function(btn){
+.forEach(
+function(btn){
 
 btn.classList.remove("active");
 
-});
+}
+);
 
 button.classList.add("active");
 
@@ -1104,17 +1322,27 @@ option2_price,
 option3_name,
 option3_price
 `)
-.order("product_id",{ascending:false});
+.order(
+"product_id",
+{
+ascending:false
+}
+);
 
-const data = result.data;
-const error = result.error;
+const data =
+result.data;
+
+const error =
+result.error;
 
 if(error){
 
 console.error(error);
 
 container.innerHTML = `
+
 <div class="error-box">
+
 <strong>
 حدث خطأ في تحميل العطور
 </strong>
@@ -1124,13 +1352,20 @@ container.innerHTML = `
 ${escapeHTML(error.message)}
 
 </div>
+
 `;
 
 return;
 
 }
 
-products = data || [];
+products =
+data || [];
+
+console.log(
+"PRODUCTS FROM SUPABASE:",
+products
+);
 
 renderProducts();
 
@@ -1145,40 +1380,90 @@ function getProductOptions(product){
 
 const options = [];
 
-const names = [
-product.option1_name,
-product.option2_name,
-product.option3_name
-];
 
-const prices = [
-product.option1_price,
-product.option2_price,
-product.option3_price
-];
+/* OPTION 1 */
 
-for(let i = 0; i < 3; i++){
+const option1Name =
+String(
+product.option1_name || ""
+).trim();
 
-const name =
-String(names[i] || "").trim();
-
-const price =
-Number(prices[i]);
+const option1Price =
+Number(product.option1_price);
 
 if(
-name &&
-Number.isFinite(price) &&
-price > 0
+option1Name &&
+Number.isFinite(option1Price) &&
+option1Price > 0
 ){
 
 options.push({
 
-name:name,
-price:price
+name:option1Name,
+
+price:option1Price,
+
+originalIndex:0
 
 });
 
 }
+
+
+/* OPTION 2 */
+
+const option2Name =
+String(
+product.option2_name || ""
+).trim();
+
+const option2Price =
+Number(product.option2_price);
+
+if(
+option2Name &&
+Number.isFinite(option2Price) &&
+option2Price > 0
+){
+
+options.push({
+
+name:option2Name,
+
+price:option2Price,
+
+originalIndex:1
+
+});
+
+}
+
+
+/* OPTION 3 */
+
+const option3Name =
+String(
+product.option3_name || ""
+).trim();
+
+const option3Price =
+Number(product.option3_price);
+
+if(
+option3Name &&
+Number.isFinite(option3Price) &&
+option3Price > 0
+){
+
+options.push({
+
+name:option3Name,
+
+price:option3Price,
+
+originalIndex:2
+
+});
 
 }
 
@@ -1196,36 +1481,47 @@ function renderProducts(){
 const container =
 document.getElementById("products");
 
-let filtered = products;
+let filtered =
+products;
 
-if(currentCategory !== "all"){
+if(
+currentCategory !== "all"
+){
 
 filtered =
-products.filter(function(product){
+products.filter(
+function(product){
 
 return String(
 product.category || ""
-).toLowerCase() ===
+).toLowerCase()
+===
 currentCategory;
 
-});
+}
+);
 
 }
+
 
 if(!filtered.length){
 
 container.innerHTML = `
+
 <div class="empty">
 لا توجد عطور في هذا القسم حاليًا.
 </div>
+
 `;
 
 return;
 
 }
 
+
 container.innerHTML =
-filtered.map(function(product,index){
+filtered.map(
+function(product,index){
 
 const options =
 getProductOptions(product);
@@ -1234,6 +1530,7 @@ const productId =
 String(product.product_id);
 
 let sizesHTML = "";
+
 
 if(options.length){
 
@@ -1245,7 +1542,13 @@ sizesHTML = `
 
 <div class="size-options">
 
-${options.map(function(option,optionIndex){
+${
+
+options.map(
+function(
+option,
+optionIndex
+){
 
 const safeId =
 "product_" +
@@ -1269,29 +1572,41 @@ ${optionIndex === 0 ? "checked" : ""}
 <label
 for="${escapeAttribute(safeId)}"
 >
+
 ${escapeHTML(option.name)}
+
 </label>
 
 </div>
 
 `;
 
-}).join("")}
+}
+).join("")
+
+}
 
 </div>
+
 
 <div
 id="selected-price-${escapeAttribute(productId)}"
 class="selected-price"
 >
-${options[0].price.toLocaleString("ar-EG")} جنيه
+
+${options[0].price.toLocaleString("ar-EG")}
+جنيه
+
 </div>
+
 
 <button
 class="add-btn"
 onclick="addProductToCart('${escapeAttribute(productId)}')"
 >
+
 أضف للسلة 🛍️
+
 </button>
 
 `;
@@ -1308,17 +1623,24 @@ sizesHTML = `
 
 }
 
+
 return `
 
 <div class="product">
 
 <div class="product-image">
 
-${index < 3 ? `
+${
+index < 3
+?
+`
 <div class="product-tag">
 NEW
 </div>
-` : ""}
+`
+:
+""
+}
 
 <img
 src="${escapeAttribute(product.image || "")}"
@@ -1328,15 +1650,26 @@ onerror="this.style.display='none';"
 
 </div>
 
+
 <div class="product-info">
 
 <div class="product-name">
-${escapeHTML(product.name || "عطر")}
+
+${escapeHTML(
+product.name || "عطر"
+)}
+
 </div>
 
+
 <div class="product-description">
-${escapeHTML(product.description || "")}
+
+${escapeHTML(
+product.description || ""
+)}
+
 </div>
+
 
 ${sizesHTML}
 
@@ -1346,7 +1679,8 @@ ${sizesHTML}
 
 `;
 
-}).join("");
+}
+).join("");
 
 }
 
@@ -1355,17 +1689,26 @@ ${sizesHTML}
 SELECTED PRICE
 ========================= */
 
-function updateSelectedPrice(productId,optionIndex){
+function updateSelectedPrice(
+productId,
+optionIndex
+){
 
 const product =
-products.find(function(p){
+products.find(
+function(p){
 
-return String(p.product_id) ===
+return String(
+p.product_id
+) ===
 String(productId);
 
-});
+}
+);
 
-if(!product) return;
+if(!product)
+return;
+
 
 const options =
 getProductOptions(product);
@@ -1373,17 +1716,22 @@ getProductOptions(product);
 const option =
 options[optionIndex];
 
-if(!option) return;
+if(!option)
+return;
+
 
 const priceElement =
 document.getElementById(
-"selected-price-" + productId
+"selected-price-" +
+productId
 );
 
 if(priceElement){
 
 priceElement.textContent =
-option.price.toLocaleString("ar-EG") +
+option.price.toLocaleString(
+"ar-EG"
+) +
 " جنيه";
 
 }
@@ -1395,64 +1743,89 @@ option.price.toLocaleString("ar-EG") +
 ADD TO CART
 ========================= */
 
-function addProductToCart(productId){
+function addProductToCart(
+productId
+){
 
 const product =
-products.find(function(p){
+products.find(
+function(p){
 
-return String(p.product_id) ===
+return String(
+p.product_id
+) ===
 String(productId);
 
-});
+}
+);
+
 
 if(!product){
 
-alert("العطر غير موجود");
+alert(
+"العطر غير موجود"
+);
 
 return;
 
 }
+
 
 const options =
 getProductOptions(product);
 
+
 if(!options.length){
 
-alert("لا توجد أسعار متاحة لهذا العطر");
+alert(
+"لا توجد أسعار متاحة لهذا العطر"
+);
 
 return;
 
 }
+
 
 const selected =
 document.querySelector(
 `input[name="size_${CSS.escape(String(productId))}"]:checked`
 );
 
+
 if(!selected){
 
-alert("اختار الحجم الأول");
+alert(
+"اختار الحجم الأول"
+);
 
 return;
 
 }
 
+
 const optionIndex =
-Number(selected.value);
+Number(
+selected.value
+);
 
 const option =
 options[optionIndex];
 
+
 if(!option){
 
-alert("اختيار غير صحيح");
+alert(
+"اختيار غير صحيح"
+);
 
 return;
 
 }
 
+
 const existing =
-cart.find(function(item){
+cart.find(
+function(item){
 
 return (
 String(item.productId) ===
@@ -1461,7 +1834,9 @@ item.optionName ===
 option.name
 );
 
-});
+}
+);
+
 
 if(existing){
 
@@ -1471,7 +1846,9 @@ existing.quantity >=
 Number(product.stock)
 ){
 
-alert("الكمية المتاحة خلصت");
+alert(
+"الكمية المتاحة خلصت"
+);
 
 return;
 
@@ -1483,18 +1860,36 @@ existing.quantity++;
 
 cart.push({
 
-productId:productId,
-name:product.name,
-image:product.image,
-description:product.description,
-optionName:option.name,
-price:option.price,
-quantity:1,
-stock:Number(product.stock || 0)
+productId:
+productId,
+
+name:
+product.name,
+
+image:
+product.image,
+
+description:
+product.description,
+
+optionName:
+option.name,
+
+price:
+option.price,
+
+quantity:
+1,
+
+stock:
+Number(
+product.stock || 0
+)
 
 });
 
 }
+
 
 updateCart();
 
@@ -1504,13 +1899,17 @@ openCart();
 
 
 /* =========================
-QUANTITY
+INCREASE
 ========================= */
 
-function increaseQuantity(productId,optionName){
+function increaseQuantity(
+productId,
+optionName
+){
 
 const item =
-cart.find(function(item){
+cart.find(
+function(item){
 
 return (
 String(item.productId) ===
@@ -1519,20 +1918,27 @@ item.optionName ===
 optionName
 );
 
-});
+}
+);
 
-if(!item) return;
+if(!item)
+return;
+
 
 if(
 item.stock > 0 &&
-item.quantity >= item.stock
+item.quantity >=
+item.stock
 ){
 
-alert("الكمية المتاحة خلصت");
+alert(
+"الكمية المتاحة خلصت"
+);
 
 return;
 
 }
+
 
 item.quantity++;
 
@@ -1541,10 +1947,18 @@ updateCart();
 }
 
 
-function decreaseQuantity(productId,optionName){
+/* =========================
+DECREASE
+========================= */
+
+function decreaseQuantity(
+productId,
+optionName
+){
 
 const item =
-cart.find(function(item){
+cart.find(
+function(item){
 
 return (
 String(item.productId) ===
@@ -1553,46 +1967,66 @@ item.optionName ===
 optionName
 );
 
-});
+}
+);
 
-if(!item) return;
+if(!item)
+return;
+
 
 item.quantity--;
+
 
 if(item.quantity <= 0){
 
 cart =
-cart.filter(function(cartItem){
+cart.filter(
+function(cartItem){
 
 return !(
-String(cartItem.productId) ===
+String(
+cartItem.productId
+) ===
 String(productId) &&
 cartItem.optionName ===
 optionName
 );
 
-});
+}
+);
 
 }
+
 
 updateCart();
 
 }
 
 
-function removeFromCart(productId,optionName){
+/* =========================
+REMOVE
+========================= */
+
+function removeFromCart(
+productId,
+optionName
+){
 
 cart =
-cart.filter(function(item){
+cart.filter(
+function(item){
 
 return !(
-String(item.productId) ===
+String(
+item.productId
+) ===
 String(productId) &&
 item.optionName ===
 optionName
 );
 
-});
+}
+);
 
 updateCart();
 
@@ -1606,56 +2040,92 @@ UPDATE CART
 function updateCart(){
 
 const cartItems =
-document.getElementById("cartItems");
+document.getElementById(
+"cartItems"
+);
 
 const cartCount =
-document.getElementById("cartCount");
+document.getElementById(
+"cartCount"
+);
 
 const cartTotal =
-document.getElementById("cartTotal");
+document.getElementById(
+"cartTotal"
+);
 
 const orderForm =
-document.getElementById("orderForm");
+document.getElementById(
+"orderForm"
+);
+
 
 const count =
-cart.reduce(function(sum,item){
+cart.reduce(
+function(
+sum,
+item
+){
 
-return sum + item.quantity;
+return sum +
+item.quantity;
 
-},0);
+},
+0
+);
+
 
 const total =
-cart.reduce(function(sum,item){
+cart.reduce(
+function(
+sum,
+item
+){
 
 return sum +
 Number(item.price || 0) *
 item.quantity;
 
-},0);
+},
+0
+);
 
-cartCount.textContent = count;
+
+cartCount.textContent =
+count;
+
 
 cartTotal.textContent =
-total.toLocaleString("ar-EG");
+total.toLocaleString(
+"ar-EG"
+);
+
 
 if(!cart.length){
 
 cartItems.innerHTML = `
+
 <div class="empty">
 السلة فارغة 🛍️
 </div>
+
 `;
 
-orderForm.style.display = "none";
+orderForm.style.display =
+"none";
 
 return;
 
 }
 
-orderForm.style.display = "block";
+
+orderForm.style.display =
+"block";
+
 
 cartItems.innerHTML =
-cart.map(function(item){
+cart.map(
+function(item){
 
 return `
 
@@ -1666,20 +2136,38 @@ src="${escapeAttribute(item.image || "")}"
 alt="${escapeAttribute(item.name || "")}"
 >
 
+
 <div class="cart-item-info">
 
 <strong>
-${escapeHTML(item.name || "عطر")}
+
+${escapeHTML(
+item.name || "عطر"
+)}
+
 </strong>
 
+
 <div class="cart-size">
-الحجم: ${escapeHTML(item.optionName)}
+
+الحجم:
+${escapeHTML(
+item.optionName
+)}
+
 </div>
 
+
 <div>
-${Number(item.price || 0).toLocaleString("ar-EG")}
+
+${Number(
+item.price || 0
+).toLocaleString("ar-EG")}
+
 جنيه
+
 </div>
+
 
 <div class="quantity">
 
@@ -1689,9 +2177,11 @@ onclick="decreaseQuantity('${escapeAttribute(String(item.productId))}','${escape
 −
 </button>
 
+
 <span>
 ${item.quantity}
 </span>
+
 
 <button
 onclick="increaseQuantity('${escapeAttribute(String(item.productId))}','${escapeAttribute(item.optionName)}')"
@@ -1700,6 +2190,7 @@ onclick="increaseQuantity('${escapeAttribute(String(item.productId))}','${escape
 </button>
 
 </div>
+
 
 <button
 class="remove"
@@ -1714,13 +2205,14 @@ onclick="removeFromCart('${escapeAttribute(String(item.productId))}','${escapeAt
 
 `;
 
-}).join("");
+}
+).join("");
 
 }
 
 
 /* =========================
-CART
+OPEN CART
 ========================= */
 
 function openCart(){
@@ -1731,12 +2223,17 @@ document
 
 document
 .getElementById("overlay")
-.style.display = "block";
+.style.display =
+"block";
 
 updateCart();
 
 }
 
+
+/* =========================
+CLOSE CART
+========================= */
 
 function closeCart(){
 
@@ -1746,81 +2243,217 @@ document
 
 document
 .getElementById("overlay")
-.style.display = "none";
+.style.display =
+"none";
 
 }
 
 
-/* =========================
+/* ==================================================
 SEND ORDER
-========================= */
+SAVE TO SUPABASE + WHATSAPP
+================================================== */
 
 async function sendOrder(){
 
 if(!cart.length){
 
-alert("السلة فارغة");
+alert(
+"السلة فارغة"
+);
 
 return;
 
 }
+
 
 const name =
-document.getElementById("customerName")
-.value.trim();
+document
+.getElementById(
+"customerName"
+)
+.value
+.trim();
+
 
 const phone =
-document.getElementById("customerPhone")
-.value.trim();
+document
+.getElementById(
+"customerPhone"
+)
+.value
+.trim();
+
 
 const address =
-document.getElementById("customerAddress")
-.value.trim();
+document
+.getElementById(
+"customerAddress"
+)
+.value
+.trim();
 
-if(!name || !phone || !address){
 
-alert("من فضلك املأ جميع بيانات الطلب");
+if(
+!name ||
+!phone ||
+!address
+){
+
+alert(
+"من فضلك املأ جميع بيانات الطلب"
+);
 
 return;
 
 }
 
+
+/* =========================
+TOTAL
+========================= */
+
 const total =
-cart.reduce(function(sum,item){
+cart.reduce(
+function(
+sum,
+item
+){
 
 return sum +
 Number(item.price || 0) *
 item.quantity;
 
-},0);
+},
+0
+);
 
 
-/*
-نرسل الطلب إلى WhatsApp.
-*/
+/* =========================
+ITEMS
+========================= */
+
+const orderItems =
+cart.map(
+function(item){
+
+return {
+
+product_id:
+item.productId,
+
+name:
+item.name,
+
+optionName:
+item.optionName,
+
+price:
+Number(item.price || 0),
+
+quantity:
+Number(item.quantity || 1)
+
+};
+
+}
+);
+
+
+/* =========================
+SAVE ORDER
+========================= */
+
+const {
+data:order,
+error
+} =
+await supabaseClient
+.from("orders")
+.insert({
+
+customer_name:
+name,
+
+customer_phone:
+phone,
+
+customer_address:
+address,
+
+total:
+total,
+
+status:
+"new",
+
+items:
+orderItems
+
+})
+.select()
+.single();
+
+
+/* =========================
+ERROR
+========================= */
+
+if(error){
+
+console.error(
+"ORDER ERROR:",
+error
+);
+
+alert(
+"حصل خطأ أثناء حفظ الطلب:\n\n" +
+error.message
+);
+
+return;
+
+}
+
+
+/* =========================
+WHATSAPP MESSAGE
+========================= */
 
 let message =
 "🖤 طلب جديد من Velvet Scent\n\n";
+
+
+message +=
+"🔢 رقم الطلب: " +
+order.id +
+"\n\n";
+
 
 message +=
 "👤 الاسم: " +
 name +
 "\n";
 
+
 message +=
 "📱 الموبايل: " +
 phone +
 "\n";
+
 
 message +=
 "📍 العنوان: " +
 address +
 "\n\n";
 
+
 message +=
 "🌹 العطور:\n";
 
-cart.forEach(function(item){
+
+cart.forEach(
+function(item){
 
 message +=
 "• " +
@@ -1836,7 +2469,9 @@ item.quantity
 ) +
 " جنيه\n";
 
-});
+}
+);
+
 
 message +=
 "\n💰 الإجمالي: " +
@@ -1844,20 +2479,43 @@ total +
 " جنيه";
 
 
+/* =========================
+WHATSAPP URL
+========================= */
+
 const whatsappURL =
 "https://wa.me/" +
 STORE_WHATSAPP +
 "?text=" +
-encodeURIComponent(message);
+encodeURIComponent(
+message
+);
 
 
-/*
-فتح WhatsApp
-*/
+/* =========================
+OPEN WHATSAPP
+========================= */
 
 window.open(
 whatsappURL,
 "_blank"
+);
+
+
+/* =========================
+CLEAR CART
+========================= */
+
+cart = [];
+
+updateCart();
+
+closeCart();
+
+
+alert(
+"تم تسجيل الطلب بنجاح ✅\n\nرقم الطلب:\n" +
+order.id
 );
 
 }
@@ -1871,13 +2529,33 @@ function escapeHTML(value){
 
 return String(value)
 
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
+.replaceAll(
+"&",
+"&amp;"
+)
+
+.replaceAll(
+"<",
+"&lt;"
+)
+
+.replaceAll(
+">",
+"&gt;"
+)
+
+.replaceAll(
+'"',
+"&quot;"
+)
+
+.replaceAll(
+"'",
+"&#039;"
+);
 
 }
+
 
 function escapeAttribute(value){
 
