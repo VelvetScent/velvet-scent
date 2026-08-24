@@ -10,6 +10,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -38,8 +39,6 @@ color:var(--black);
 font-family:"Cairo",Arial,sans-serif;
 overflow-x:hidden;
 }
-
-/* LOADER */
 
 #loader{
 position:fixed;
@@ -72,8 +71,6 @@ height:1px;
 background:var(--gold);
 margin-top:18px;
 }
-
-/* HEADER */
 
 header{
 position:fixed;
@@ -122,8 +119,6 @@ border-radius:30px;
 padding:9px 17px;
 cursor:pointer;
 }
-
-/* HERO */
 
 .hero{
 min-height:100vh;
@@ -184,8 +179,6 @@ cursor:pointer;
 font-weight:bold;
 }
 
-/* SECTIONS */
-
 .section{
 width:90%;
 max-width:1250px;
@@ -213,8 +206,6 @@ margin:10px 0;
 color:var(--gray);
 }
 
-/* CATEGORIES */
-
 .categories{
 display:flex;
 justify-content:center;
@@ -238,8 +229,6 @@ background:var(--black);
 color:white;
 border-color:var(--black);
 }
-
-/* PRODUCTS */
 
 .products{
 display:grid;
@@ -304,8 +293,6 @@ min-height:42px;
 line-height:1.7;
 margin-bottom:12px;
 }
-
-/* SIZE OPTIONS */
 
 .size-title{
 font-weight:bold;
@@ -388,8 +375,6 @@ word-break:break-word;
 grid-column:1/-1;
 }
 
-/* STORY */
-
 .story{
 background:var(--black);
 color:white;
@@ -430,8 +415,6 @@ line-height:2;
 margin-bottom:20px;
 }
 
-/* FEATURES */
-
 .features{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -461,8 +444,6 @@ color:var(--gray);
 line-height:1.8;
 }
 
-/* CTA */
-
 .cta{
 width:90%;
 max-width:1250px;
@@ -487,8 +468,6 @@ color:#ccc;
 margin-bottom:25px;
 }
 
-/* FOOTER */
-
 footer{
 background:#0c0b0a;
 color:white;
@@ -507,8 +486,6 @@ footer p{
 color:#999;
 font-size:13px;
 }
-
-/* CART */
 
 .overlay{
 display:none;
@@ -640,8 +617,6 @@ padding:14px;
 cursor:pointer;
 font-weight:bold;
 }
-
-/* RESPONSIVE */
 
 @media(max-width:950px){
 
@@ -883,48 +858,30 @@ The Velvet Experience
 <div class="features">
 
 <div class="feature">
-
 <div class="feature-icon">✦</div>
-
-<h3>
-Premium Quality
-</h3>
-
+<h3>Premium Quality</h3>
 <p>
 نهتم بكل تفاصيل تجربتك
 من اختيار العطر حتى وصوله إليك.
 </p>
-
 </div>
 
 <div class="feature">
-
 <div class="feature-icon">♢</div>
-
-<h3>
-Curated Collection
-</h3>
-
+<h3>Curated Collection</h3>
 <p>
 مجموعة مختارة بعناية
 لتناسب مختلف الأذواق.
 </p>
-
 </div>
 
 <div class="feature">
-
 <div class="feature-icon">♡</div>
-
-<h3>
-Made For You
-</h3>
-
+<h3>Made For You</h3>
 <p>
 لأن عطرك هو جزء من شخصيتك
 وحضورك الخاص.
 </p>
-
 </div>
 
 </div>
@@ -953,9 +910,7 @@ SHOP NOW
 VELVET SCENT
 </div>
 
-<p>
-Luxury Fragrances
-</p>
+<p>Luxury Fragrances</p>
 
 <br>
 
@@ -987,9 +942,7 @@ Shopping Bag
 
 الإجمالي:
 
-<span id="cartTotal">
-0
-</span>
+<span id="cartTotal">0</span>
 
 جنيه
 
@@ -1161,9 +1114,7 @@ if(error){
 console.error(error);
 
 container.innerHTML = `
-
 <div class="error-box">
-
 <strong>
 حدث خطأ في تحميل العطور
 </strong>
@@ -1173,7 +1124,6 @@ container.innerHTML = `
 ${escapeHTML(error.message)}
 
 </div>
-
 `;
 
 return;
@@ -1182,91 +1132,53 @@ return;
 
 products = data || [];
 
-console.log("PRODUCTS FROM SUPABASE:",products);
-
 renderProducts();
 
 }
 
 
 /* =========================
-GET ALL 3 OPTIONS
+OPTIONS
 ========================= */
 
 function getProductOptions(product){
 
 const options = [];
 
-/*
-نقرأ كل اختيار بشكل مستقل.
-لا نعتمد على price القديم.
-*/
+const names = [
+product.option1_name,
+product.option2_name,
+product.option3_name
+];
 
-const option1Name =
-String(product.option1_name || "").trim();
+const prices = [
+product.option1_price,
+product.option2_price,
+product.option3_price
+];
 
-const option1Price =
-Number(product.option1_price);
+for(let i = 0; i < 3; i++){
+
+const name =
+String(names[i] || "").trim();
+
+const price =
+Number(prices[i]);
 
 if(
-option1Name &&
-Number.isFinite(option1Price) &&
-option1Price > 0
+name &&
+Number.isFinite(price) &&
+price > 0
 ){
 
 options.push({
 
-name:option1Name,
-price:option1Price,
-originalIndex:0
+name:name,
+price:price
 
 });
 
 }
-
-
-const option2Name =
-String(product.option2_name || "").trim();
-
-const option2Price =
-Number(product.option2_price);
-
-if(
-option2Name &&
-Number.isFinite(option2Price) &&
-option2Price > 0
-){
-
-options.push({
-
-name:option2Name,
-price:option2Price,
-originalIndex:1
-
-});
-
-}
-
-
-const option3Name =
-String(product.option3_name || "").trim();
-
-const option3Price =
-Number(product.option3_price);
-
-if(
-option3Name &&
-Number.isFinite(option3Price) &&
-option3Price > 0
-){
-
-options.push({
-
-name:option3Name,
-price:option3Price,
-originalIndex:2
-
-});
 
 }
 
@@ -1293,7 +1205,8 @@ products.filter(function(product){
 
 return String(
 product.category || ""
-).toLowerCase() === currentCategory;
+).toLowerCase() ===
+currentCategory;
 
 });
 
@@ -1353,10 +1266,10 @@ onchange="updateSelectedPrice('${escapeAttribute(productId)}',${optionIndex})"
 ${optionIndex === 0 ? "checked" : ""}
 >
 
-<label for="${escapeAttribute(safeId)}">
-
+<label
+for="${escapeAttribute(safeId)}"
+>
 ${escapeHTML(option.name)}
-
 </label>
 
 </div>
@@ -1439,7 +1352,7 @@ ${sizesHTML}
 
 
 /* =========================
-UPDATE SELECTED PRICE
+SELECTED PRICE
 ========================= */
 
 function updateSelectedPrice(productId,optionIndex){
@@ -1542,8 +1455,10 @@ const existing =
 cart.find(function(item){
 
 return (
-String(item.productId) === String(productId) &&
-item.optionName === option.name
+String(item.productId) ===
+String(productId) &&
+item.optionName ===
+option.name
 );
 
 });
@@ -1552,7 +1467,8 @@ if(existing){
 
 if(
 product.stock > 0 &&
-existing.quantity >= Number(product.stock)
+existing.quantity >=
+Number(product.stock)
 ){
 
 alert("الكمية المتاحة خلصت");
@@ -1568,19 +1484,12 @@ existing.quantity++;
 cart.push({
 
 productId:productId,
-
 name:product.name,
-
 image:product.image,
-
 description:product.description,
-
 optionName:option.name,
-
 price:option.price,
-
 quantity:1,
-
 stock:Number(product.stock || 0)
 
 });
@@ -1595,7 +1504,7 @@ openCart();
 
 
 /* =========================
-INCREASE
+QUANTITY
 ========================= */
 
 function increaseQuantity(productId,optionName){
@@ -1604,8 +1513,10 @@ const item =
 cart.find(function(item){
 
 return (
-String(item.productId) === String(productId) &&
-item.optionName === optionName
+String(item.productId) ===
+String(productId) &&
+item.optionName ===
+optionName
 );
 
 });
@@ -1630,18 +1541,16 @@ updateCart();
 }
 
 
-/* =========================
-DECREASE
-========================= */
-
 function decreaseQuantity(productId,optionName){
 
 const item =
 cart.find(function(item){
 
 return (
-String(item.productId) === String(productId) &&
-item.optionName === optionName
+String(item.productId) ===
+String(productId) &&
+item.optionName ===
+optionName
 );
 
 });
@@ -1656,8 +1565,10 @@ cart =
 cart.filter(function(cartItem){
 
 return !(
-String(cartItem.productId) === String(productId) &&
-cartItem.optionName === optionName
+String(cartItem.productId) ===
+String(productId) &&
+cartItem.optionName ===
+optionName
 );
 
 });
@@ -1669,18 +1580,16 @@ updateCart();
 }
 
 
-/* =========================
-REMOVE
-========================= */
-
 function removeFromCart(productId,optionName){
 
 cart =
 cart.filter(function(item){
 
 return !(
-String(item.productId) === String(productId) &&
-item.optionName === optionName
+String(item.productId) ===
+String(productId) &&
+item.optionName ===
+optionName
 );
 
 });
@@ -1811,7 +1720,7 @@ onclick="removeFromCart('${escapeAttribute(String(item.productId))}','${escapeAt
 
 
 /* =========================
-OPEN CART
+CART
 ========================= */
 
 function openCart(){
@@ -1829,10 +1738,6 @@ updateCart();
 }
 
 
-/* =========================
-CLOSE CART
-========================= */
-
 function closeCart(){
 
 document
@@ -1847,10 +1752,10 @@ document
 
 
 /* =========================
-WHATSAPP
+SEND ORDER
 ========================= */
 
-function sendOrder(){
+async function sendOrder(){
 
 if(!cart.length){
 
@@ -1888,6 +1793,11 @@ Number(item.price || 0) *
 item.quantity;
 
 },0);
+
+
+/*
+نرسل الطلب إلى WhatsApp.
+*/
 
 let message =
 "🖤 طلب جديد من Velvet Scent\n\n";
@@ -1933,11 +1843,17 @@ message +=
 total +
 " جنيه";
 
+
 const whatsappURL =
 "https://wa.me/" +
 STORE_WHATSAPP +
 "?text=" +
 encodeURIComponent(message);
+
+
+/*
+فتح WhatsApp
+*/
 
 window.open(
 whatsappURL,
