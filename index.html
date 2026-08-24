@@ -1,1778 +1,2419 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Velvet Scent | Luxury Fragrances</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
-    rel="stylesheet"
-  >
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    :root {
-      --black: #11100f;
-      --gold: #c9a45c;
-      --gold-light: #e2c98d;
-      --cream: #f7f3eb;
-      --white: #fff;
-      --gray: #77716a;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: var(--cream);
-      color: var(--black);
-      font-family: "Cairo", Arial, sans-serif;
-      overflow-x: hidden;
-    }
-
-    #loader {
-      position: fixed;
-      inset: 0;
-      background: var(--black);
-      z-index: 99999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      transition: .6s;
-    }
-
-    #loader.hide {
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    .loader-logo {
-      color: white;
-      font-family: "Playfair Display", serif;
-      font-size: 36px;
-      letter-spacing: 6px;
-      text-align: center;
-    }
-
-    .loader-line {
-      width: 90px;
-      height: 1px;
-      background: var(--gold);
-      margin-top: 18px;
-    }
-
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 78px;
-      z-index: 5000;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 6%;
-      color: white;
-      transition: .3s;
-    }
-
-    header.scrolled {
-      background: rgba(17,16,15,.95);
-      backdrop-filter: blur(12px);
-    }
-
-    .logo {
-      color: white;
-      text-decoration: none;
-      font-family: "Playfair Display", serif;
-      font-size: 24px;
-      letter-spacing: 4px;
-    }
-
-    nav {
-      display: flex;
-      gap: 28px;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    .header-cart {
-      background: transparent;
-      color: white;
-      border: 1px solid rgba(255,255,255,.5);
-      border-radius: 30px;
-      padding: 9px 17px;
-      cursor: pointer;
-      font-family: inherit;
-    }
-
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      background:
-        linear-gradient(
-          90deg,
-          rgba(10,9,8,.92),
-          rgba(10,9,8,.58),
-          rgba(10,9,8,.25)
-        ),
-        url("hero.jpg") center/cover no-repeat;
-    }
-
-    .hero-content {
-      width: 90%;
-      max-width: 1250px;
-      margin: auto;
-      color: white;
-      padding-top: 70px;
-    }
-
-    .eyebrow {
-      color: var(--gold-light);
-      letter-spacing: 5px;
-      font-size: 13px;
-      margin-bottom: 18px;
-    }
-
-    .hero h1 {
-      font-family: "Playfair Display", serif;
-      font-size: clamp(55px, 9vw, 110px);
-      line-height: .95;
-      margin-bottom: 25px;
-    }
-
-    .hero h1 span {
-      color: var(--gold-light);
-    }
-
-    .hero-text {
-      max-width: 520px;
-      color: #e4dfd6;
-      line-height: 2;
-      margin-bottom: 30px;
-    }
-
-    .btn-gold {
-      display: inline-block;
-      background: var(--gold);
-      color: #17130e;
-      padding: 14px 28px;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .section {
-      width: 90%;
-      max-width: 1250px;
-      margin: auto;
-      padding: 90px 0;
-    }
-
-    .section-heading {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-
-    .section-heading small {
-      color: var(--gold);
-      letter-spacing: 4px;
-    }
-
-    .section-heading h2 {
-      font-family: "Playfair Display", serif;
-      font-size: clamp(35px, 5vw, 55px);
-      margin: 10px 0;
-    }
-
-    .section-heading p {
-      color: var(--gray);
-    }
-
-    .categories {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 40px;
-    }
-
-    .category-btn {
-      background: transparent;
-      border: 1px solid #cfc8bc;
-      padding: 11px 25px;
-      cursor: pointer;
-      font-family: inherit;
-      transition: .3s;
-    }
-
-    .category-btn.active,
-    .category-btn:hover {
-      background: var(--black);
-      color: white;
-      border-color: var(--black);
-    }
-
-    .products {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-    }
-
-    .product {
-      background: white;
-      overflow: hidden;
-      transition: .3s;
-    }
-
-    .product:hover {
-      transform: translateY(-7px);
-      box-shadow: 0 18px 40px rgba(0,0,0,.12);
-    }
-
-    .product-image {
-      height: 320px;
-      background: #eee;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .product-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: .5s;
-    }
-
-    .product:hover .product-image img {
-      transform: scale(1.06);
-    }
-
-    .product-tag {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      z-index: 2;
-      background: var(--black);
-      color: white;
-      padding: 5px 10px;
-      font-size: 11px;
-    }
-
-    .product-info {
-      padding: 18px;
-    }
-
-    .product-name {
-      font-family: "Playfair Display", serif;
-      font-size: 21px;
-      margin-bottom: 7px;
-    }
-
-    .product-description {
-      color: var(--gray);
-      font-size: 13px;
-      min-height: 42px;
-      line-height: 1.7;
-      margin-bottom: 12px;
-    }
-
-    .product-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .price {
-      font-weight: bold;
-    }
-
-    .add-btn {
-      background: var(--black);
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      cursor: pointer;
-      font-family: inherit;
-    }
-
-    .add-btn:hover {
-      background: var(--gold);
-      color: var(--black);
-    }
-
-    .empty {
-      text-align: center;
-      padding: 50px 20px;
-      color: var(--gray);
-      grid-column: 1 / -1;
-    }
-
-    .error-box {
-      background: #fff0f0;
-      color: #a00000;
-      border: 1px solid #e0aaaa;
-      padding: 20px;
-      border-radius: 10px;
-      direction: ltr;
-      text-align: left;
-      word-break: break-word;
-      grid-column: 1 / -1;
-    }
-
-    .story {
-      background: var(--black);
-      color: white;
-    }
-
-    .story-inner {
-      width: 90%;
-      max-width: 1250px;
-      margin: auto;
-      padding: 90px 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 70px;
-      align-items: center;
-    }
-
-    .story-image {
-      height: 500px;
-      background:
-        linear-gradient(rgba(0,0,0,.2), rgba(0,0,0,.2)),
-        url("story.jpg") center/cover;
-    }
-
-    .story-content small {
-      color: var(--gold-light);
-      letter-spacing: 4px;
-    }
-
-    .story-content h2 {
-      font-family: "Playfair Display", serif;
-      font-size: clamp(38px, 5vw, 65px);
-      margin: 15px 0 25px;
-    }
-
-    .story-content p {
-      color: #c9c5be;
-      line-height: 2;
-      margin-bottom: 20px;
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .feature {
-      background: white;
-      text-align: center;
-      padding: 40px 25px;
-      border: 1px solid #eee9df;
-    }
-
-    .feature-icon {
-      font-size: 30px;
-      margin-bottom: 15px;
-    }
-
-    .feature h3 {
-      font-family: "Playfair Display", serif;
-      font-size: 22px;
-      margin-bottom: 10px;
-    }
-
-    .feature p {
-      color: var(--gray);
-      line-height: 1.8;
-    }
-
-    .cta {
-      width: 90%;
-      max-width: 1250px;
-      margin: 0 auto 90px;
-      padding: 75px 20px;
-      text-align: center;
-      color: white;
-      background:
-        linear-gradient(rgba(17,16,15,.92), rgba(17,16,15,.92)),
-        url("cta.jpg") center/cover;
-    }
-
-    .cta h2 {
-      font-family: "Playfair Display", serif;
-      font-size: clamp(35px, 5vw, 60px);
-      margin-bottom: 15px;
-    }
-
-    .cta p {
-      color: #ccc;
-      margin-bottom: 25px;
-    }
-
-    footer {
-      background: #0c0b0a;
-      color: white;
-      text-align: center;
-      padding: 45px 20px;
-    }
-
-    .footer-logo {
-      font-family: "Playfair Display", serif;
-      font-size: 27px;
-      letter-spacing: 5px;
-      margin-bottom: 10px;
-    }
-
-    footer p {
-      color: #999;
-      font-size: 13px;
-    }
-
-    .overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.65);
-      z-index: 7000;
-    }
-
-    .cart {
-      position: fixed;
-      top: 0;
-      right: -460px;
-      width: 440px;
-      max-width: 95%;
-      height: 100%;
-      background: white;
-      z-index: 8000;
-      transition: .4s;
-      padding: 25px;
-      overflow-y: auto;
-    }
-
-    .cart.open {
-      right: 0;
-    }
-
-    .cart-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 15px;
-    }
-
-    .cart-header h2 {
-      font-family: "Playfair Display", serif;
-    }
-
-    .close-cart {
-      width: 38px;
-      height: 38px;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 20px;
-    }
-
-    .cart-item {
-      display: flex;
-      gap: 12px;
-      padding: 15px 0;
-      border-bottom: 1px solid #eee;
-    }
-
-    .cart-item img {
-      width: 75px;
-      height: 75px;
-      object-fit: cover;
-    }
-
-    .cart-item-info {
-      flex: 1;
-    }
-
-    .quantity {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      margin-top: 8px;
-    }
-
-    .quantity button {
-      width: 28px;
-      height: 28px;
-      border: none;
-      background: var(--black);
-      color: white;
-      cursor: pointer;
-    }
-
-    .remove {
-      border: none;
-      background: none;
-      color: #b00000;
-      cursor: pointer;
-      margin-top: 5px;
-    }
-
-    .cart-total {
-      font-size: 21px;
-      font-weight: bold;
-      border-top: 2px solid var(--black);
-      margin-top: 20px;
-      padding: 20px 0;
-    }
-
-    .order-form {
-      display: none;
-    }
-
-    .order-form input,
-    .order-form textarea {
-      width: 100%;
-      padding: 13px;
-      margin-bottom: 10px;
-      border: 1px solid #ddd;
-      font-family: inherit;
-    }
-
-    .order-form textarea {
-      height: 90px;
-      resize: none;
-    }
-
-    .whatsapp-btn {
-      width: 100%;
-      background: #25D366;
-      color: white;
-      border: none;
-      padding: 14px;
-      cursor: pointer;
-      font-weight: bold;
-      font-family: inherit;
-    }
-
-    @media (max-width: 950px) {
-      nav {
-        display: none;
-      }
-
-      .products {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .story-inner {
-        grid-template-columns: 1fr;
-      }
-
-      .features {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 600px) {
-      header {
-        height: 68px;
-        padding: 0 18px;
-      }
-
-      .logo {
-        font-size: 18px;
-        letter-spacing: 2px;
-      }
-
-      .hero h1 {
-        font-size: 52px;
-      }
-
-      .products {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-      }
-
-      .product-image {
-        height: 210px;
-      }
-
-      .product-info {
-        padding: 11px;
-      }
-
-      .product-name {
-        font-size: 17px;
-      }
-
-      .product-description {
-        font-size: 11px;
-      }
-
-      .product-bottom {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .price {
-        text-align: center;
-      }
-
-      .cart {
-        width: 100%;
-        max-width: 100%;
-      }
-
-      .story-image {
-        height: 350px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Velvet Scent | Luxury Fragrances</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+:root{
+--black:#11100f;
+--gold:#c9a45c;
+--gold-light:#e2c98d;
+--cream:#f7f3eb;
+--white:#fff;
+--gray:#77716a;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+background:var(--cream);
+color:var(--black);
+font-family:"Cairo",Arial,sans-serif;
+overflow-x:hidden;
+}
+
+/* LOADER */
+
+#loader{
+position:fixed;
+inset:0;
+background:var(--black);
+z-index:99999;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+transition:.6s;
+}
+
+#loader.hide{
+opacity:0;
+visibility:hidden;
+}
+
+.loader-logo{
+color:white;
+font-family:"Playfair Display",serif;
+font-size:36px;
+letter-spacing:6px;
+text-align:center;
+}
+
+.loader-line{
+width:90px;
+height:1px;
+background:var(--gold);
+margin-top:18px;
+}
+
+/* HEADER */
+
+header{
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:78px;
+z-index:5000;
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+padding:0 6%;
+color:white;
+
+transition:.3s;
+}
+
+header.scrolled{
+background:rgba(17,16,15,.95);
+backdrop-filter:blur(12px);
+}
+
+.logo{
+color:white;
+text-decoration:none;
+font-family:"Playfair Display",serif;
+font-size:24px;
+letter-spacing:4px;
+}
+
+nav{
+display:flex;
+gap:28px;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+font-size:14px;
+}
+
+.header-cart{
+background:transparent;
+color:white;
+border:1px solid rgba(255,255,255,.5);
+border-radius:30px;
+padding:9px 17px;
+cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+min-height:100vh;
+display:flex;
+align-items:center;
+
+background:
+linear-gradient(
+90deg,
+rgba(10,9,8,.92),
+rgba(10,9,8,.58),
+rgba(10,9,8,.25)
+),
+url("hero.jpg") center/cover no-repeat;
+}
+
+.hero-content{
+width:90%;
+max-width:1250px;
+margin:auto;
+color:white;
+padding-top:70px;
+}
+
+.eyebrow{
+color:var(--gold-light);
+letter-spacing:5px;
+font-size:13px;
+margin-bottom:18px;
+}
+
+.hero h1{
+font-family:"Playfair Display",serif;
+font-size:clamp(55px,9vw,110px);
+line-height:.95;
+margin-bottom:25px;
+}
+
+.hero h1 span{
+color:var(--gold-light);
+}
+
+.hero-text{
+max-width:520px;
+color:#e4dfd6;
+line-height:2;
+margin-bottom:30px;
+}
+
+.btn-gold{
+display:inline-block;
+background:var(--gold);
+color:#17130e;
+padding:14px 28px;
+text-decoration:none;
+border:none;
+cursor:pointer;
+font-weight:bold;
+}
+
+/* SECTIONS */
+
+.section{
+width:90%;
+max-width:1250px;
+margin:auto;
+padding:90px 0;
+}
+
+.section-heading{
+text-align:center;
+margin-bottom:40px;
+}
+
+.section-heading small{
+color:var(--gold);
+letter-spacing:4px;
+}
+
+.section-heading h2{
+font-family:"Playfair Display",serif;
+font-size:clamp(35px,5vw,55px);
+margin:10px 0;
+}
+
+.section-heading p{
+color:var(--gray);
+}
+
+/* CATEGORIES */
+
+.categories{
+display:flex;
+justify-content:center;
+gap:12px;
+flex-wrap:wrap;
+margin-bottom:40px;
+}
+
+.category-btn{
+background:transparent;
+border:1px solid #cfc8bc;
+padding:11px 25px;
+cursor:pointer;
+font-family:inherit;
+transition:.3s;
+}
+
+.category-btn.active,
+.category-btn:hover{
+background:var(--black);
+color:white;
+border-color:var(--black);
+}
+
+/* PRODUCTS */
+
+.products{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:24px;
+}
+
+.product{
+background:white;
+overflow:hidden;
+transition:.3s;
+}
+
+.product:hover{
+transform:translateY(-7px);
+box-shadow:0 18px 40px rgba(0,0,0,.12);
+}
+
+.product-image{
+height:320px;
+background:#eee;
+position:relative;
+overflow:hidden;
+}
+
+.product-image img{
+width:100%;
+height:100%;
+object-fit:cover;
+transition:.5s;
+}
+
+.product:hover .product-image img{
+transform:scale(1.06);
+}
+
+.product-tag{
+position:absolute;
+top:12px;
+right:12px;
+z-index:2;
+background:var(--black);
+color:white;
+padding:5px 10px;
+font-size:11px;
+}
+
+.product-info{
+padding:18px;
+}
+
+.product-name{
+font-family:"Playfair Display",serif;
+font-size:21px;
+margin-bottom:7px;
+}
+
+.product-description{
+color:var(--gray);
+font-size:13px;
+min-height:42px;
+line-height:1.7;
+margin-bottom:12px;
+}
+
+/* SIZE OPTIONS */
+
+.size-title{
+font-weight:bold;
+font-size:13px;
+margin-bottom:8px;
+}
+
+.size-options{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:6px;
+margin-bottom:12px;
+}
+
+.size-option{
+position:relative;
+}
+
+.size-option input{
+position:absolute;
+opacity:0;
+pointer-events:none;
+}
+
+.size-option label{
+display:block;
+border:1px solid #d8d1c5;
+padding:8px 4px;
+text-align:center;
+cursor:pointer;
+font-size:12px;
+transition:.2s;
+background:#fff;
+}
+
+.size-option input:checked + label{
+background:var(--black);
+color:white;
+border-color:var(--black);
+}
+
+.selected-price{
+text-align:center;
+font-weight:bold;
+font-size:15px;
+margin-bottom:10px;
+}
+
+.add-btn{
+width:100%;
+background:var(--black);
+color:white;
+border:none;
+padding:10px 15px;
+cursor:pointer;
+font-family:inherit;
+}
+
+.add-btn:hover{
+background:var(--gold);
+color:var(--black);
+}
+
+.empty{
+text-align:center;
+padding:50px 20px;
+color:var(--gray);
+grid-column:1/-1;
+}
+
+.error-box{
+background:#fff0f0;
+color:#a00000;
+border:1px solid #e0aaaa;
+padding:20px;
+border-radius:10px;
+direction:ltr;
+text-align:left;
+word-break:break-word;
+grid-column:1/-1;
+}
+
+/* STORY */
+
+.story{
+background:var(--black);
+color:white;
+}
+
+.story-inner{
+width:90%;
+max-width:1250px;
+margin:auto;
+padding:90px 0;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:70px;
+align-items:center;
+}
+
+.story-image{
+height:500px;
+background:
+linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),
+url("story.jpg") center/cover;
+}
+
+.story-content small{
+color:var(--gold-light);
+letter-spacing:4px;
+}
+
+.story-content h2{
+font-family:"Playfair Display",serif;
+font-size:clamp(38px,5vw,65px);
+margin:15px 0 25px;
+}
+
+.story-content p{
+color:#c9c5be;
+line-height:2;
+margin-bottom:20px;
+}
+
+/* FEATURES */
+
+.features{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
+.feature{
+background:white;
+text-align:center;
+padding:40px 25px;
+border:1px solid #eee9df;
+}
+
+.feature-icon{
+font-size:30px;
+margin-bottom:15px;
+}
+
+.feature h3{
+font-family:"Playfair Display",serif;
+font-size:22px;
+margin-bottom:10px;
+}
+
+.feature p{
+color:var(--gray);
+line-height:1.8;
+}
+
+/* CTA */
+
+.cta{
+width:90%;
+max-width:1250px;
+margin:0 auto 90px;
+padding:75px 20px;
+text-align:center;
+color:white;
+
+background:
+linear-gradient(rgba(17,16,15,.92),rgba(17,16,15,.92)),
+url("cta.jpg") center/cover;
+}
+
+.cta h2{
+font-family:"Playfair Display",serif;
+font-size:clamp(35px,5vw,60px);
+margin-bottom:15px;
+}
+
+.cta p{
+color:#ccc;
+margin-bottom:25px;
+}
+
+/* FOOTER */
+
+footer{
+background:#0c0b0a;
+color:white;
+text-align:center;
+padding:45px 20px;
+}
+
+.footer-logo{
+font-family:"Playfair Display",serif;
+font-size:27px;
+letter-spacing:5px;
+margin-bottom:10px;
+}
+
+footer p{
+color:#999;
+font-size:13px;
+}
+
+/* CART */
+
+.overlay{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.65);
+z-index:7000;
+}
+
+.cart{
+position:fixed;
+top:0;
+right:-460px;
+width:440px;
+max-width:95%;
+height:100%;
+background:white;
+z-index:8000;
+transition:.4s;
+padding:25px;
+overflow-y:auto;
+}
+
+.cart.open{
+right:0;
+}
+
+.cart-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid #eee;
+padding-bottom:15px;
+}
+
+.cart-header h2{
+font-family:"Playfair Display",serif;
+}
+
+.close-cart{
+width:38px;
+height:38px;
+border:none;
+border-radius:50%;
+cursor:pointer;
+font-size:20px;
+}
+
+.cart-item{
+display:flex;
+gap:12px;
+padding:15px 0;
+border-bottom:1px solid #eee;
+}
+
+.cart-item img{
+width:75px;
+height:75px;
+object-fit:cover;
+}
+
+.cart-item-info{
+flex:1;
+}
+
+.cart-size{
+color:#777;
+font-size:13px;
+margin-top:3px;
+}
+
+.quantity{
+display:flex;
+gap:8px;
+align-items:center;
+margin-top:8px;
+}
+
+.quantity button{
+width:28px;
+height:28px;
+border:none;
+background:var(--black);
+color:white;
+cursor:pointer;
+padding:0;
+}
+
+.remove{
+border:none;
+background:none;
+color:#b00000;
+cursor:pointer;
+margin-top:5px;
+}
+
+.cart-total{
+font-size:21px;
+font-weight:bold;
+border-top:2px solid var(--black);
+margin-top:20px;
+padding:20px 0;
+}
+
+.order-form{
+display:none;
+}
+
+.order-form input,
+.order-form textarea{
+width:100%;
+padding:13px;
+margin-bottom:10px;
+border:1px solid #ddd;
+font-family:inherit;
+}
+
+.order-form textarea{
+height:90px;
+resize:none;
+}
+
+.whatsapp-btn{
+width:100%;
+background:#25D366;
+color:white;
+border:none;
+padding:14px;
+cursor:pointer;
+font-weight:bold;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+nav{
+display:none;
+}
+
+.products{
+grid-template-columns:repeat(2,1fr);
+}
+
+.story-inner{
+grid-template-columns:1fr;
+}
+
+.features{
+grid-template-columns:1fr;
+}
+
+}
+
+@media(max-width:600px){
+
+header{
+height:68px;
+padding:0 18px;
+}
+
+.logo{
+font-size:18px;
+letter-spacing:2px;
+}
+
+.hero h1{
+font-size:52px;
+}
+
+.products{
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.product-image{
+height:210px;
+}
+
+.product-info{
+padding:11px;
+}
+
+.product-name{
+font-size:17px;
+}
+
+.product-description{
+font-size:11px;
+}
+
+.size-options{
+gap:4px;
+}
+
+.size-option label{
+font-size:10px;
+padding:7px 2px;
+}
+
+.cart{
+width:100%;
+max-width:100%;
+}
+
+.story-image{
+height:350px;
+}
+
+}
+
+</style>
 </head>
 
 <body>
 
+<!-- LOADER -->
+
 <div id="loader">
-  <div class="loader-logo">VELVET SCENT</div>
-  <div class="loader-line"></div>
+
+<div class="loader-logo">
+VELVET SCENT
 </div>
+
+<div class="loader-line"></div>
+
+</div>
+
+
+<!-- HEADER -->
 
 <header id="header">
 
-  <a href="#home" class="logo">
-    VELVET SCENT
-  </a>
+<a href="#home" class="logo">
+VELVET SCENT
+</a>
 
-  <nav>
-    <a href="#home">HOME</a>
-    <a href="#products-section">COLLECTION</a>
-    <a href="#story">OUR STORY</a>
-    <a href="#why-us">WHY US</a>
-  </nav>
+<nav>
 
-  <button class="header-cart" onclick="openCart()">
-    🛍️ CART (<span id="cartCount">0</span>)
-  </button>
+<a href="#home">HOME</a>
+
+<a href="#products-section">
+COLLECTION
+</a>
+
+<a href="#story">
+OUR STORY
+</a>
+
+<a href="#why-us">
+WHY US
+</a>
+
+</nav>
+
+<button
+class="header-cart"
+onclick="openCart()"
+>
+
+🛍️ CART
+(<span id="cartCount">0</span>)
+
+</button>
 
 </header>
 
-<section id="home" class="hero">
 
-  <div class="hero-content">
+<!-- HERO -->
 
-    <div class="eyebrow">
-      THE ART OF FRAGRANCE
-    </div>
+<section
+id="home"
+class="hero"
+>
 
-    <h1>
-      Your Scent.
-      <br>
-      <span>Your Signature.</span>
-    </h1>
+<div class="hero-content">
 
-    <p class="hero-text">
-      Discover Velvet Scent —
-      a world of luxury fragrances
-      created to express your personality.
-    </p>
+<div class="eyebrow">
+THE ART OF FRAGRANCE
+</div>
 
-    <a href="#products-section" class="btn-gold">
-      EXPLORE COLLECTION
-    </a>
+<h1>
 
-  </div>
+Your Scent.
+<br>
 
-</section>
+<span>
+Your Signature.
+</span>
 
-<section id="products-section" class="section">
+</h1>
 
-  <div class="section-heading">
+<p class="hero-text">
 
-    <small>VELVET SCENT COLLECTION</small>
+Discover Velvet Scent —
+a world of luxury fragrances
+created to express your personality.
 
-    <h2>Find Your Signature</h2>
+</p>
 
-    <p>
-      اختر العطر الذي يناسب شخصيتك
-    </p>
+<a
+href="#products-section"
+class="btn-gold"
+>
 
-  </div>
+EXPLORE COLLECTION
 
-  <div class="categories">
+</a>
 
-    <button
-      class="category-btn active"
-      onclick="filterProducts('all', this)"
-    >
-      ALL
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="filterProducts('man', this)"
-    >
-      MAN
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="filterProducts('women', this)"
-    >
-      WOMEN
-    </button>
-
-    <button
-      class="category-btn"
-      onclick="filterProducts('unisex', this)"
-    >
-      UNISEX
-    </button>
-
-  </div>
-
-  <div id="products" class="products">
-
-    <div class="empty">
-      جاري تحميل العطور...
-    </div>
-
-  </div>
+</div>
 
 </section>
 
-<section id="story" class="story">
 
-  <div class="story-inner">
+<!-- PRODUCTS -->
 
-    <div class="story-image"></div>
+<section
+id="products-section"
+class="section"
+>
 
-    <div class="story-content">
+<div class="section-heading">
 
-      <small>OUR STORY</small>
+<small>
+VELVET SCENT COLLECTION
+</small>
 
-      <h2>
-        Scent tells your story.
-      </h2>
+<h2>
+Find Your Signature
+</h2>
 
-      <p>
-        في Velvet Scent نؤمن أن العطر
-        ليس مجرد رائحة، بل هو انطباع
-        وذكرى وشخصية.
-      </p>
+<p>
+اختر العطر والحجم المناسب لك
+</p>
 
-      <p>
-        اخترنا لك مجموعة من الروائح
-        المميزة التي تمنحك حضورًا مختلفًا.
-      </p>
+</div>
 
-      <a href="#products-section" class="btn-gold">
-        SHOP FRAGRANCES
-      </a>
 
-    </div>
+<div class="categories">
 
-  </div>
+<button
+class="category-btn active"
+onclick="filterProducts('all',this)"
+>
+ALL
+</button>
+
+<button
+class="category-btn"
+onclick="filterProducts('man',this)"
+>
+MAN
+</button>
+
+<button
+class="category-btn"
+onclick="filterProducts('women',this)"
+>
+WOMEN
+</button>
+
+<button
+class="category-btn"
+onclick="filterProducts('unisex',this)"
+>
+UNISEX
+</button>
+
+</div>
+
+
+<div
+id="products"
+class="products"
+>
+
+<div class="empty">
+جاري تحميل العطور...
+</div>
+
+</div>
+
+</section>
+
+
+<!-- STORY -->
+
+<section
+id="story"
+class="story"
+>
+
+<div class="story-inner">
+
+<div class="story-image"></div>
+
+<div class="story-content">
+
+<small>
+OUR STORY
+</small>
+
+<h2>
+Scent tells your story.
+</h2>
+
+<p>
+في Velvet Scent نؤمن أن العطر
+ليس مجرد رائحة، بل هو انطباع
+وذكرى وشخصية.
+</p>
+
+<p>
+اخترنا لك مجموعة من الروائح
+المميزة التي تمنحك حضورًا مختلفًا.
+</p>
+
+<a
+href="#products-section"
+class="btn-gold"
+>
+SHOP FRAGRANCES
+</a>
+
+</div>
+
+</div>
 
 </section>
 
-<section id="why-us" class="section">
 
-  <div class="section-heading">
+<!-- WHY US -->
 
-    <small>WHY VELVET SCENT</small>
+<section
+id="why-us"
+class="section"
+>
 
-    <h2>The Velvet Experience</h2>
+<div class="section-heading">
 
-  </div>
+<small>
+WHY VELVET SCENT
+</small>
 
-  <div class="features">
+<h2>
+The Velvet Experience
+</h2>
 
-    <div class="feature">
-      <div class="feature-icon">✦</div>
-      <h3>Premium Quality</h3>
-      <p>
-        نهتم بكل تفاصيل تجربتك
-        من اختيار العطر حتى وصوله إليك.
-      </p>
-    </div>
+</div>
 
-    <div class="feature">
-      <div class="feature-icon">♢</div>
-      <h3>Curated Collection</h3>
-      <p>
-        مجموعة مختارة بعناية
-        لتناسب مختلف الأذواق.
-      </p>
-    </div>
 
-    <div class="feature">
-      <div class="feature-icon">♡</div>
-      <h3>Made For You</h3>
-      <p>
-        لأن عطرك هو جزء من شخصيتك
-        وحضورك الخاص.
-      </p>
-    </div>
+<div class="features">
 
-  </div>
+<div class="feature">
+
+<div class="feature-icon">
+✦
+</div>
+
+<h3>
+Premium Quality
+</h3>
+
+<p>
+نهتم بكل تفاصيل تجربتك
+من اختيار العطر حتى وصوله إليك.
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<div class="feature-icon">
+♢
+</div>
+
+<h3>
+Curated Collection
+</h3>
+
+<p>
+مجموعة مختارة بعناية
+لتناسب مختلف الأذواق.
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<div class="feature-icon">
+♡
+</div>
+
+<h3>
+Made For You
+</h3>
+
+<p>
+لأن عطرك هو جزء من شخصيتك
+وحضورك الخاص.
+</p>
+
+</div>
+
+</div>
 
 </section>
+
+
+<!-- CTA -->
 
 <section class="cta">
 
-  <h2>Find Your Signature</h2>
+<h2>
+Find Your Signature
+</h2>
 
-  <p>
-    Your next favorite fragrance is waiting.
-  </p>
+<p>
+Your next favorite fragrance is waiting.
+</p>
 
-  <a href="#products-section" class="btn-gold">
-    SHOP NOW
-  </a>
+<a
+href="#products-section"
+class="btn-gold"
+>
+SHOP NOW
+</a>
 
 </section>
 
+
+<!-- FOOTER -->
+
 <footer>
 
-  <div class="footer-logo">
-    VELVET SCENT
-  </div>
+<div class="footer-logo">
+VELVET SCENT
+</div>
 
-  <p>Luxury Fragrances</p>
+<p>
+Luxury Fragrances
+</p>
 
-  <br>
+<br>
 
-  <p>
-    ©️ 2026 Velvet Scent — جميع الحقوق محفوظة
-  </p>
+<p>
+©️ 2026 Velvet Scent — جميع الحقوق محفوظة
+</p>
 
 </footer>
 
+
+<!-- OVERLAY -->
+
 <div
-  id="overlay"
-  class="overlay"
-  onclick="closeCart()"
+id="overlay"
+class="overlay"
+onclick="closeCart()"
 ></div>
 
-<div id="cart" class="cart">
 
-  <div class="cart-header">
+<!-- CART -->
 
-    <h2>Shopping Bag</h2>
+<div
+id="cart"
+class="cart"
+>
 
-    <button
-      class="close-cart"
-      onclick="closeCart()"
-    >
-      ×
-    </button>
+<div class="cart-header">
 
-  </div>
+<h2>
+Shopping Bag
+</h2>
 
-  <div id="cartItems"></div>
-
-  <div class="cart-total">
-
-    الإجمالي:
-
-    <span id="cartTotal">0</span>
-
-    جنيه
-
-  </div>
-
-  <div id="orderForm" class="order-form">
-
-    <input
-      id="customerName"
-      type="text"
-      placeholder="الاسم"
-    >
-
-    <input
-      id="customerPhone"
-      type="tel"
-      placeholder="رقم الموبايل"
-    >
-
-    <textarea
-      id="customerAddress"
-      placeholder="العنوان بالتفصيل"
-    ></textarea>
-
-    <button
-      class="whatsapp-btn"
-      onclick="sendOrder()"
-    >
-      📱 إرسال الطلب عبر WhatsApp
-    </button>
-
-  </div>
+<button
+class="close-cart"
+onclick="closeCart()"
+>
+×
+</button>
 
 </div>
+
+
+<div id="cartItems"></div>
+
+
+<div class="cart-total">
+
+الإجمالي:
+
+<span id="cartTotal">
+0
+</span>
+
+جنيه
+
+</div>
+
+
+<div
+id="orderForm"
+class="order-form"
+>
+
+<input
+id="customerName"
+type="text"
+placeholder="الاسم"
+>
+
+<input
+id="customerPhone"
+type="tel"
+placeholder="رقم الموبايل"
+>
+
+<textarea
+id="customerAddress"
+placeholder="العنوان بالتفصيل"
+></textarea>
+
+<button
+class="whatsapp-btn"
+onclick="sendOrder()"
+>
+
+📱 إرسال الطلب عبر WhatsApp
+
+</button>
+
+</div>
+
+</div>
+
 
 <script>
 
 /* =========================
-   SUPABASE
+SUPABASE
 ========================= */
 
 const SUPABASE_URL =
-  "https://frvgjkeeaojyvwsjikre.supabase.co";
+"https://frvgjkeeaojyvwsjikre.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_aPftd5l28afljdgY2ddn9A_2HPnFF3E";
+"sb_publishable_aPftd5l28afljdgY2ddn9A_2HPnFF3E";
 
-/* الرقم الجديد */
 const STORE_WHATSAPP =
-  "201092460908";
+"201092460908";
 
 const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
 
 
 /* =========================
-   DATA
+DATA
 ========================= */
 
 let products = [];
+
 let cart = [];
+
 let currentCategory = "all";
 
 
 /* =========================
-   LOADER
+LOADER
 ========================= */
 
 window.addEventListener(
-  "load",
-  function() {
+"load",
+function(){
 
-    setTimeout(
-      function() {
+setTimeout(
+function(){
 
-        document
-          .getElementById("loader")
-          .classList.add("hide");
+document
+.getElementById("loader")
+.classList.add("hide");
 
-      },
-      800
-    );
+},
+800
+);
 
-  }
+}
 );
 
 
 /* =========================
-   HEADER
+HEADER
 ========================= */
 
 window.addEventListener(
-  "scroll",
-  function() {
+"scroll",
+function(){
 
-    const header =
-      document.getElementById("header");
+const header =
+document.getElementById("header");
 
-    if (window.scrollY > 40) {
-      header.classList.add("scrolled");
-    } else {
-      header.classList.remove("scrolled");
-    }
+if(window.scrollY > 40){
 
-  }
+header.classList.add("scrolled");
+
+}else{
+
+header.classList.remove("scrolled");
+
+}
+
+}
 );
 
 
 /* =========================
-   FILTER
+FILTER
 ========================= */
 
 function filterProducts(
-  category,
-  button
-) {
+category,
+button
+){
 
-  currentCategory = category;
+currentCategory =
+category;
 
-  document
-    .querySelectorAll(".category-btn")
-    .forEach(
-      function(btn) {
-        btn.classList.remove("active");
-      }
-    );
+document
+.querySelectorAll(".category-btn")
+.forEach(
+function(btn){
 
-  button.classList.add("active");
+btn.classList.remove("active");
 
-  renderProducts();
+}
+);
+
+button.classList.add("active");
+
+renderProducts();
 
 }
 
 
 /* =========================
-   LOAD PRODUCTS
+LOAD PRODUCTS
 ========================= */
 
-async function loadProducts() {
+async function loadProducts(){
 
-  const container =
-    document.getElementById("products");
+const container =
+document.getElementById(
+"products"
+);
 
-  container.innerHTML = `
-    <div class="empty">
-      جاري تحميل العطور...
-    </div>
-  `;
+container.innerHTML = `
+<div class="empty">
+جاري تحميل العطور...
+</div>
+`;
 
-  try {
 
-    const result =
-      await supabaseClient
-        .from("products")
-        .select("*");
+const {
+data,
+error
+} =
+await supabaseClient
+.from("products")
+.select(`
+product_id,
+name,
+price,
+image,
+description,
+stock,
+category,
+option1_name,
+option1_price,
+option2_name,
+option2_price,
+option3_name,
+option3_price
+`);
 
-    const data = result.data;
-    const error = result.error;
 
-    if (error) {
+if(error){
 
-      console.error(
-        "SUPABASE ERROR:",
-        error
-      );
+console.error(
+"SUPABASE ERROR:",
+error
+);
 
-      container.innerHTML = `
-        <div class="error-box">
+container.innerHTML = `
 
-          <strong>
-            حدث خطأ في تحميل العطور
-          </strong>
+<div class="error-box">
 
-          <br><br>
+<strong>
+حدث خطأ في تحميل العطور
+</strong>
 
-          <b>Message:</b>
-          ${escapeHTML(error.message || "")}
+<br><br>
 
-          <br>
+<b>Message:</b>
+${escapeHTML(error.message)}
 
-          <b>Code:</b>
-          ${escapeHTML(error.code || "")}
+<br>
 
-          <br>
+<b>Code:</b>
+${escapeHTML(error.code || "")}
 
-          <b>Details:</b>
-          ${escapeHTML(error.details || "")}
+<br>
 
-          <br>
+<b>Details:</b>
+${escapeHTML(error.details || "")}
 
-          <b>Hint:</b>
-          ${escapeHTML(error.hint || "")}
+<br>
 
-        </div>
-      `;
+<b>Hint:</b>
+${escapeHTML(error.hint || "")}
 
-      return;
-    }
+</div>
 
-    products = data || [];
+`;
 
-    renderProducts();
+return;
 
-  } catch (error) {
+}
 
-    console.error(error);
 
-    container.innerHTML = `
-      <div class="error-box">
-        حدث خطأ غير متوقع أثناء تحميل المنتجات.
-        <br><br>
-        ${escapeHTML(error.message || "")}
-      </div>
-    `;
+products =
+data || [];
 
-  }
+renderProducts();
 
 }
 
 
 /* =========================
-   RENDER PRODUCTS
+RENDER PRODUCTS
 ========================= */
 
-function renderProducts() {
+function renderProducts(){
 
-  const container =
-    document.getElementById("products");
+const container =
+document.getElementById(
+"products"
+);
 
-  let filtered =
-    products;
 
-  if (currentCategory !== "all") {
+let filtered =
+products;
 
-    filtered =
-      products.filter(
-        function(product) {
 
-          return String(
-            product.category || ""
-          )
-          .toLowerCase()
-          .trim() === currentCategory;
+if(currentCategory !== "all"){
 
-        }
-      );
+filtered =
+products.filter(
+function(product){
 
-  }
+return String(
+product.category || ""
+).toLowerCase()
+===
+currentCategory;
 
-  if (!filtered.length) {
+}
+);
 
-    container.innerHTML = `
-      <div class="empty">
-        لا توجد عطور في هذا القسم حاليًا.
-      </div>
-    `;
+}
 
-    return;
-  }
 
-  container.innerHTML =
-    filtered
-      .map(
-        function(product) {
+if(!filtered.length){
 
-          /*
-            الإصلاح المهم:
-            بنجيب الـ index الحقيقي للمنتج
-            من products بدل الطريقة القديمة
-          */
+container.innerHTML = `
+<div class="empty">
+لا توجد عطور في هذا القسم حاليًا.
+</div>
+`;
 
-          const realIndex =
-            products.indexOf(product);
+return;
 
-          return `
+}
 
-          <div class="product">
 
-            <div class="product-image">
+container.innerHTML =
+filtered
+.map(
+function(product,index){
 
-              ${
-                realIndex < 3
-                ?
-                `
-                <div class="product-tag">
-                  NEW
-                </div>
-                `
-                :
-                ""
-              }
+const options = [
 
-              <img
-                src="${escapeHTML(
-                  product.image || ""
-                )}"
-                alt="${escapeHTML(
-                  product.name || ""
-                )}"
-                onerror="
-                  this.style.display='none';
-                "
-              >
+{
+name:product.option1_name,
+price:Number(
+product.option1_price || 0
+)
+},
 
-            </div>
+{
+name:product.option2_name,
+price:Number(
+product.option2_price || 0
+)
+},
 
-            <div class="product-info">
+{
+name:product.option3_name,
+price:Number(
+product.option3_price || 0
+)
+}
 
-              <div class="product-name">
-                ${escapeHTML(
-                  product.name || "عطر"
-                )}
-              </div>
+].filter(
+function(option){
 
-              <div class="product-description">
-                ${escapeHTML(
-                  product.description || ""
-                )}
-              </div>
+return option.name &&
+option.price > 0;
 
-              <div class="product-bottom">
+}
+);
 
-                <div class="price">
 
-                  ${Number(
-                    product.price || 0
-                  ).toLocaleString("ar-EG")}
+return `
 
-                  جنيه
+<div class="product">
 
-                </div>
+<div class="product-image">
 
-                <button
-                  class="add-btn"
-                  onclick="addToCart(${realIndex})"
-                >
-                  أضف للسلة
-                </button>
+${
+index < 3
+?
+`
+<div class="product-tag">
+NEW
+</div>
+`
+:
+""
+}
 
-              </div>
+<img
+src="${escapeAttribute(
+product.image || ""
+)}"
+alt="${escapeAttribute(
+product.name || ""
+)}"
+onerror="
+this.style.display='none';
+"
+>
 
-            </div>
+</div>
 
-          </div>
 
-          `;
+<div class="product-info">
 
-        }
-      )
-      .join("");
+<div class="product-name">
+
+${escapeHTML(
+product.name || "عطر"
+)}
+
+</div>
+
+
+<div class="product-description">
+
+${escapeHTML(
+product.description || ""
+)}
+
+</div>
+
+
+${
+options.length
+?
+`
+
+<div class="size-title">
+اختر الحجم:
+</div>
+
+<div class="size-options">
+
+${
+options
+.map(
+function(option,optionIndex){
+
+const safeId =
+"product_" +
+product.product_id +
+"_" +
+optionIndex;
+
+return `
+
+<div class="size-option">
+
+<input
+type="radio"
+name="size_${escapeAttribute(
+String(product.product_id)
+)}"
+id="${escapeAttribute(safeId)}"
+value="${optionIndex}"
+onchange="
+updateSelectedPrice(
+'${escapeAttribute(
+String(product.product_id)
+)}',
+${optionIndex}
+)
+"
+${optionIndex === 0
+? "checked"
+: ""
+}
+>
+
+<label
+for="${escapeAttribute(safeId)}"
+>
+
+${escapeHTML(
+option.name
+)}
+
+</label>
+
+</div>
+
+`;
+
+}
+)
+.join("")
+}
+
+</div>
+
+
+<div
+id="selected-price-${escapeAttribute(
+String(product.product_id)
+)}"
+class="selected-price"
+>
+
+${options[0].price.toLocaleString("ar-EG")}
+جنيه
+
+</div>
+
+<button
+class="add-btn"
+onclick="
+addProductToCart(
+'${escapeAttribute(
+String(product.product_id)
+)}'
+)
+"
+>
+
+أضف للسلة 🛍️
+
+</button>
+
+`
+:
+`
+
+<div class="selected-price">
+السعر غير متاح
+</div>
+
+`
+}
+
+</div>
+
+</div>
+
+`;
+
+}
+)
+.join("");
 
 }
 
 
 /* =========================
-   ADD TO CART
+GET OPTIONS
 ========================= */
 
-function addToCart(index) {
+function getProductOptions(product){
 
-  const product =
-    products[index];
+return [
 
-  if (!product) {
+{
+name:product.option1_name,
+price:Number(
+product.option1_price || 0
+)
+},
 
-    console.error(
-      "Product not found:",
-      index
-    );
+{
+name:product.option2_name,
+price:Number(
+product.option2_price || 0
+)
+},
 
-    alert(
-      "حصل خطأ في إضافة المنتج للسلة"
-    );
+{
+name:product.option3_name,
+price:Number(
+product.option3_price || 0
+)
+}
 
-    return;
-  }
+].filter(
+function(option){
 
-  const existing =
-    cart.find(
-      function(item) {
+return option.name &&
+option.price > 0;
 
-        return item._cartIndex === index;
-
-      }
-    );
-
-  if (existing) {
-
-    if (
-      product.stock !== null &&
-      product.stock !== undefined &&
-      product.stock !== "" &&
-      Number(product.stock) > 0 &&
-      existing.quantity >= Number(product.stock)
-    ) {
-
-      alert(
-        "الكمية المتاحة خلصت"
-      );
-
-      return;
-
-    }
-
-    existing.quantity++;
-
-  } else {
-
-    cart.push({
-
-      ...product,
-
-      _cartIndex: index,
-
-      quantity: 1
-
-    });
-
-  }
-
-  updateCart();
-
-  openCart();
+}
+);
 
 }
 
 
 /* =========================
-   QUANTITY
+UPDATE SELECTED PRICE
 ========================= */
 
-function increaseQuantity(index) {
+function updateSelectedPrice(
+productId,
+optionIndex
+){
 
-  const item =
-    cart.find(
-      function(item) {
+const product =
+products.find(
+function(p){
 
-        return item._cartIndex === index;
-
-      }
-    );
-
-  if (!item) {
-    return;
-  }
-
-  if (
-    item.stock !== null &&
-    item.stock !== undefined &&
-    item.stock !== "" &&
-    Number(item.stock) > 0 &&
-    item.quantity >= Number(item.stock)
-  ) {
-
-    alert(
-      "الكمية المتاحة خلصت"
-    );
-
-    return;
-
-  }
-
-  item.quantity++;
-
-  updateCart();
+return String(
+p.product_id
+) ===
+String(productId);
 
 }
+);
+
+if(!product) return;
 
 
-function decreaseQuantity(index) {
+const options =
+getProductOptions(product);
 
-  const item =
-    cart.find(
-      function(item) {
+const option =
+options[optionIndex];
 
-        return item._cartIndex === index;
+if(!option) return;
 
-      }
-    );
 
-  if (!item) {
-    return;
-  }
+const priceElement =
+document.getElementById(
+"selected-price-" +
+productId
+);
 
-  item.quantity--;
+if(priceElement){
 
-  if (item.quantity <= 0) {
-
-    cart =
-      cart.filter(
-        function(item) {
-
-          return item._cartIndex !== index;
-
-        }
-      );
-
-  }
-
-  updateCart();
+priceElement.textContent =
+option.price.toLocaleString(
+"ar-EG"
+) +
+" جنيه";
 
 }
-
-
-function removeFromCart(index) {
-
-  cart =
-    cart.filter(
-      function(item) {
-
-        return item._cartIndex !== index;
-
-      }
-    );
-
-  updateCart();
 
 }
 
 
 /* =========================
-   UPDATE CART
+ADD TO CART
 ========================= */
 
-function updateCart() {
+function addProductToCart(
+productId
+){
 
-  const cartItems =
-    document.getElementById(
-      "cartItems"
-    );
+const product =
+products.find(
+function(p){
 
-  const cartCount =
-    document.getElementById(
-      "cartCount"
-    );
+return String(
+p.product_id
+) ===
+String(productId);
 
-  const cartTotal =
-    document.getElementById(
-      "cartTotal"
-    );
+}
+);
 
-  const orderForm =
-    document.getElementById(
-      "orderForm"
-    );
 
-  const count =
-    cart.reduce(
-      function(sum, item) {
+if(!product){
 
-        return sum + item.quantity;
+alert("العطر غير موجود");
 
-      },
-      0
-    );
+return;
 
-  const total =
-    cart.reduce(
-      function(sum, item) {
+}
 
-        return sum +
-          Number(item.price || 0) *
-          item.quantity;
 
-      },
-      0
-    );
+const options =
+getProductOptions(product);
 
-  cartCount.textContent =
-    count;
 
-  cartTotal.textContent =
-    total.toLocaleString(
-      "ar-EG"
-    );
+if(!options.length){
 
-  if (!cart.length) {
+alert(
+"لا توجد أسعار متاحة لهذا العطر"
+);
 
-    cartItems.innerHTML = `
-      <div class="empty">
-        السلة فارغة 🛍️
-      </div>
-    `;
+return;
 
-    orderForm.style.display =
-      "none";
+}
 
-    return;
 
-  }
+const selected =
+document.querySelector(
+`input[name="size_${CSS.escape(
+String(productId)
+)}"]:checked`
+);
 
-  orderForm.style.display =
-    "block";
 
-  cartItems.innerHTML =
-    cart
-      .map(
-        function(item) {
+if(!selected){
 
-          return `
+alert(
+"اختار الحجم الأول"
+);
 
-          <div class="cart-item">
+return;
 
-            <img
-              src="${escapeHTML(
-                item.image || ""
-              )}"
-              alt="${escapeHTML(
-                item.name || ""
-              )}"
-            >
+}
 
-            <div class="cart-item-info">
 
-              <strong>
-                ${escapeHTML(
-                  item.name || "عطر"
-                )}
-              </strong>
+const optionIndex =
+Number(selected.value);
 
-              <div>
+const option =
+options[optionIndex];
 
-                ${Number(
-                  item.price || 0
-                ).toLocaleString("ar-EG")}
 
-                جنيه
+if(!option){
 
-              </div>
+alert(
+"اختيار غير صحيح"
+);
 
-              <div class="quantity">
+return;
 
-                <button
-                  onclick="decreaseQuantity(${item._cartIndex})"
-                >
-                  −
-                </button>
+}
 
-                <span>
-                  ${item.quantity}
-                </span>
 
-                <button
-                  onclick="increaseQuantity(${item._cartIndex})"
-                >
-                  +
-                </button>
+const existing =
+cart.find(
+function(item){
 
-              </div>
+return (
+String(item.productId) ===
+String(productId) &&
+item.optionName ===
+option.name
+);
 
-              <button
-                class="remove"
-                onclick="removeFromCart(${item._cartIndex})"
-              >
-                حذف
-              </button>
+}
+);
 
-            </div>
 
-          </div>
+if(existing){
 
-          `;
+if(
+product.stock &&
+existing.quantity >=
+Number(product.stock)
+){
 
-        }
-      )
-      .join("");
+alert(
+"الكمية المتاحة خلصت"
+);
+
+return;
+
+}
+
+
+existing.quantity++;
+
+}else{
+
+cart.push({
+
+productId:
+productId,
+
+name:
+product.name,
+
+image:
+product.image,
+
+description:
+product.description,
+
+optionName:
+option.name,
+
+price:
+option.price,
+
+quantity:
+1,
+
+stock:
+Number(product.stock || 0)
+
+});
+
+}
+
+
+updateCart();
+
+openCart();
 
 }
 
 
 /* =========================
-   OPEN CART
+QUANTITY
 ========================= */
 
-function openCart() {
+function increaseQuantity(
+productId,
+optionName
+){
 
-  document
-    .getElementById("cart")
-    .classList.add("open");
+const item =
+cart.find(
+function(item){
 
-  document
-    .getElementById("overlay")
-    .style.display =
-      "block";
+return (
+String(item.productId) ===
+String(productId) &&
+item.optionName ===
+optionName
+);
 
-  updateCart();
+}
+);
+
+
+if(!item) return;
+
+
+if(
+item.stock &&
+item.quantity >=
+item.stock
+){
+
+alert(
+"الكمية المتاحة خلصت"
+);
+
+return;
+
+}
+
+
+item.quantity++;
+
+updateCart();
+
+}
+
+
+function decreaseQuantity(
+productId,
+optionName
+){
+
+const item =
+cart.find(
+function(item){
+
+return (
+String(item.productId) ===
+String(productId) &&
+item.optionName ===
+optionName
+);
+
+}
+);
+
+
+if(!item) return;
+
+
+item.quantity--;
+
+
+if(item.quantity <= 0){
+
+cart =
+cart.filter(
+function(cartItem){
+
+return !(
+String(cartItem.productId) ===
+String(productId) &&
+cartItem.optionName ===
+optionName
+);
+
+}
+);
+
+}
+
+
+updateCart();
+
+}
+
+
+function removeFromCart(
+productId,
+optionName
+){
+
+cart =
+cart.filter(
+function(item){
+
+return !(
+String(item.productId) ===
+String(productId) &&
+item.optionName ===
+optionName
+);
+
+}
+);
+
+
+updateCart();
 
 }
 
 
 /* =========================
-   CLOSE CART
+UPDATE CART
 ========================= */
 
-function closeCart() {
+function updateCart(){
 
-  document
-    .getElementById("cart")
-    .classList.remove("open");
+const cartItems =
+document.getElementById(
+"cartItems"
+);
 
-  document
-    .getElementById("overlay")
-    .style.display =
-      "none";
+const cartCount =
+document.getElementById(
+"cartCount"
+);
+
+const cartTotal =
+document.getElementById(
+"cartTotal"
+);
+
+const orderForm =
+document.getElementById(
+"orderForm"
+);
+
+
+const count =
+cart.reduce(
+function(sum,item){
+
+return sum +
+item.quantity;
+
+},
+0
+);
+
+
+const total =
+cart.reduce(
+function(sum,item){
+
+return sum +
+Number(item.price || 0) *
+item.quantity;
+
+},
+0
+);
+
+
+cartCount.textContent =
+count;
+
+
+cartTotal.textContent =
+total.toLocaleString(
+"ar-EG"
+);
+
+
+if(!cart.length){
+
+cartItems.innerHTML = `
+<div class="empty">
+السلة فارغة 🛍️
+</div>
+`;
+
+orderForm.style.display =
+"none";
+
+return;
+
+}
+
+
+orderForm.style.display =
+"block";
+
+
+cartItems.innerHTML =
+cart
+.map(
+function(item){
+
+return `
+
+<div class="cart-item">
+
+<img
+src="${escapeAttribute(
+item.image || ""
+)}"
+alt="${escapeAttribute(
+item.name || ""
+)}"
+>
+
+<div class="cart-item-info">
+
+<strong>
+
+${escapeHTML(
+item.name || "عطر"
+)}
+
+</strong>
+
+
+<div class="cart-size">
+
+${escapeHTML(
+item.optionName
+)}
+
+</div>
+
+
+<div>
+
+${Number(
+item.price || 0
+).toLocaleString("ar-EG")}
+
+جنيه
+
+</div>
+
+
+<div class="quantity">
+
+<button
+onclick="
+decreaseQuantity(
+'${escapeAttribute(
+String(item.productId)
+)}',
+'${escapeAttribute(
+item.optionName
+)}'
+)
+"
+>
+−
+</button>
+
+
+<span>
+${item.quantity}
+</span>
+
+
+<button
+onclick="
+increaseQuantity(
+'${escapeAttribute(
+String(item.productId)
+)}',
+'${escapeAttribute(
+item.optionName
+)}'
+)
+"
+>
++
+</button>
+
+</div>
+
+
+<button
+class="remove"
+onclick="
+removeFromCart(
+'${escapeAttribute(
+String(item.productId)
+)}',
+'${escapeAttribute(
+item.optionName
+)}'
+)
+"
+>
+
+حذف
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}
+)
+.join("");
 
 }
 
 
 /* =========================
-   SEND ORDER WHATSAPP
+OPEN CART
 ========================= */
 
-function sendOrder() {
+function openCart(){
 
-  if (!cart.length) {
+document
+.getElementById("cart")
+.classList.add("open");
 
-    alert(
-      "السلة فارغة"
-    );
+document
+.getElementById("overlay")
+.style.display =
+"block";
 
-    return;
-
-  }
-
-  const name =
-    document
-      .getElementById(
-        "customerName"
-      )
-      .value
-      .trim();
-
-  const phone =
-    document
-      .getElementById(
-        "customerPhone"
-      )
-      .value
-      .trim();
-
-  const address =
-    document
-      .getElementById(
-        "customerAddress"
-      )
-      .value
-      .trim();
-
-  if (
-    !name ||
-    !phone ||
-    !address
-  ) {
-
-    alert(
-      "من فضلك املأ جميع بيانات الطلب"
-    );
-
-    return;
-
-  }
-
-  const total =
-    cart.reduce(
-      function(sum, item) {
-
-        return sum +
-          Number(item.price || 0) *
-          item.quantity;
-
-      },
-      0
-    );
-
-  let message =
-    "🖤 طلب جديد من Velvet Scent\n\n";
-
-  message +=
-    "👤 الاسم: " +
-    name +
-    "\n";
-
-  message +=
-    "📱 الموبايل: " +
-    phone +
-    "\n";
-
-  message +=
-    "📍 العنوان: " +
-    address +
-    "\n\n";
-
-  message +=
-    "🌹 العطور:\n";
-
-  cart.forEach(
-    function(item) {
-
-      message +=
-        "• " +
-        item.name +
-        " × " +
-        item.quantity +
-        " = " +
-        (
-          Number(item.price || 0) *
-          item.quantity
-        ) +
-        " جنيه\n";
-
-    }
-  );
-
-  message +=
-    "\n💰 الإجمالي: " +
-    total +
-    " جنيه";
-
-  const whatsappURL =
-    "https://wa.me/" +
-    STORE_WHATSAPP +
-    "?text=" +
-    encodeURIComponent(
-      message
-    );
-
-  window.open(
-    whatsappURL,
-    "_blank"
-  );
+updateCart();
 
 }
 
 
 /* =========================
-   ESCAPE HTML
+CLOSE CART
 ========================= */
 
-function escapeHTML(value) {
+function closeCart(){
 
-  return String(value)
+document
+.getElementById("cart")
+.classList.remove("open");
 
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
-
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
-
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
-
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
-
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
+document
+.getElementById("overlay")
+.style.display =
+"none";
 
 }
 
 
 /* =========================
-   START
+WHATSAPP
+========================= */
+
+function sendOrder(){
+
+if(!cart.length){
+
+alert(
+"السلة فارغة"
+);
+
+return;
+
+}
+
+
+const name =
+document
+.getElementById(
+"customerName"
+)
+.value
+.trim();
+
+
+const phone =
+document
+.getElementById(
+"customerPhone"
+)
+.value
+.trim();
+
+
+const address =
+document
+.getElementById(
+"customerAddress"
+)
+.value
+.trim();
+
+
+if(
+!name ||
+!phone ||
+!address
+){
+
+alert(
+"من فضلك املأ جميع بيانات الطلب"
+);
+
+return;
+
+}
+
+
+const total =
+cart.reduce(
+function(sum,item){
+
+return sum +
+Number(item.price || 0) *
+item.quantity;
+
+},
+0
+);
+
+
+let message =
+"🖤 طلب جديد من Velvet Scent\n\n";
+
+
+message +=
+"👤 الاسم: " +
+name +
+"\n";
+
+
+message +=
+"📱 الموبايل: " +
+phone +
+"\n";
+
+
+message +=
+"📍 العنوان: " +
+address +
+"\n\n";
+
+
+message +=
+"🌹 العطور:\n";
+
+
+cart.forEach(
+function(item){
+
+message +=
+"• " +
+item.name +
+" — " +
+item.optionName +
+" × " +
+item.quantity +
+" = " +
+(
+Number(item.price || 0) *
+item.quantity
+) +
+" جنيه\n";
+
+}
+);
+
+
+message +=
+"\n💰 الإجمالي: " +
+total +
+" جنيه";
+
+
+const whatsappURL =
+"https://wa.me/" +
+STORE_WHATSAPP +
+"?text=" +
+encodeURIComponent(
+message
+);
+
+
+window.open(
+whatsappURL,
+"_blank"
+);
+
+}
+
+
+/* =========================
+ESCAPE
+========================= */
+
+function escapeHTML(value){
+
+return String(value)
+
+.replaceAll(
+"&",
+"&amp;"
+)
+
+.replaceAll(
+"<",
+"&lt;"
+)
+
+.replaceAll(
+">",
+"&gt;"
+)
+
+.replaceAll(
+'"',
+"&quot;"
+)
+
+.replaceAll(
+"'",
+"&#039;"
+);
+
+}
+
+
+function escapeAttribute(value){
+
+return escapeHTML(value);
+
+}
+
+
+/* =========================
+START
 ========================= */
 
 loadProducts();
