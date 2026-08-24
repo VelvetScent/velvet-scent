@@ -1,1941 +1,2011 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Velvet Scent | Admin</title>
+<title>Velvet Scent | Admin</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
 
-    body {
-      font-family: "Cairo", Arial, sans-serif;
-      background: #f5f1e9;
-      color: #171513;
-      padding: 20px;
-    }
+body{
+font-family:"Cairo",Arial,sans-serif;
+background:#f5f1e9;
+color:#171513;
+padding:20px;
+}
 
-    .container {
-      width: 95%;
-      max-width: 1100px;
-      margin: auto;
-    }
+.container{
+width:95%;
+max-width:1150px;
+margin:auto;
+}
 
-    header {
-      background: #11100f;
-      color: white;
-      padding: 28px;
-      border-radius: 16px;
-      text-align: center;
-      margin-bottom: 25px;
-    }
+header{
+background:#11100f;
+color:white;
+padding:28px;
+border-radius:16px;
+text-align:center;
+margin-bottom:25px;
+}
 
-    header h1 {
-      font-family: "Playfair Display", serif;
-      letter-spacing: 4px;
-      font-size: 32px;
-    }
+header h1{
+font-family:"Playfair Display",serif;
+letter-spacing:4px;
+font-size:32px;
+}
 
-    header p {
-      color: #c9a45c;
-      margin-top: 5px;
-    }
+header p{
+color:#c9a45c;
+margin-top:5px;
+}
 
-    .card {
-      background: white;
-      padding: 22px;
-      border-radius: 15px;
-      margin-bottom: 22px;
-      box-shadow: 0 5px 25px rgba(0,0,0,.06);
-    }
+.card{
+background:white;
+padding:22px;
+border-radius:15px;
+margin-bottom:22px;
+box-shadow:0 5px 25px rgba(0,0,0,.06);
+}
 
-    h2 {
-      margin-bottom: 18px;
-    }
+h2{
+margin-bottom:18px;
+}
 
-    input,
-    textarea,
-    select {
-      width: 100%;
-      padding: 13px;
-      margin-bottom: 12px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 15px;
-    }
+input,
+textarea,
+select{
+width:100%;
+padding:13px;
+margin-bottom:12px;
+border:1px solid #ddd;
+border-radius:8px;
+font-family:inherit;
+font-size:15px;
+}
 
-    textarea {
-      min-height: 90px;
-      resize: vertical;
-    }
+textarea{
+min-height:90px;
+resize:vertical;
+}
 
-    button {
-      width: 100%;
-      padding: 13px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-family: inherit;
-      font-weight: bold;
-      background: #11100f;
-      color: white;
-      margin-top: 5px;
-    }
+button{
+width:100%;
+padding:13px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-family:inherit;
+font-weight:bold;
+background:#11100f;
+color:white;
+margin-top:5px;
+}
 
-    button:hover {
-      opacity: .9;
-    }
+button:hover{
+opacity:.9;
+}
 
-    .gold {
-      background: #c9a45c;
-      color: #111;
-    }
+.gold{
+background:#c9a45c;
+color:#111;
+}
 
-    .red {
-      background: #b00000;
-    }
+.red{
+background:#b00000;
+}
 
-    .gray {
-      background: #777;
-    }
+.gray{
+background:#777;
+}
 
-    .logout {
-      background: #b00000;
-    }
+.green{
+background:#16823b;
+}
 
-    #adminPanel {
-      display: none;
-    }
+.logout{
+background:#b00000;
+}
 
-    .message {
-      margin-top: 12px;
-      font-weight: bold;
-    }
+#adminPanel{
+display:none;
+}
 
-    .success {
-      color: #16823b;
-    }
+.message{
+margin-top:12px;
+font-weight:bold;
+}
 
-    .error {
-      color: #b00000;
-    }
+.success{
+color:#16823b;
+}
 
-    .toolbar {
-      display: grid;
-      grid-template-columns: 1fr 200px;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
+.error{
+color:#b00000;
+}
 
-    .products {
-      display: grid;
-      gap: 15px;
-    }
+.toolbar{
+display:grid;
+grid-template-columns:1fr 200px;
+gap:10px;
+margin-bottom:20px;
+}
 
-    .product {
-      border: 1px solid #eee;
-      border-radius: 12px;
-      padding: 15px;
-      display: grid;
-      grid-template-columns: 100px 1fr;
-      gap: 15px;
-      align-items: start;
-    }
+.products{
+display:grid;
+gap:15px;
+}
 
-    .product img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 10px;
-      background: #eee;
-    }
+.product{
+border:1px solid #eee;
+border-radius:12px;
+padding:15px;
+display:grid;
+grid-template-columns:100px 1fr;
+gap:15px;
+align-items:start;
+}
 
-    .product-name {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
+.product img{
+width:100px;
+height:100px;
+object-fit:cover;
+border-radius:10px;
+background:#eee;
+}
 
-    .product-info {
-      color: #666;
-      line-height: 1.9;
-    }
+.product-name{
+font-size:20px;
+font-weight:bold;
+margin-bottom:5px;
+}
 
-    .category {
-      display: inline-block;
-      background: #111;
-      color: white;
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-    }
+.product-info{
+color:#666;
+line-height:1.9;
+}
 
-    .prices {
-      background: #faf8f3;
-      border: 1px solid #e5ddce;
-      border-radius: 10px;
-      padding: 15px;
-      margin: 12px 0;
-    }
+.category{
+display:inline-block;
+background:#111;
+color:white;
+padding:3px 10px;
+border-radius:20px;
+font-size:12px;
+}
 
-    .prices-title {
-      font-weight: bold;
-      margin-bottom: 12px;
-      color: #111;
-    }
+.prices{
+background:#faf8f3;
+border:1px solid #e5ddce;
+border-radius:10px;
+padding:15px;
+margin:12px 0;
+}
 
-    .price-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
+.prices-title{
+font-weight:bold;
+margin-bottom:12px;
+color:#111;
+}
 
-    .price-option {
-      background: white;
-      border: 1px solid #eee;
-      padding: 10px;
-      border-radius: 8px;
-    }
+.price-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+}
 
-    .price-option strong {
-      color: #111;
-    }
+.price-option{
+background:white;
+border:1px solid #eee;
+padding:10px;
+border-radius:8px;
+}
 
-    .actions {
-      display: flex;
-      gap: 8px;
-      margin-top: 10px;
-    }
+.actions{
+display:flex;
+gap:8px;
+margin-top:10px;
+}
 
-    .actions button {
-      flex: 1;
-      margin: 0;
-    }
+.actions button{
+flex:1;
+margin:0;
+}
 
-    .edit-box {
-      display: none;
-      background: #faf8f3;
-      border: 1px solid #e5ddce;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 12px;
-    }
+.edit-box{
+display:none;
+background:#faf8f3;
+border:1px solid #e5ddce;
+padding:15px;
+border-radius:10px;
+margin-top:12px;
+}
 
-    .edit-box.show {
-      display: block;
-    }
+.edit-box.show{
+display:block;
+}
 
-    .option-box {
-      background: white;
-      border: 1px solid #e5ddce;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 12px;
-    }
+.option-box{
+background:white;
+border:1px solid #e5ddce;
+padding:15px;
+border-radius:10px;
+margin-bottom:12px;
+}
 
-    .option-title {
-      font-weight: bold;
-      margin-bottom: 10px;
-      color: #111;
-    }
+.option-title{
+font-weight:bold;
+margin-bottom:10px;
+}
 
-    .empty {
-      text-align: center;
-      color: #777;
-      padding: 30px;
-    }
+.empty{
+text-align:center;
+color:#777;
+padding:30px;
+}
 
-    .count {
-      color: #777;
-      margin-bottom: 15px;
-    }
+.count{
+color:#777;
+margin-bottom:15px;
+}
 
-    @media (max-width: 650px) {
+/* ORDERS */
 
-      body {
-        padding: 10px;
-      }
+.order{
+border:1px solid #e5ddce;
+border-radius:12px;
+padding:18px;
+margin-bottom:15px;
+background:#fff;
+}
 
-      .container {
-        width: 100%;
-      }
+.order-header{
+display:flex;
+justify-content:space-between;
+gap:10px;
+align-items:center;
+margin-bottom:12px;
+flex-wrap:wrap;
+}
 
-      .toolbar {
-        grid-template-columns: 1fr;
-      }
+.order-id{
+font-weight:bold;
+font-size:18px;
+}
 
-      .product {
-        grid-template-columns: 75px 1fr;
-      }
+.order-date{
+color:#777;
+font-size:13px;
+}
 
-      .product img {
-        width: 75px;
-        height: 75px;
-      }
+.order-customer{
+background:#faf8f3;
+padding:12px;
+border-radius:10px;
+line-height:2;
+margin-bottom:12px;
+}
 
-      .product-name {
-        font-size: 16px;
-      }
+.order-items{
+border-top:1px solid #eee;
+border-bottom:1px solid #eee;
+padding:12px 0;
+margin-bottom:12px;
+}
 
-      .actions {
-        flex-direction: column;
-      }
+.order-item{
+display:flex;
+justify-content:space-between;
+gap:10px;
+padding:6px 0;
+}
 
-      .price-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+.order-total{
+font-size:20px;
+font-weight:bold;
+margin-bottom:12px;
+}
+
+.status{
+display:inline-block;
+padding:5px 12px;
+border-radius:20px;
+font-size:12px;
+font-weight:bold;
+}
+
+.status-new{
+background:#fff0c7;
+color:#805900;
+}
+
+.status-contacted{
+background:#dcecff;
+color:#145a9c;
+}
+
+.status-shipped{
+background:#eadcff;
+color:#6336a3;
+}
+
+.status-delivered{
+background:#dff5e5;
+color:#16823b;
+}
+
+.status-cancelled{
+background:#ffe0e0;
+color:#a00000;
+}
+
+.order-actions{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+@media(max-width:650px){
+
+body{
+padding:10px;
+}
+
+.container{
+width:100%;
+}
+
+.toolbar{
+grid-template-columns:1fr;
+}
+
+.product{
+grid-template-columns:75px 1fr;
+}
+
+.product img{
+width:75px;
+height:75px;
+}
+
+.product-name{
+font-size:16px;
+}
+
+.actions{
+flex-direction:column;
+}
+
+.price-grid{
+grid-template-columns:1fr;
+}
+
+.order-actions{
+grid-template-columns:1fr;
+}
+
+.order-item{
+display:block;
+}
+
+}
+</style>
 </head>
 
 <body>
 
 <div class="container">
 
-  <header>
-    <h1>VELVET SCENT</h1>
-    <p>Luxury Fragrances — Admin Panel</p>
-  </header>
+<header>
+<h1>VELVET SCENT</h1>
+<p>Luxury Fragrances — Admin Panel</p>
+</header>
 
 
-  <!-- LOGIN -->
+<!-- LOGIN -->
 
-  <div id="loginBox" class="card">
+<div id="loginBox" class="card">
 
-    <h2>🔐 تسجيل دخول الإدارة</h2>
+<h2>🔐 تسجيل دخول الإدارة</h2>
 
-    <input
-      id="email"
-      type="email"
-      placeholder="Email"
-    >
+<input
+id="email"
+type="email"
+placeholder="Email"
+>
 
-    <input
-      id="password"
-      type="password"
-      placeholder="Password"
-    >
+<input
+id="password"
+type="password"
+placeholder="Password"
+>
 
-    <button onclick="login()">
-      دخول
-    </button>
+<button onclick="login()">
+دخول
+</button>
 
-    <p id="loginMessage" class="message"></p>
+<p id="loginMessage" class="message"></p>
 
-  </div>
+</div>
 
 
-  <!-- ADMIN -->
+<!-- ADMIN -->
 
-  <div id="adminPanel">
+<div id="adminPanel">
 
 
-    <!-- ADD PRODUCT -->
+<!-- ADD PRODUCT -->
 
-    <div class="card">
+<div class="card">
 
-      <h2>✨ إضافة عطر جديد</h2>
+<h2>✨ إضافة عطر جديد</h2>
 
-      <input
-        id="productName"
-        type="text"
-        placeholder="اسم العطر"
-      >
+<input
+id="productName"
+type="text"
+placeholder="اسم العطر"
+>
 
+<div class="prices">
 
-      <div class="prices">
+<div class="prices-title">
+💰 اختيارات الأسعار
+</div>
 
-        <div class="prices-title">
-          💰 اختيارات الأسعار
-        </div>
+<div class="option-box">
 
+<div class="option-title">
+الاختيار الأول
+</div>
 
-        <div class="option-box">
+<input
+id="option1Name"
+type="text"
+placeholder="مثال: 30 ML"
+>
 
-          <div class="option-title">
-            الاختيار الأول
-          </div>
+<input
+id="option1Price"
+type="number"
+min="0"
+placeholder="السعر"
+>
 
-          <input
-            id="option1Name"
-            type="text"
-            placeholder="مثال: 30 ML"
-          >
+</div>
 
-          <input
-            id="option1Price"
-            type="number"
-            min="0"
-            placeholder="السعر - مثال: 500"
-          >
+<div class="option-box">
 
-        </div>
+<div class="option-title">
+الاختيار الثاني
+</div>
 
+<input
+id="option2Name"
+type="text"
+placeholder="مثال: 50 ML"
+>
 
-        <div class="option-box">
+<input
+id="option2Price"
+type="number"
+min="0"
+placeholder="السعر"
+>
 
-          <div class="option-title">
-            الاختيار الثاني
-          </div>
+</div>
 
-          <input
-            id="option2Name"
-            type="text"
-            placeholder="مثال: 50 ML"
-          >
+<div class="option-box">
 
-          <input
-            id="option2Price"
-            type="number"
-            min="0"
-            placeholder="السعر - مثال: 750"
-          >
+<div class="option-title">
+الاختيار الثالث
+</div>
 
-        </div>
+<input
+id="option3Name"
+type="text"
+placeholder="مثال: 100 ML"
+>
 
+<input
+id="option3Price"
+type="number"
+min="0"
+placeholder="السعر"
+>
 
-        <div class="option-box">
+</div>
 
-          <div class="option-title">
-            الاختيار الثالث
-          </div>
+</div>
 
-          <input
-            id="option3Name"
-            type="text"
-            placeholder="مثال: 100 ML"
-          >
+<textarea
+id="productDescription"
+placeholder="وصف العطر"
+></textarea>
 
-          <input
-            id="option3Price"
-            type="number"
-            min="0"
-            placeholder="السعر - مثال: 1000"
-          >
+<input
+id="productStock"
+type="number"
+min="0"
+placeholder="المخزون"
+>
 
-        </div>
+<select id="productCategory">
 
-      </div>
+<option value="">
+اختر القسم
+</option>
 
+<option value="man">
+MAN
+</option>
 
-      <textarea
-        id="productDescription"
-        placeholder="وصف العطر"
-      ></textarea>
+<option value="women">
+WOMEN
+</option>
 
+<option value="unisex">
+UNISEX
+</option>
 
-      <input
-        id="productStock"
-        type="number"
-        min="0"
-        placeholder="المخزون"
-      >
+</select>
 
+<input
+id="productImage"
+type="file"
+accept="image/*"
+>
 
-      <select id="productCategory">
+<button
+class="gold"
+onclick="addProduct()"
+>
+✨ إضافة العطر
+</button>
 
-        <option value="">
-          اختر القسم
-        </option>
+<p id="addMessage" class="message"></p>
 
-        <option value="man">
-          MAN
-        </option>
+</div>
 
-        <option value="women">
-          WOMEN
-        </option>
 
-        <option value="unisex">
-          UNISEX
-        </option>
+<!-- PRODUCTS -->
 
-      </select>
+<div class="card">
 
+<h2>🌹 إدارة العطور</h2>
 
-      <input
-        id="productImage"
-        type="file"
-        accept="image/*"
-      >
+<div class="toolbar">
 
+<input
+id="searchInput"
+type="text"
+placeholder="🔎 ابحث عن عطر..."
+oninput="renderProducts()"
+>
 
-      <button
-        class="gold"
-        onclick="addProduct()"
-      >
-        ✨ إضافة العطر
-      </button>
+<select
+id="filterCategory"
+onchange="renderProducts()"
+>
 
+<option value="all">
+كل الأقسام
+</option>
 
-      <p
-        id="addMessage"
-        class="message"
-      ></p>
+<option value="man">
+MAN
+</option>
 
-    </div>
+<option value="women">
+WOMEN
+</option>
 
+<option value="unisex">
+UNISEX
+</option>
 
-    <!-- PRODUCTS -->
+</select>
 
-    <div class="card">
+</div>
 
-      <h2>🌹 إدارة العطور</h2>
+<div id="count" class="count"></div>
 
+<div
+id="products"
+class="products"
+>
 
-      <div class="toolbar">
+<div class="empty">
+جاري تحميل العطور...
+</div>
 
-        <input
-          id="searchInput"
-          type="text"
-          placeholder="🔎 ابحث عن عطر..."
-          oninput="renderProducts()"
-        >
+</div>
 
+</div>
 
-        <select
-          id="filterCategory"
-          onchange="renderProducts()"
-        >
 
-          <option value="all">
-            كل الأقسام
-          </option>
+<!-- ORDERS -->
 
-          <option value="man">
-            MAN
-          </option>
+<div class="card">
 
-          <option value="women">
-            WOMEN
-          </option>
+<h2>📦 إدارة الطلبات</h2>
 
-          <option value="unisex">
-            UNISEX
-          </option>
+<div class="toolbar">
 
-        </select>
+<input
+id="orderSearch"
+type="text"
+placeholder="🔎 ابحث بالاسم أو رقم الهاتف..."
+oninput="renderOrders()"
+>
 
-      </div>
+<select
+id="orderStatusFilter"
+onchange="renderOrders()"
+>
 
+<option value="all">
+كل الحالات
+</option>
 
-      <div
-        id="count"
-        class="count"
-      ></div>
+<option value="new">
+جديد
+</option>
 
+<option value="contacted">
+تم التواصل
+</option>
 
-      <div
-        id="products"
-        class="products"
-      >
+<option value="shipped">
+تم الشحن
+</option>
 
-        <div class="empty">
-          جاري تحميل العطور...
-        </div>
+<option value="delivered">
+تم التسليم
+</option>
 
-      </div>
+<option value="cancelled">
+ملغي
+</option>
 
-    </div>
+</select>
 
+</div>
 
-    <button
-      class="logout"
-      onclick="logout()"
-    >
-      تسجيل خروج
-    </button>
+<div id="ordersCount" class="count"></div>
 
-  </div>
+<div id="orders">
+
+<div class="empty">
+جاري تحميل الطلبات...
+</div>
+
+</div>
+
+</div>
+
+
+<button
+class="logout"
+onclick="logout()"
+>
+تسجيل خروج
+</button>
+
+</div>
 
 </div>
 
 
 <script>
 
-/* ==========================
-   SUPABASE
-========================== */
+/* =========================
+SUPABASE
+========================= */
 
 const SUPABASE_URL =
-  "https://frvgjkeeaojyvwsjikre.supabase.co";
+"https://frvgjkeeaojyvwsjikre.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_aPftd5l28afljdgY2ddn9A_2HPnFF3E";
+"sb_publishable_aPftd5l28afljdgY2ddn9A_2HPnFF3E";
 
 const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
 
 
-/* ==========================
-   DATA
-========================== */
+/* =========================
+DATA
+========================= */
 
 let products = [];
+let orders = [];
 
 
-/* ==========================
-   LOGIN
-========================== */
+/* =========================
+LOGIN
+========================= */
 
-async function login() {
+async function login(){
 
-  const email =
-    document
-      .getElementById("email")
-      .value
-      .trim();
+const email =
+document.getElementById("email").value.trim();
 
-  const password =
-    document
-      .getElementById("password")
-      .value;
+const password =
+document.getElementById("password").value;
 
+if(!email || !password){
 
-  if (!email || !password) {
+showMessage(
+"loginMessage",
+"اكتب الإيميل والباسورد",
+"error"
+);
 
-    showMessage(
-      "loginMessage",
-      "اكتب الإيميل والباسورد",
-      "error"
-    );
+return;
+}
 
-    return;
-  }
+const {error} =
+await supabaseClient.auth.signInWithPassword({
+email,
+password
+});
 
+if(error){
 
-  const { error } =
-    await supabaseClient.auth
-      .signInWithPassword({
+showMessage(
+"loginMessage",
+error.message,
+"error"
+);
 
-        email,
-        password
+return;
+}
 
-      });
+showAdmin();
 
+loadProducts();
 
-  if (error) {
+loadOrders();
 
-    showMessage(
-      "loginMessage",
-      error.message,
-      "error"
-    );
-
-    return;
-  }
-
-
-  showAdmin();
-
-  loadProducts();
 }
 
 
-/* ==========================
-   SHOW ADMIN
-========================== */
+/* =========================
+SHOW ADMIN
+========================= */
 
-function showAdmin() {
+function showAdmin(){
 
-  document
-    .getElementById("loginBox")
-    .style.display = "none";
+document.getElementById("loginBox")
+.style.display="none";
 
-  document
-    .getElementById("adminPanel")
-    .style.display = "block";
+document.getElementById("adminPanel")
+.style.display="block";
+
 }
 
 
-/* ==========================
-   LOGOUT
-========================== */
+/* =========================
+LOGOUT
+========================= */
 
-async function logout() {
+async function logout(){
 
-  await supabaseClient.auth.signOut();
+await supabaseClient.auth.signOut();
 
-  document
-    .getElementById("adminPanel")
-    .style.display = "none";
+document.getElementById("adminPanel")
+.style.display="none";
 
-  document
-    .getElementById("loginBox")
-    .style.display = "block";
+document.getElementById("loginBox")
+.style.display="block";
+
 }
 
 
-/* ==========================
-   ADD PRODUCT
-========================== */
+/* =========================
+ADD PRODUCT
+========================= */
+
+async function addProduct(){
+
+const name =
+document.getElementById("productName")
+.value.trim();
+
+const option1Name =
+document.getElementById("option1Name")
+.value.trim();
+
+const option1Price =
+document.getElementById("option1Price")
+.value;
+
+const option2Name =
+document.getElementById("option2Name")
+.value.trim();
+
+const option2Price =
+document.getElementById("option2Price")
+.value;
+
+const option3Name =
+document.getElementById("option3Name")
+.value.trim();
+
+const option3Price =
+document.getElementById("option3Price")
+.value;
+
+const description =
+document.getElementById("productDescription")
+.value.trim();
 
-async function addProduct() {
+const stock =
+document.getElementById("productStock")
+.value;
 
-  const name =
-    document
-      .getElementById("productName")
-      .value
-      .trim();
+const category =
+document.getElementById("productCategory")
+.value;
 
+const imageFile =
+document.getElementById("productImage")
+.files[0];
 
-  const option1Name =
-    document
-      .getElementById("option1Name")
-      .value
-      .trim();
+if(
+!name ||
+!option1Name ||
+!option1Price ||
+!option2Name ||
+!option2Price ||
+!option3Name ||
+!option3Price ||
+!category ||
+!imageFile
+){
 
-  const option1Price =
-    document
-      .getElementById("option1Price")
-      .value;
+showMessage(
+"addMessage",
+"اكتب اسم العطر والـ3 اختيارات والأسعار والقسم والصورة",
+"error"
+);
 
+return;
+}
 
-  const option2Name =
-    document
-      .getElementById("option2Name")
-      .value
-      .trim();
+showMessage(
+"addMessage",
+"جاري إضافة العطر...",
+""
+);
 
-  const option2Price =
-    document
-      .getElementById("option2Price")
-      .value;
+const safeName =
+imageFile.name.replace(
+/[^a-zA-Z0-9._-]/g,
+"-"
+);
 
+const fileName =
+Date.now()+"-"+safeName;
 
-  const option3Name =
-    document
-      .getElementById("option3Name")
-      .value
-      .trim();
+const {error:uploadError} =
+await supabaseClient.storage
+.from("product-images")
+.upload(fileName,imageFile);
 
-  const option3Price =
-    document
-      .getElementById("option3Price")
-      .value;
+if(uploadError){
 
+showMessage(
+"addMessage",
+uploadError.message,
+"error"
+);
 
-  const description =
-    document
-      .getElementById("productDescription")
-      .value
-      .trim();
+return;
+}
 
+const {data:publicData} =
+supabaseClient.storage
+.from("product-images")
+.getPublicUrl(fileName);
 
-  const stock =
-    document
-      .getElementById("productStock")
-      .value;
+const imageUrl =
+publicData.publicUrl;
 
+const {error} =
+await supabaseClient
+.from("products")
+.insert({
 
-  const category =
-    document
-      .getElementById("productCategory")
-      .value;
+name:name,
 
+price:Number(option1Price),
 
-  const imageFile =
-    document
-      .getElementById("productImage")
-      .files[0];
+option1_name:option1Name,
+option1_price:Number(option1Price),
 
+option2_name:option2Name,
+option2_price:Number(option2Price),
 
-  if (
-    !name ||
-    !option1Name ||
-    !option1Price ||
-    !option2Name ||
-    !option2Price ||
-    !option3Name ||
-    !option3Price ||
-    !category ||
-    !imageFile
-  ) {
+option3_name:option3Name,
+option3_price:Number(option3Price),
 
-    showMessage(
-      "addMessage",
-      "اكتب اسم العطر والـ3 اختيارات والأسعار والقسم واختار صورة",
-      "error"
-    );
+image:imageUrl,
 
-    return;
-  }
+description:description,
 
+stock:Number(stock||0),
 
-  showMessage(
-    "addMessage",
-    "جاري إضافة العطر...",
-    ""
-  );
+category:category
 
+});
 
-  /* ==========================
-     UPLOAD IMAGE
-  ========================== */
+if(error){
 
-  const safeName =
-    imageFile.name.replace(
-      /[^a-zA-Z0-9._-]/g,
-      "-"
-    );
+showMessage(
+"addMessage",
+error.message,
+"error"
+);
 
+return;
+}
 
-  const fileName =
-    Date.now() + "-" + safeName;
+showMessage(
+"addMessage",
+"تم إضافة العطر بنجاح ✅",
+"success"
+);
 
+clearAddForm();
 
-  const {
-    error: uploadError
-  } =
-    await supabaseClient.storage
-      .from("product-images")
-      .upload(
-        fileName,
-        imageFile
-      );
+loadProducts();
 
-
-  if (uploadError) {
-
-    showMessage(
-      "addMessage",
-      uploadError.message,
-      "error"
-    );
-
-    return;
-  }
-
-
-  /* ==========================
-     IMAGE URL
-  ========================== */
-
-  const {
-    data: publicData
-  } =
-    supabaseClient.storage
-      .from("product-images")
-      .getPublicUrl(
-        fileName
-      );
-
-
-  const imageUrl =
-    publicData.publicUrl;
-
-
-  /* ==========================
-     INSERT
-  ========================== */
-
-  const {
-    error
-  } =
-    await supabaseClient
-      .from("products")
-      .insert({
-
-        name: name,
-
-        price: Number(option1Price),
-
-        option1_name: option1Name,
-
-        option1_price: Number(option1Price),
-
-        option2_name: option2Name,
-
-        option2_price: Number(option2Price),
-
-        option3_name: option3Name,
-
-        option3_price: Number(option3Price),
-
-        image: imageUrl,
-
-        description: description,
-
-        stock: Number(stock || 0),
-
-        category: category
-
-      });
-
-
-  if (error) {
-
-    showMessage(
-      "addMessage",
-      error.message,
-      "error"
-    );
-
-    return;
-  }
-
-
-  showMessage(
-    "addMessage",
-    "تم إضافة العطر بنجاح ✅",
-    "success"
-  );
-
-
-  clearAddForm();
-
-  loadProducts();
 }
 
 
-/* ==========================
-   CLEAR FORM
-========================== */
+/* =========================
+CLEAR FORM
+========================= */
 
-function clearAddForm() {
+function clearAddForm(){
 
-  document.getElementById(
-    "productName"
-  ).value = "";
+[
+"productName",
+"option1Name",
+"option1Price",
+"option2Name",
+"option2Price",
+"option3Name",
+"option3Price",
+"productDescription",
+"productStock",
+"productCategory",
+"productImage"
+].forEach(function(id){
 
+document.getElementById(id).value="";
 
-  document.getElementById(
-    "option1Name"
-  ).value = "";
+});
 
-
-  document.getElementById(
-    "option1Price"
-  ).value = "";
-
-
-  document.getElementById(
-    "option2Name"
-  ).value = "";
-
-
-  document.getElementById(
-    "option2Price"
-  ).value = "";
-
-
-  document.getElementById(
-    "option3Name"
-  ).value = "";
-
-
-  document.getElementById(
-    "option3Price"
-  ).value = "";
-
-
-  document.getElementById(
-    "productDescription"
-  ).value = "";
-
-
-  document.getElementById(
-    "productStock"
-  ).value = "";
-
-
-  document.getElementById(
-    "productCategory"
-  ).value = "";
-
-
-  document.getElementById(
-    "productImage"
-  ).value = "";
 }
 
 
-/* ==========================
-   LOAD PRODUCTS
-========================== */
+/* =========================
+LOAD PRODUCTS
+========================= */
 
-async function loadProducts() {
+async function loadProducts(){
 
-  const container =
-    document.getElementById(
-      "products"
-    );
+const container =
+document.getElementById("products");
 
+container.innerHTML=
+'<div class="empty">جاري تحميل العطور...</div>';
 
-  container.innerHTML =
-    '<div class="empty">جاري تحميل العطور...</div>';
+const {data,error} =
+await supabaseClient
+.from("products")
+.select(`
+product_id,
+name,
+price,
+image,
+description,
+stock,
+category,
+option1_name,
+option1_price,
+option2_name,
+option2_price,
+option3_name,
+option3_price
+`);
 
+if(error){
 
-  const {
-    data,
-    error
-  } =
-    await supabaseClient
-      .from("products")
-      .select(`
-        product_id,
-        name,
-        price,
-        image,
-        description,
-        stock,
-        category,
-        option1_name,
-        option1_price,
-        option2_name,
-        option2_price,
-        option3_name,
-        option3_price
-      `);
+container.innerHTML=
+`
+<div class="empty">
+❌ ${escapeHTML(error.message)}
+</div>
+`;
 
+return;
+}
 
-  if (error) {
+products=data||[];
 
-    container.innerHTML = `
-      <div class="empty">
+renderProducts();
 
-        ❌ حدث خطأ في تحميل العطور
-
-        <br><br>
-
-        ${escapeHTML(
-          error.message
-        )}
-
-      </div>
-    `;
-
-    return;
-  }
-
-
-  products =
-    data || [];
-
-
-  renderProducts();
 }
 
 
-/* ==========================
-   FILTER + SEARCH
-========================== */
+/* =========================
+FILTER PRODUCTS
+========================= */
 
-function getFilteredProducts() {
+function getFilteredProducts(){
 
-  const search =
-    document
-      .getElementById(
-        "searchInput"
-      )
-      .value
-      .trim()
-      .toLowerCase();
+const search =
+document.getElementById("searchInput")
+.value.trim().toLowerCase();
 
+const category =
+document.getElementById("filterCategory")
+.value;
 
-  const category =
-    document
-      .getElementById(
-        "filterCategory"
-      )
-      .value;
+return products.filter(function(product){
 
+const matchesSearch =
+!search ||
+String(product.name||"")
+.toLowerCase()
+.includes(search);
 
-  return products.filter(
-    function(product) {
+const matchesCategory =
+category==="all" ||
+product.category===category;
 
-      const matchesSearch =
-        !search ||
-        String(
-          product.name || ""
-        )
-          .toLowerCase()
-          .includes(search);
+return matchesSearch &&
+matchesCategory;
 
+});
 
-      const matchesCategory =
-        category === "all" ||
-        product.category === category;
-
-
-      return (
-        matchesSearch &&
-        matchesCategory
-      );
-
-    }
-  );
 }
 
 
-/* ==========================
-   RENDER PRODUCTS
-========================== */
+/* =========================
+RENDER PRODUCTS
+========================= */
 
-function renderProducts() {
+function renderProducts(){
 
-  const container =
-    document.getElementById(
-      "products"
-    );
+const container =
+document.getElementById("products");
 
+const filtered =
+getFilteredProducts();
 
-  const filtered =
-    getFilteredProducts();
+document.getElementById("count")
+.textContent=
+`عدد العطور الظاهرة: ${filtered.length} من ${products.length}`;
 
+if(!filtered.length){
 
-  document.getElementById(
-    "count"
-  ).textContent =
-    `عدد العطور الظاهرة: ${filtered.length} من ${products.length}`;
+container.innerHTML=
+`
+<div class="empty">
+لا توجد عطور مطابقة للبحث.
+</div>
+`;
 
+return;
+}
 
-  if (!filtered.length) {
+container.innerHTML=
+filtered.map(function(product){
 
-    container.innerHTML = `
-      <div class="empty">
-        لا توجد عطور مطابقة للبحث.
-      </div>
-    `;
+return `
 
-    return;
-  }
+<div class="product">
 
+<img
+src="${escapeAttribute(product.image||"")}"
+alt=""
+>
 
-  container.innerHTML =
-    filtered
-      .map(
-        function(product) {
+<div>
 
-          const category =
-            getCategoryName(
-              product.category
-            );
+<div class="product-name">
+${escapeHTML(product.name||"")}
+</div>
+
+<div class="product-info">
 
+<div class="prices">
 
-          return `
+<div class="prices-title">
+💰 الأسعار والأحجام
+</div>
 
-          <div class="product">
+<div class="price-grid">
 
-            <img
-              src="${escapeAttribute(
-                product.image || ""
-              )}"
-              alt=""
-              onerror="
-                this.style.opacity='.3'
-              "
-            >
+<div class="price-option">
+<strong>
+${escapeHTML(product.option1_name||"اختيار 1")}
+</strong>
+<br>
+${Number(product.option1_price||0).toLocaleString("ar-EG")}
+جنيه
+</div>
 
+<div class="price-option">
+<strong>
+${escapeHTML(product.option2_name||"اختيار 2")}
+</strong>
+<br>
+${Number(product.option2_price||0).toLocaleString("ar-EG")}
+جنيه
+</div>
 
-            <div>
+<div class="price-option">
+<strong>
+${escapeHTML(product.option3_name||"اختيار 3")}
+</strong>
+<br>
+${Number(product.option3_price||0).toLocaleString("ar-EG")}
+جنيه
+</div>
 
-              <div class="product-name">
+</div>
+</div>
+
+📦 المخزون:
+${Number(product.stock||0)}
+
+<br>
+
+🏷️ القسم:
 
-                ${escapeHTML(
-                  product.name || ""
-                )}
+<span class="category">
+${escapeHTML(getCategoryName(product.category))}
+</span>
 
-              </div>
+</div>
+
+<div class="actions">
+
+<button
+class="gold"
+onclick="openEdit('${escapeAttribute(String(product.product_id))}')"
+>
+✏️ تعديل
+</button>
+
+<button
+class="red"
+onclick="deleteProduct('${escapeAttribute(String(product.product_id))}')"
+>
+🗑️ حذف
+</button>
+
+</div>
+
+<div
+id="edit-${escapeAttribute(String(product.product_id))}"
+class="edit-box"
+>
+
+<input
+id="name-${escapeAttribute(String(product.product_id))}"
+value="${escapeAttribute(product.name||"")}"
+placeholder="اسم العطر"
+>
+
+<div class="option-box">
+
+<div class="option-title">
+الاختيار الأول
+</div>
+
+<input
+id="option1-name-${escapeAttribute(String(product.product_id))}"
+value="${escapeAttribute(product.option1_name||"")}"
+placeholder="مثال: 30 ML"
+>
+
+<input
+id="option1-price-${escapeAttribute(String(product.product_id))}"
+type="number"
+min="0"
+value="${escapeAttribute(product.option1_price||0)}"
+>
+
+</div>
+
+<div class="option-box">
+
+<div class="option-title">
+الاختيار الثاني
+</div>
+
+<input
+id="option2-name-${escapeAttribute(String(product.product_id))}"
+value="${escapeAttribute(product.option2_name||"")}"
+placeholder="مثال: 50 ML"
+>
+
+<input
+id="option2-price-${escapeAttribute(String(product.product_id))}"
+type="number"
+min="0"
+value="${escapeAttribute(product.option2_price||0)}"
+>
+
+</div>
+
+<div class="option-box">
+
+<div class="option-title">
+الاختيار الثالث
+</div>
+
+<input
+id="option3-name-${escapeAttribute(String(product.product_id))}"
+value="${escapeAttribute(product.option3_name||"")}"
+placeholder="مثال: 100 ML"
+>
+
+<input
+id="option3-price-${escapeAttribute(String(product.product_id))}"
+type="number"
+min="0"
+value="${escapeAttribute(product.option3_price||0)}"
+>
+
+</div>
+
+<textarea
+id="description-${escapeAttribute(String(product.product_id))}"
+>${escapeHTML(product.description||"")}</textarea>
+
+<input
+id="stock-${escapeAttribute(String(product.product_id))}"
+type="number"
+min="0"
+value="${escapeAttribute(product.stock||0)}"
+>
+
+<select id="category-${escapeAttribute(String(product.product_id))}">
+
+<option value="man" ${product.category==="man"?"selected":""}>
+MAN
+</option>
+
+<option value="women" ${product.category==="women"?"selected":""}>
+WOMEN
+</option>
+
+<option value="unisex" ${product.category==="unisex"?"selected":""}>
+UNISEX
+</option>
+
+</select>
+
+<input
+id="image-${escapeAttribute(String(product.product_id))}"
+type="file"
+accept="image/*"
+>
+
+<button
+class="gold"
+onclick="updateProduct('${escapeAttribute(String(product.product_id))}')"
+>
+💾 حفظ التعديلات
+</button>
+
+<button
+class="gray"
+onclick="openEdit('${escapeAttribute(String(product.product_id))}')"
+>
+إلغاء
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+}).join("");
 
-
-              <div class="product-info">
-
-                <div class="prices">
-
-                  <div class="prices-title">
-                    💰 اختيارات الأسعار
-                  </div>
-
-                  <div class="price-grid">
-
-                    <div class="price-option">
-                      <strong>
-                        ${escapeHTML(
-                          product.option1_name || "اختيار 1"
-                        )}
-                      </strong>
-
-                      <br>
-
-                      ${Number(
-                        product.option1_price || 0
-                      ).toLocaleString("ar-EG")}
-
-                      جنيه
-                    </div>
-
-
-                    <div class="price-option">
-                      <strong>
-                        ${escapeHTML(
-                          product.option2_name || "اختيار 2"
-                        )}
-                      </strong>
-
-                      <br>
-
-                      ${Number(
-                        product.option2_price || 0
-                      ).toLocaleString("ar-EG")}
-
-                      جنيه
-                    </div>
-
-
-                    <div class="price-option">
-                      <strong>
-                        ${escapeHTML(
-                          product.option3_name || "اختيار 3"
-                        )}
-                      </strong>
-
-                      <br>
-
-                      ${Number(
-                        product.option3_price || 0
-                      ).toLocaleString("ar-EG")}
-
-                      جنيه
-                    </div>
-
-                  </div>
-
-                </div>
-
-
-                📦 المخزون:
-                ${Number(
-                  product.stock || 0
-                )}
-
-                <br>
-
-                🏷️ القسم:
-
-                <span class="category">
-                  ${escapeHTML(category)}
-                </span>
-
-              </div>
-
-
-              <div class="actions">
-
-                <button
-                  class="gold"
-                  onclick="
-                    openEdit(
-                      '${product.product_id}'
-                    )
-                  "
-                >
-                  ✏️ تعديل
-                </button>
-
-
-                <button
-                  class="red"
-                  onclick="
-                    deleteProduct(
-                      '${product.product_id}'
-                    )
-                  "
-                >
-                  🗑️ حذف
-                </button>
-
-              </div>
-
-
-              <!-- EDIT -->
-
-              <div
-                id="edit-${product.product_id}"
-                class="edit-box"
-              >
-
-                <input
-                  id="name-${product.product_id}"
-                  value="${escapeAttribute(
-                    product.name || ""
-                  )}"
-                  placeholder="اسم العطر"
-                >
-
-
-                <div class="option-box">
-
-                  <div class="option-title">
-                    الاختيار الأول
-                  </div>
-
-                  <input
-                    id="option1-name-${product.product_id}"
-                    value="${escapeAttribute(
-                      product.option1_name || ""
-                    )}"
-                    placeholder="مثال: 30 ML"
-                  >
-
-                  <input
-                    id="option1-price-${product.product_id}"
-                    type="number"
-                    min="0"
-                    value="${escapeAttribute(
-                      product.option1_price || 0
-                    )}"
-                    placeholder="السعر"
-                  >
-
-                </div>
-
-
-                <div class="option-box">
-
-                  <div class="option-title">
-                    الاختيار الثاني
-                  </div>
-
-                  <input
-                    id="option2-name-${product.product_id}"
-                    value="${escapeAttribute(
-                      product.option2_name || ""
-                    )}"
-                    placeholder="مثال: 50 ML"
-                  >
-
-                  <input
-                    id="option2-price-${product.product_id}"
-                    type="number"
-                    min="0"
-                    value="${escapeAttribute(
-                      product.option2_price || 0
-                    )}"
-                    placeholder="السعر"
-                  >
-
-                </div>
-
-
-                <div class="option-box">
-
-                  <div class="option-title">
-                    الاختيار الثالث
-                  </div>
-
-                  <input
-                    id="option3-name-${product.product_id}"
-                    value="${escapeAttribute(
-                      product.option3_name || ""
-                    )}"
-                    placeholder="مثال: 100 ML"
-                  >
-
-                  <input
-                    id="option3-price-${product.product_id}"
-                    type="number"
-                    min="0"
-                    value="${escapeAttribute(
-                      product.option3_price || 0
-                    )}"
-                    placeholder="السعر"
-                  >
-
-                </div>
-
-
-                <textarea
-                  id="description-${product.product_id}"
-                  placeholder="الوصف"
-                >${escapeHTML(
-                  product.description || ""
-                )}</textarea>
-
-
-                <input
-                  id="stock-${product.product_id}"
-                  type="number"
-                  min="0"
-                  value="${escapeAttribute(
-                    product.stock || 0
-                  )}"
-                  placeholder="المخزون"
-                >
-
-
-                <select
-                  id="category-${product.product_id}"
-                >
-
-                  <option
-                    value="man"
-                    ${
-                      product.category === "man"
-                      ? "selected"
-                      : ""
-                    }
-                  >
-                    MAN
-                  </option>
-
-
-                  <option
-                    value="women"
-                    ${
-                      product.category === "women"
-                      ? "selected"
-                      : ""
-                    }
-                  >
-                    WOMEN
-                  </option>
-
-
-                  <option
-                    value="unisex"
-                    ${
-                      product.category === "unisex"
-                      ? "selected"
-                      : ""
-                    }
-                  >
-                    UNISEX
-                  </option>
-
-                </select>
-
-
-                <input
-                  id="image-${product.product_id}"
-                  type="file"
-                  accept="image/*"
-                >
-
-
-                <button
-                  class="gold"
-                  onclick="
-                    updateProduct(
-                      '${product.product_id}'
-                    )
-                  "
-                >
-                  💾 حفظ التعديلات
-                </button>
-
-
-                <button
-                  class="gray"
-                  onclick="
-                    openEdit(
-                      '${product.product_id}'
-                    )
-                  "
-                >
-                  إلغاء
-                </button>
-
-              </div>
-
-            </div>
-
-          </div>
-
-          `;
-
-        }
-      )
-      .join("");
 }
 
 
-/* ==========================
-   OPEN EDIT
-========================== */
+/* =========================
+EDIT
+========================= */
 
-function openEdit(id) {
+function openEdit(id){
 
-  const box =
-    document.getElementById(
-      "edit-" + id
-    );
+const box =
+document.getElementById("edit-"+id);
 
+if(box){
+box.classList.toggle("show");
+}
 
-  if (!box) return;
-
-
-  box.classList.toggle("show");
 }
 
 
-/* ==========================
-   UPDATE PRODUCT
-========================== */
+/* =========================
+UPDATE PRODUCT
+========================= */
 
-async function updateProduct(id) {
+async function updateProduct(id){
 
-  const product =
-    products.find(
-      function(p) {
+const product =
+products.find(function(p){
 
-        return p.product_id === id;
+return String(p.product_id)===String(id);
 
-      }
-    );
+});
 
+if(!product)return;
 
-  if (!product) {
+const name =
+document.getElementById("name-"+id).value.trim();
 
-    alert(
-      "العطر غير موجود"
-    );
+const option1Name =
+document.getElementById("option1-name-"+id).value.trim();
 
-    return;
-  }
+const option1Price =
+document.getElementById("option1-price-"+id).value;
 
+const option2Name =
+document.getElementById("option2-name-"+id).value.trim();
 
-  const name =
-    document
-      .getElementById(
-        "name-" + id
-      )
-      .value
-      .trim();
-
+const option2Price =
+document.getElementById("option2-price-"+id).value;
 
-  const option1Name =
-    document
-      .getElementById(
-        "option1-name-" + id
-      )
-      .value
-      .trim();
+const option3Name =
+document.getElementById("option3-name-"+id).value.trim();
 
+const option3Price =
+document.getElementById("option3-price-"+id).value;
 
-  const option1Price =
-    document
-      .getElementById(
-        "option1-price-" + id
-      )
-      .value;
+const description =
+document.getElementById("description-"+id).value.trim();
 
+const stock =
+document.getElementById("stock-"+id).value;
 
-  const option2Name =
-    document
-      .getElementById(
-        "option2-name-" + id
-      )
-      .value
-      .trim();
+const category =
+document.getElementById("category-"+id).value;
 
+const imageFile =
+document.getElementById("image-"+id).files[0];
 
-  const option2Price =
-    document
-      .getElementById(
-        "option2-price-" + id
-      )
-      .value;
+if(
+!name||
+!option1Name||
+!option1Price||
+!option2Name||
+!option2Price||
+!option3Name||
+!option3Price
+){
 
+alert("من فضلك اكتب جميع الأحجام والأسعار");
 
-  const option3Name =
-    document
-      .getElementById(
-        "option3-name-" + id
-      )
-      .value
-      .trim();
-
-
-  const option3Price =
-    document
-      .getElementById(
-        "option3-price-" + id
-      )
-      .value;
-
-
-  const description =
-    document
-      .getElementById(
-        "description-" + id
-      )
-      .value
-      .trim();
-
-
-  const stock =
-    document
-      .getElementById(
-        "stock-" + id
-      )
-      .value;
-
-
-  const category =
-    document
-      .getElementById(
-        "category-" + id
-      )
-      .value;
-
-
-  const imageFile =
-    document
-      .getElementById(
-        "image-" + id
-      )
-      .files[0];
-
-
-  if (
-    !name ||
-    !option1Name ||
-    !option1Price ||
-    !option2Name ||
-    !option2Price ||
-    !option3Name ||
-    !option3Price ||
-    !category
-  ) {
-
-    alert(
-      "اكتب اسم العطر والـ3 اختيارات والأسعار والقسم"
-    );
-
-    return;
-  }
-
-
-  let image =
-    product.image;
-
-
-  /* ==========================
-     NEW IMAGE
-  ========================== */
-
-  if (imageFile) {
-
-    const safeName =
-      imageFile.name.replace(
-        /[^a-zA-Z0-9._-]/g,
-        "-"
-      );
-
-
-    const fileName =
-      Date.now() + "-" + safeName;
-
-
-    const {
-      error
-    } =
-      await supabaseClient.storage
-        .from("product-images")
-        .upload(
-          fileName,
-          imageFile
-        );
-
-
-    if (error) {
-
-      alert(
-        error.message
-      );
-
-      return;
-    }
-
-
-    const {
-      data
-    } =
-      supabaseClient.storage
-        .from("product-images")
-        .getPublicUrl(
-          fileName
-        );
-
-
-    image =
-      data.publicUrl;
-  }
-
-
-  /* ==========================
-     UPDATE DATABASE
-  ========================== */
-
-  const {
-    error
-  } =
-    await supabaseClient
-      .from("products")
-      .update({
-
-        name: name,
-
-        price: Number(
-          option1Price
-        ),
-
-        option1_name:
-          option1Name,
-
-        option1_price:
-          Number(
-            option1Price
-          ),
-
-        option2_name:
-          option2Name,
-
-        option2_price:
-          Number(
-            option2Price
-          ),
-
-        option3_name:
-          option3Name,
-
-        option3_price:
-          Number(
-            option3Price
-          ),
-
-        image: image,
-
-        description:
-          description,
-
-        stock:
-          Number(
-            stock || 0
-          ),
-
-        category:
-          category
-
-      })
-      .eq(
-        "product_id",
-        id
-      );
-
-
-  if (error) {
-
-    alert(
-      "حدث خطأ أثناء التعديل:\n\n" +
-      error.message
-    );
-
-    return;
-  }
-
-
-  alert(
-    "تم تعديل العطر بنجاح ✅"
-  );
-
-
-  loadProducts();
+return;
 }
 
+let image=product.image;
 
-/* ==========================
-   DELETE
-========================== */
+if(imageFile){
 
-async function deleteProduct(id) {
+const safeName =
+imageFile.name.replace(
+/[^a-zA-Z0-9._-]/g,
+"-"
+);
 
-  const product =
-    products.find(
-      function(p) {
+const fileName =
+Date.now()+"-"+safeName;
 
-        return p.product_id === id;
+const {error} =
+await supabaseClient.storage
+.from("product-images")
+.upload(fileName,imageFile);
 
-      }
-    );
+if(error){
 
+alert(error.message);
 
-  if (!product) {
-
-    alert(
-      "العطر غير موجود"
-    );
-
-    return;
-  }
-
-
-  const confirmed =
-    confirm(
-      "هل أنت متأكد من حذف:\n\n" +
-      product.name +
-      "\n\nلا يمكن التراجع عن الحذف."
-    );
-
-
-  if (!confirmed) return;
-
-
-  const {
-    error
-  } =
-    await supabaseClient
-      .from("products")
-      .delete()
-      .eq(
-        "product_id",
-        id
-      );
-
-
-  if (error) {
-
-    alert(
-      "حدث خطأ أثناء الحذف:\n\n" +
-      error.message
-    );
-
-    return;
-  }
-
-
-  alert(
-    "تم حذف العطر بنجاح 🗑️"
-  );
-
-
-  loadProducts();
+return;
 }
 
+const {data} =
+supabaseClient.storage
+.from("product-images")
+.getPublicUrl(fileName);
 
-/* ==========================
-   CATEGORY
-========================== */
-
-function getCategoryName(category) {
-
-  if (category === "man")
-    return "MAN";
-
-
-  if (category === "women")
-    return "WOMEN";
-
-
-  if (category === "unisex")
-    return "UNISEX";
-
-
-  return category || "غير محدد";
-}
-
-
-/* ==========================
-   MESSAGES
-========================== */
-
-function showMessage(
-  id,
-  text,
-  type
-) {
-
-  const element =
-    document.getElementById(id);
-
-
-  element.textContent =
-    text;
-
-
-  element.className =
-    "message " + type;
-}
-
-
-/* ==========================
-   ESCAPE
-========================== */
-
-function escapeHTML(value) {
-
-  return String(value)
-
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
-
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
-
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
-
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
-
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
-}
-
-
-function escapeAttribute(value) {
-
-  return escapeHTML(value);
-}
-
-
-/* ==========================
-   SESSION
-========================== */
-
-async function checkSession() {
-
-  const {
-    data
-  } =
-    await supabaseClient.auth
-      .getSession();
-
-
-  if (data.session) {
-
-    showAdmin();
-
-    loadProducts();
-
-  }
+image=data.publicUrl;
 
 }
 
+const {error} =
+await supabaseClient
+.from("products")
+.update({
+
+name:name,
+
+price:Number(option1Price),
+
+option1_name:option1Name,
+option1_price:Number(option1Price),
+
+option2_name:option2Name,
+option2_price:Number(option2Price),
+
+option3_name:option3Name,
+option3_price:Number(option3Price),
+
+description:description,
+
+stock:Number(stock||0),
+
+category:category,
+
+image:image
+
+})
+.eq("product_id",id);
+
+if(error){
+
+alert(error.message);
+
+return;
+}
+
+alert("تم تعديل العطر بنجاح ✅");
+
+loadProducts();
+
+}
+
+
+/* =========================
+DELETE PRODUCT
+========================= */
+
+async function deleteProduct(id){
+
+const product =
+products.find(function(p){
+
+return String(p.product_id)===String(id);
+
+});
+
+if(!product)return;
+
+if(!confirm(
+"هل أنت متأكد من حذف:\n\n"+
+product.name
+))return;
+
+const {error} =
+await supabaseClient
+.from("products")
+.delete()
+.eq("product_id",id);
+
+if(error){
+
+alert(error.message);
+
+return;
+}
+
+alert("تم حذف العطر 🗑️");
+
+loadProducts();
+
+}
+
+
+/* =========================
+ORDERS
+========================= */
+
+async function loadOrders(){
+
+const container =
+document.getElementById("orders");
+
+container.innerHTML=
+'<div class="empty">جاري تحميل الطلبات...</div>';
+
+const {data,error} =
+await supabaseClient
+.from("orders")
+.select("*")
+.order("created_at",{ascending:false});
+
+if(error){
+
+container.innerHTML=
+`
+<div class="empty">
+
+❌ لم يتم تحميل الطلبات
+
+<br><br>
+
+${escapeHTML(error.message)}
+
+</div>
+`;
+
+return;
+}
+
+orders=data||[];
+
+renderOrders();
+
+}
+
+
+/* =========================
+FILTER ORDERS
+========================= */
+
+function renderOrders(){
+
+const container =
+document.getElementById("orders");
+
+const search =
+document.getElementById("orderSearch")
+.value.trim().toLowerCase();
+
+const status =
+document.getElementById("orderStatusFilter")
+.value;
+
+const filtered =
+orders.filter(function(order){
+
+const name =
+String(order.customer_name||"")
+.toLowerCase();
+
+const phone =
+String(order.customer_phone||"")
+.toLowerCase();
+
+const matchesSearch =
+!search ||
+name.includes(search) ||
+phone.includes(search);
+
+const matchesStatus =
+status==="all" ||
+String(order.status||"new")===status;
+
+return matchesSearch &&
+matchesStatus;
+
+});
+
+document.getElementById("ordersCount")
+.textContent=
+`عدد الطلبات: ${filtered.length} من ${orders.length}`;
+
+if(!filtered.length){
+
+container.innerHTML=
+`
+<div class="empty">
+لا توجد طلبات.
+</div>
+`;
+
+return;
+}
+
+container.innerHTML=
+filtered.map(function(order){
+
+let items=[];
+
+try{
+
+items=
+Array.isArray(order.items)
+?
+order.items
+:
+JSON.parse(order.items||"[]");
+
+}catch(e){
+
+items=[];
+
+}
+
+const statusValue =
+order.status||"new";
+
+const statusName =
+getStatusName(statusValue);
+
+const date =
+order.created_at
+?
+new Date(order.created_at)
+.toLocaleString("ar-EG")
+:
+"غير معروف";
+
+return `
+
+<div class="order">
+
+<div class="order-header">
+
+<div>
+
+<div class="order-id">
+طلب #${escapeHTML(String(order.id||""))}
+</div>
+
+<div class="order-date">
+${escapeHTML(date)}
+</div>
+
+</div>
+
+<span class="status ${getStatusClass(statusValue)}">
+${escapeHTML(statusName)}
+</span>
+
+</div>
+
+
+<div class="order-customer">
+
+👤 <strong>الاسم:</strong>
+${escapeHTML(order.customer_name||"")}
+
+<br>
+
+📱 <strong>الموبايل:</strong>
+${escapeHTML(order.customer_phone||"")}
+
+<br>
+
+📍 <strong>العنوان:</strong>
+${escapeHTML(order.customer_address||"")}
+
+</div>
+
+
+<div class="order-items">
+
+<strong>🛍️ المنتجات:</strong>
+
+${
+items.length
+?
+items.map(function(item){
+
+const quantity =
+Number(item.quantity||1);
+
+const price =
+Number(item.price||0);
+
+return `
+
+<div class="order-item">
+
+<div>
+
+${escapeHTML(item.name||"عطر")}
+
+<br>
+
+<small>
+${escapeHTML(item.optionName||item.option_name||"")}
+× ${quantity}
+</small>
+
+</div>
+
+<strong>
+${(price*quantity).toLocaleString("ar-EG")}
+ جنيه
+</strong>
+
+</div>
+
+`;
+
+}).join("")
+:
+"<div>لا توجد تفاصيل للمنتجات</div>"
+}
+
+</div>
+
+
+<div class="order-total">
+
+💰 الإجمالي:
+
+${Number(order.total||0).toLocaleString("ar-EG")}
+
+جنيه
+
+</div>
+
+
+<div class="order-actions">
+
+<select
+onchange="changeOrderStatus('${escapeAttribute(String(order.id))}',this.value)"
+>
+
+<option value="new" ${statusValue==="new"?"selected":""}>
+جديد
+</option>
+
+<option value="contacted" ${statusValue==="contacted"?"selected":""}>
+تم التواصل
+</option>
+
+<option value="shipped" ${statusValue==="shipped"?"selected":""}>
+تم الشحن
+</option>
+
+<option value="delivered" ${statusValue==="delivered"?"selected":""}>
+تم التسليم
+</option>
+
+<option value="cancelled" ${statusValue==="cancelled"?"selected":""}>
+ملغي
+</option>
+
+</select>
+
+<button
+class="red"
+onclick="deleteOrder('${escapeAttribute(String(order.id))}')"
+>
+🗑️ حذف الطلب
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}).join("");
+
+}
+
+
+/* =========================
+CHANGE ORDER STATUS
+========================= */
+
+async function changeOrderStatus(id,status){
+
+const {error} =
+await supabaseClient
+.from("orders")
+.update({
+status:status
+})
+.eq("id",id);
+
+if(error){
+
+alert(
+"حدث خطأ أثناء تغيير الحالة:\n\n"+
+error.message
+);
+
+return;
+}
+
+loadOrders();
+
+}
+
+
+/* =========================
+DELETE ORDER
+========================= */
+
+async function deleteOrder(id){
+
+if(!confirm(
+"هل أنت متأكد من حذف هذا الطلب؟"
+))return;
+
+const {error} =
+await supabaseClient
+.from("orders")
+.delete()
+.eq("id",id);
+
+if(error){
+
+alert(
+"حدث خطأ أثناء حذف الطلب:\n\n"+
+error.message
+);
+
+return;
+}
+
+loadOrders();
+
+}
+
+
+/* =========================
+STATUS
+========================= */
+
+function getStatusName(status){
+
+if(status==="new")
+return "جديد";
+
+if(status==="contacted")
+return "تم التواصل";
+
+if(status==="shipped")
+return "تم الشحن";
+
+if(status==="delivered")
+return "تم التسليم";
+
+if(status==="cancelled")
+return "ملغي";
+
+return status;
+
+}
+
+
+function getStatusClass(status){
+
+if(status==="new")
+return "status-new";
+
+if(status==="contacted")
+return "status-contacted";
+
+if(status==="shipped")
+return "status-shipped";
+
+if(status==="delivered")
+return "status-delivered";
+
+if(status==="cancelled")
+return "status-cancelled";
+
+return "status-new";
+
+}
+
+
+/* =========================
+CATEGORY
+========================= */
+
+function getCategoryName(category){
+
+if(category==="man")
+return "MAN";
+
+if(category==="women")
+return "WOMEN";
+
+if(category==="unisex")
+return "UNISEX";
+
+return category||"غير محدد";
+
+}
+
+
+/* =========================
+MESSAGE
+========================= */
+
+function showMessage(id,text,type){
+
+const element =
+document.getElementById(id);
+
+element.textContent=text;
+
+element.className=
+"message "+type;
+
+}
+
+
+/* =========================
+ESCAPE
+========================= */
+
+function escapeHTML(value){
+
+return String(value)
+
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
+function escapeAttribute(value){
+
+return escapeHTML(value);
+
+}
+
+
+/* =========================
+SESSION
+========================= */
+
+async function checkSession(){
+
+const {data} =
+await supabaseClient.auth.getSession();
+
+if(data.session){
+
+showAdmin();
+
+loadProducts();
+
+loadOrders();
+
+}
+
+}
 
 checkSession();
 
